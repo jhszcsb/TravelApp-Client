@@ -1,18 +1,20 @@
 package frontend;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import javax.annotation.Resource;
-
-@Configuration
-@EnableWebMvc
-@ComponentScan
+//@Configuration
+//@EnableWebMvc
+//@ComponentScan
 public class WebAppConfig {
 
-    @Resource
+  /*  @Resource
     private Environment env;
+
+    @Bean
+    public InternalResourceViewResolver viewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setPrefix("WEB-INF/");
+        //resolver.setSuffix(".jsp");
+        return resolver;
+    }*/
 
 }

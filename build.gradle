@@ -10,13 +10,13 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'war'
 
 jar {
-    baseName = 'rest-client'
-    version =  '0.1.0'
+    baseName = 'Travelapp-Client'
+    //version =  '0.1.0'
 }
 
 repositories {
@@ -28,7 +28,16 @@ repositories {
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    //compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework:spring-web")
+    //compile 'org.springframework:spring-webmvc:4.1.6.RELEASE'
+
+    compile 'com.sun.faces:jsf-api:2.2.9'
+    compile 'com.sun.faces:jsf-impl:2.2.9'
+    compile 'javax.servlet:jstl:1.2'
+
     testCompile("junit:junit")
+
 }
 
 task wrapper(type: Wrapper) {

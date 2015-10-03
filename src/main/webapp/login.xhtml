@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="bootstrap.css" />
+</h:head>
+<h:body>
+
+    <!-- todo: include navbar from a separate file -->
+
+    <h:form id="loginForm">
+        <h:outputLabel for="loginPanel" value="Log In" />
+        <h:panelGrid id="loginPanel" columns="2">
+            <h:outputLabel id="label_username" for="username" value="User Name"/>
+            <p:inputText id="username" value="#{loginController.username}" />
+            <h:outputLabel id="label_password" for="password" value="Password"/>
+            <p:password id="password" value="#{loginController.password}" feedback="false" />
+        </h:panelGrid>
+        <p:commandButton id="loginButton" value="Log In" title="Log in" />
+    </h:form>
+
+    <br/><br/><br/>
+
+    <!-- todo: input validations -->
+    <h:form id="registerForm">
+        <h:outputLabel for="loginPanel" value="Register" />
+        <h:panelGrid id="loginPanel" columns="2" style="width: 300px;">
+            <h:outputLabel id="label_username" for="username" value="User Name"/>
+            <p:inputText id="username" value="#{loginController.registerUsername}" />
+            <h:outputLabel id="label_firstname" for="firstname" value="First Name"/>
+            <p:inputText id="firstname" value="#{loginController.registerFirstname}" />
+            <h:outputLabel id="label_lastname" for="lastname" value="Last Name"/>
+            <p:inputText id="lastname" value="#{loginController.registerLastname}" />
+            <h:outputLabel id="label_email" for="email" value="E-mail"/>
+            <p:inputText id="email" value="#{loginController.registerEmail}" />
+            <h:outputLabel id="label_password" for="password" value="Password"/>
+            <p:password id="password" value="#{loginController.registerPassword}" feedback="false" />
+        </h:panelGrid>
+        <p:commandButton id="loginButton" value="Register" title="Register" action="#{loginController.register()}" />
+    </h:form>
+
+</h:body>
+</html>
