@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>My Trips</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="bootstrap.css" />
+</h:head>
+<h:body>
+
+    <ui:include src="navbar.xhtml">
+        <ui:param name="active" value="trips" />
+    </ui:include>
+
+    <h:form id="tripsForm">
+
+        <h2>TEST: Load Trips for Traveler</h2>
+        <h:commandButton value="Load" class="btn btn-default"
+                         action="#{tripController.loadTripsForTraveler()}"/>
+
+        <br/><br/>
+
+        <h:dataTable value="#{tripController.trips}" var="trip" class="table"
+                     rendered="#{!empty tripController.trips}">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{trip.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Timeline ID</f:facet>
+                #{trip.timeline.id}
+            </h:column>
+        </h:dataTable>
+
+    </h:form>
+
+</h:body>
+</html>

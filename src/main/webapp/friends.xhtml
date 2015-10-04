@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-    <title>Profile</title>
+    <title>Friends</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="bootstrap.css" />
 </h:head>
@@ -15,6 +15,44 @@
     <ui:include src="navbar.xhtml">
         <ui:param name="active" value="friends" />
     </ui:include>
+
+    <h:form id="friendsForm">
+
+        <h2>TEST: Load Friends for Traveler</h2>
+        <h:commandButton value="Load" class="btn btn-default"
+                         action="#{travelerController.loadFriendsForTraveler()}"/>
+
+        <br/><br/>
+
+        <h:dataTable value="#{travelerController.friendships}" var="friendship" class="table"
+                     rendered="#{!empty travelerController.friendships}">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{friendship.traveler2.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Username</f:facet>
+                #{friendship.traveler2.personaldata.username}
+            </h:column>
+            <h:column>
+                <f:facet name="header">E-mail</f:facet>
+                #{friendship.traveler2.personaldata.email}
+            </h:column>
+            <h:column>
+                <f:facet name="header">First Name</f:facet>
+                #{friendship.traveler2.personaldata.firstname}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Last Name</f:facet>
+                #{friendship.traveler2.personaldata.lastname}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Hometown</f:facet>
+                #{friendship.traveler2.personaldata.hometown}
+            </h:column>
+        </h:dataTable>
+
+    </h:form>
 
 </h:body>
 </html>
