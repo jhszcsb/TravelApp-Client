@@ -14,35 +14,59 @@
 
     <!-- todo: include navbar from a separate file -->
 
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="main.xhtml">travelr</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="about.xhtml">About</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
     <h:form id="loginForm">
-        <h:outputLabel for="loginPanel" value="Log In" />
+        <h1>Log In</h1>
         <h:panelGrid id="loginPanel" columns="2">
             <h:outputLabel id="label_username" for="username" value="User Name"/>
-            <p:inputText id="username" value="#{loginController.username}" />
+            <h:inputText id="username" value="#{loginController.username}" class="form-control"/>
             <h:outputLabel id="label_password" for="password" value="Password"/>
-            <p:password id="password" value="#{loginController.password}" feedback="false" />
+            <h:inputSecret id="password" value="#{loginController.password}" feedback="false" class="form-control"/>
         </h:panelGrid>
-        <p:commandButton id="loginButton" value="Log In" title="Log in" />
+        <h:commandButton id="loginButton" value="Log In" title="Log in" class="btn btn-default"/>
     </h:form>
 
     <br/><br/><br/>
 
     <!-- todo: input validations -->
     <h:form id="registerForm">
-        <h:outputLabel for="loginPanel" value="Register" />
+        <h1>Register</h1>
         <h:panelGrid id="loginPanel" columns="2" style="width: 300px;">
             <h:outputLabel id="label_username" for="username" value="User Name"/>
-            <p:inputText id="username" value="#{loginController.registerUsername}" />
+            <h:inputText id="username" value="#{loginController.registerUsername}" class="form-control"/>
             <h:outputLabel id="label_firstname" for="firstname" value="First Name"/>
-            <p:inputText id="firstname" value="#{loginController.registerFirstname}" />
+            <h:inputText id="firstname" value="#{loginController.registerFirstname}" class="form-control"/>
             <h:outputLabel id="label_lastname" for="lastname" value="Last Name"/>
-            <p:inputText id="lastname" value="#{loginController.registerLastname}" />
+            <h:inputText id="lastname" value="#{loginController.registerLastname}" class="form-control"/>
             <h:outputLabel id="label_email" for="email" value="E-mail"/>
-            <p:inputText id="email" value="#{loginController.registerEmail}" />
+            <h:inputText id="email" value="#{loginController.registerEmail}" class="form-control"/>
             <h:outputLabel id="label_password" for="password" value="Password"/>
-            <p:password id="password" value="#{loginController.registerPassword}" feedback="false" />
+            <h:inputSecret id="password" value="#{loginController.registerPassword}" feedback="false" class="form-control"/>
         </h:panelGrid>
-        <p:commandButton id="loginButton" value="Register" title="Register" action="#{loginController.register()}" />
+        <h:commandButton id="loginButton" value="Register" title="Register" action="#{loginController.register()}" class="btn btn-default"/>
     </h:form>
 
 </h:body>

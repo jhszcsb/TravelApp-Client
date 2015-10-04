@@ -29,7 +29,7 @@ public class LoginController {
         personalData.setEmail(registerEmail);
         personalData.setFirstname(registerFirstname);
         personalData.setLastname(registerLastname);
-        personalData.setHometown("dummy");  // todo
+        personalData.setHometown("dummy");  // todo: use geolocation
         newTraveler.setPersonaldata(personalData);
         accessor.registerTraveler(newTraveler);
         return "main";
