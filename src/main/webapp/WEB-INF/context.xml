@@ -1,16 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:security="http://www.springframework.org/schema/security"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-				http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 				http://www.springframework.org/schema/tx
 		        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		        http://www.springframework.org/schema/security
+                http://www.springframework.org/schema/security/spring-security-4.0.xsd
 		        http://www.springframework.org/schema/context
-		        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+		        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-    <context:annotation-config />
+    <!--<context:annotation-config />-->
     <context:component-scan base-package="frontend" />
+
+    <security:http auto-config="true" use-expressions="true">
+        <!--<security:intercept-url pattern="/" access="permitAll" />-->
+        <security:intercept-url pattern="/login.xhtml" access="isAnonymous()" />
+        <security:intercept-url pattern="/profile.xhtml" access="hasRole('ROLE_USER')" />
+        <security:intercept-url pattern="/main.xhtml" access="isAuthenticated()" />
+        <!--<security:intercept-url pattern="/main.xhtml" access="hasRole('ROLE_USER')" />-->
+
+        <security:form-login login-page="/login.xhtml"
+                             username-parameter="j_username"
+                             password-parameter="j_password"
+                             login-processing-url="/j_spring_security_check"
+                             default-target-url="/main.xhtml"
+                             authentication-failure-url="/login.xhtml?login_error=1" />
+        <!--<security:logout logout-success-url="/login.xhtml" />-->
+        <!-- todo: add logout functionality to the link on gui -->
+        <security:csrf disabled="true"/><!-- todo: use CSRF -->
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="a" password="a" authorities="ROLE_USER" />
+                <security:user name="admin" authorities="ROLE_USER" />
+                <security:user name="alma" password="alma" authorities="ROLE_USER" />
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
 
 <!--
     <bean id="DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"

@@ -3,7 +3,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jstl/core">
 
 <h:head>
     <title>Login</title>
@@ -38,16 +39,32 @@
         </div><!-- /.container-fluid -->
     </nav>
 
-    <h:form id="loginForm">
+    <!--<form action="${request.contextPath}/j_spring_security_check" method="POST" name="loginForm">-->
+    <form name='f' action="j_spring_security_check" method='POST'>
         <h1>Log In</h1>
+        <table>
+            <tr>
+                <td>User:</td>
+                <td><input type='text' name='j_username' value='' /></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type='password' name='j_password' /></td>
+            </tr>
+            <tr>
+                <td><input name="submit" type="submit" value="submit" /></td>
+            </tr>
+        </table>
+        <!--
         <h:panelGrid id="loginPanel" columns="2">
             <h:outputLabel id="label_username" for="username" value="User Name"/>
-            <h:inputText id="username" value="#{loginController.username}" class="form-control"/>
+            <h:inputText name="j_username" id="j_username" value="#{loginController.username}" class="form-control"/>
             <h:outputLabel id="label_password" for="password" value="Password"/>
-            <h:inputSecret id="password" value="#{loginController.password}" feedback="false" class="form-control"/>
+            <h:inputSecret name="j_password" id="j_password" value="#{loginController.password}" feedback="false" class="form-control"/>
         </h:panelGrid>
-        <h:commandButton id="loginButton" value="Log In" title="Log in" class="btn btn-default"/>
-    </h:form>
+        <h:commandButton id="loginButton" value="Log In" title="Log in" class="btn btn-default" />
+        -->
+    </form>
 
     <br/><br/><br/>
 
