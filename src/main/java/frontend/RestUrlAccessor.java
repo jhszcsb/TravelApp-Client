@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import frontend.domain.Friendship;
+import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
 import frontend.domain.Trip;
+import frontend.security.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -21,9 +23,18 @@ public class RestUrlAccessor {
 
     public static final String URL_TRAVELER = "http://localhost:8070/travelers/";
     public static final String BASE_URL = "http://localhost:8070/";
+    public static final String URL_AUTHENTICATION = "authenticationdata";
 
     //@Autowired
     RestTemplate restTemplate = new RestTemplate();
+
+    public User loadUserByUsername() {
+        User user = new User();
+        ResponseEntity<User> responseData = restTemplate.getForEntity(BASE_URL + URL_AUTHENTICATION, User.class);
+        user.setUsername(responseData.getBody().getUsername());
+        user.setPassword(responseData.getBody().getPassword());
+        return user;
+    }
 
     public List<Traveler> loadAllTravelers() {
         ResponseEntity<Traveler[]> responseData = restTemplate.getForEntity(URL_TRAVELER, Traveler[].class);

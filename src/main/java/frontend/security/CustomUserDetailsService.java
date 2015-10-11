@@ -1,5 +1,6 @@
 package frontend.security;
 
+import frontend.RestUrlAccessor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -18,14 +19,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        // TODO: load user data via the rest interface
         boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
         List<GrantedAuthority> authList = new ArrayList<>();
         authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-        return new User("alma", "alma", enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authList);
+        RestUrlAccessor restUrlAccessor = new RestUrlAccessor();    // todo: inject dependency with spring
+        frontend.security.User user = restUrlAccessor.loadUserByUsername();
+        return new User(user.getUsername(), user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authList);
+
+        //authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        //return new User("custom", "custom", enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authList);
     }
 
     /*
