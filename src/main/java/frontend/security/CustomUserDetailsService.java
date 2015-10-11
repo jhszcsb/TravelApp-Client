@@ -26,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> authList = new ArrayList<>();
         authList.add(new SimpleGrantedAuthority("ROLE_USER"));
         RestUrlAccessor restUrlAccessor = new RestUrlAccessor();    // todo: inject dependency with spring
-        frontend.security.User user = restUrlAccessor.loadUserByUsername();
+        frontend.security.User user = restUrlAccessor.loadUserByUsername(s);
         return new User(user.getUsername(), user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authList);
 
         //authList.add(new SimpleGrantedAuthority("ROLE_USER"));

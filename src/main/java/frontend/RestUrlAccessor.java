@@ -23,14 +23,14 @@ public class RestUrlAccessor {
 
     public static final String URL_TRAVELER = "http://localhost:8070/travelers/";
     public static final String BASE_URL = "http://localhost:8070/";
-    public static final String URL_AUTHENTICATION = "authenticationdata";
+    public static final String URL_AUTHENTICATION = "authenticationdata/";
 
     //@Autowired
     RestTemplate restTemplate = new RestTemplate();
 
-    public User loadUserByUsername() {
+    public User loadUserByUsername(String username) {
         User user = new User();
-        ResponseEntity<User> responseData = restTemplate.getForEntity(BASE_URL + URL_AUTHENTICATION, User.class);
+        ResponseEntity<User> responseData = restTemplate.getForEntity(BASE_URL + URL_AUTHENTICATION + username, User.class);
         user.setUsername(responseData.getBody().getUsername());
         user.setPassword(responseData.getBody().getPassword());
         return user;
