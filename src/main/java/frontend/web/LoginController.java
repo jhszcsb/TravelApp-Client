@@ -4,6 +4,8 @@ import frontend.RestUrlAccessor;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -18,6 +20,12 @@ public class LoginController {
     private String registerEmail;
     private String registerFirstname;
     private String registerLastname;
+
+    public String getCurrentUserName() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String name = user.getUsername();
+        return name;
+    }
 
     public String register() {    // todo: use spring ModelAndView?
         RestUrlAccessor accessor = new RestUrlAccessor();

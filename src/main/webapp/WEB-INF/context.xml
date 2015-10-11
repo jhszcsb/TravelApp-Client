@@ -18,10 +18,14 @@
 
     <security:http auto-config="true" use-expressions="true">
         <!--<security:intercept-url pattern="/" access="permitAll" />-->
-        <security:intercept-url pattern="/login.xhtml" access="isAnonymous()" />
+        <!-- todo: add pattern instead of separate pages (organize into folders) -->
+        <security:intercept-url pattern="/login.xhtml" access="permitAll" />
         <security:intercept-url pattern="/profile.xhtml" access="hasRole('ROLE_USER')" />
         <security:intercept-url pattern="/main.xhtml" access="isAuthenticated()" />
-        <!--<security:intercept-url pattern="/main.xhtml" access="hasRole('ROLE_USER')" />-->
+        <security:intercept-url pattern="/about.xhtml" access="isAuthenticated()" />
+        <security:intercept-url pattern="/main.xhtml" access="isAuthenticated()" />
+        <security:intercept-url pattern="/friends.xhtml" access="isAuthenticated()" />
+        <security:intercept-url pattern="/trips.xhtml" access="isAuthenticated()" />
 
         <security:form-login login-page="/login.xhtml"
                              username-parameter="j_username"
@@ -29,8 +33,7 @@
                              login-processing-url="/j_spring_security_check"
                              default-target-url="/main.xhtml"
                              authentication-failure-url="/login.xhtml?login_error=1" />
-        <!--<security:logout logout-success-url="/login.xhtml" />-->
-        <!-- todo: add logout functionality to the link on gui -->
+        <security:logout logout-success-url="/login.xhtml" logout-url="/j_spring_security_logout" />
         <security:csrf disabled="true"/><!-- todo: use CSRF -->
     </security:http>
 
