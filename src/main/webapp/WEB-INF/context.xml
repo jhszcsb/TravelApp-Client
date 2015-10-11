@@ -26,6 +26,7 @@
         <security:intercept-url pattern="/main.xhtml" access="isAuthenticated()" />
         <security:intercept-url pattern="/friends.xhtml" access="isAuthenticated()" />
         <security:intercept-url pattern="/trips.xhtml" access="isAuthenticated()" />
+        <!-- <intercept-url pattern="/*" requires-channel="https" /> -->
 
         <security:form-login login-page="/login.xhtml"
                              username-parameter="j_username"
@@ -49,6 +50,11 @@
             </security:user-service>
         </security:authentication-provider>
     </security:authentication-manager>
+
+    <!--
+        Tomcat config for HTTPS support:
+        <Connector SSLEnabled="true" keystoreFile="" keystorePass="" port="8443" scheme="https" secure="true" sslProtocol="TLS"/>
+    -->
 
 <!--
     <bean id="DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"

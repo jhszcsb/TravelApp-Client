@@ -1,6 +1,7 @@
 package frontend.security;
 
 import frontend.RestUrlAccessor;
+import org.springframework.http.HttpEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -15,8 +16,6 @@ import java.util.List;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    // TODO: http://fruzenshtein.com/spring-mvc-security-mysql-hibernate/
-
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         boolean enabled = true;
@@ -26,11 +25,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> authList = new ArrayList<>();
         authList.add(new SimpleGrantedAuthority("ROLE_USER"));
         RestUrlAccessor restUrlAccessor = new RestUrlAccessor();    // todo: inject dependency with spring
+
         frontend.security.User user = restUrlAccessor.loadUserByUsername(s);
         return new User(user.getUsername(), user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authList);
-
-        //authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-        //return new User("custom", "custom", enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authList);
     }
 
     /*

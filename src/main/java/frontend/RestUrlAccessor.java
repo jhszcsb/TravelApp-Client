@@ -9,6 +9,9 @@ import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
 import frontend.domain.Trip;
 import frontend.security.User;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -16,6 +19,8 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.codec.binary.Base64;
 
 @Component
 public class RestUrlAccessor {
@@ -30,7 +35,16 @@ public class RestUrlAccessor {
 
     public User loadUserByUsername(String username) {
         User user = new User();
-        ResponseEntity<User> responseData = restTemplate.getForEntity(BASE_URL + URL_AUTHENTICATION + username, User.class);
+
+        String plainCreds = "user:user";
+        byte[] plainCredsBytes = plainCreds.getBytes();
+        byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
+        String base64Creds = new String(base64CredsBytes);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Basic " + base64Creds);
+        HttpEntity<String> request = new HttpEntity<String>(headers);
+
+        ResponseEntity<User> responseData = restTemplate.exchange(BASE_URL + URL_AUTHENTICATION + username, HttpMethod.GET, request, User.class);
         user.setUsername(responseData.getBody().getUsername());
         user.setPassword(responseData.getBody().getPassword());
         return user;

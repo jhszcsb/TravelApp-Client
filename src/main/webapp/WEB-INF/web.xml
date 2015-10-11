@@ -85,15 +85,14 @@
         <url-pattern>*.faces</url-pattern>
     </servlet-mapping>
 
-    <!--
-    <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/about.xhtml</url-pattern>
-    </filter-mapping>
-    -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Travelapp-Client</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
 
 </web-app>
