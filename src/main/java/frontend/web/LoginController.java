@@ -22,9 +22,10 @@ public class LoginController {
     private String registerLastname;
 
     public String getCurrentUserName() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String name = user.getUsername();
-        return name;
+        //User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //String name = user.getUsername();
+        //return name;
+        return "ASD";
     }
 
     public String register() {    // todo: use spring ModelAndView?

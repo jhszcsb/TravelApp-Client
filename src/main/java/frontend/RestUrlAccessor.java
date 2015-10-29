@@ -9,16 +9,21 @@ import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
 import frontend.domain.Trip;
 import frontend.security.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -26,46 +31,46 @@ import org.apache.commons.codec.binary.Base64;
 public class RestUrlAccessor {
 //todo: create universal resturl accessor (base url + scope from parameter)
 
-    public static final String URL_TRAVELER = "http://localhost:8070/travelers/";
-    public static final String BASE_URL = "http://localhost:8070/";
+    public static final String URL_TRAVELER = "http://localhost:8099/travelers/";
+    public static final String BASE_URL = "http://localhost:8099/";
     public static final String URL_AUTHENTICATION = "authenticationdata/";
+
+    @Autowired
+    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     //@Autowired
     RestTemplate restTemplate = new RestTemplate();
 
     public User loadUserByUsername(String username) {
         User user = new User();
-
-        String plainCreds = "user:user";
-        byte[] plainCredsBytes = plainCreds.getBytes();
-        byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
-        String base64Creds = new String(base64CredsBytes);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Basic " + base64Creds);
-        HttpEntity<String> request = new HttpEntity<String>(headers);
-
-        ResponseEntity<User> responseData = restTemplate.exchange(BASE_URL + URL_AUTHENTICATION + username, HttpMethod.GET, request, User.class);
+        // TODO: add auth for other services
+        ResponseEntity<User> responseData = restTemplate.exchange(
+                BASE_URL + URL_AUTHENTICATION + username,
+                HttpMethod.GET,
+                createAuthenticatedRequest(),
+                User.class);
         user.setUsername(responseData.getBody().getUsername());
         user.setPassword(responseData.getBody().getPassword());
         return user;
     }
 
     public List<Traveler> loadAllTravelers() {
-        ResponseEntity<Traveler[]> responseData = restTemplate.getForEntity(URL_TRAVELER, Traveler[].class);
+        //ResponseEntity<Traveler[]> responseData = restTemplate.getForEntity(URL_TRAVELER, Traveler[].class);
+        ResponseEntity<Traveler[]> responseData = restTemplate.exchange(URL_TRAVELER, HttpMethod.GET, createAuthenticatedRequest(), Traveler[].class);
         Traveler[] travelerArray = responseData.getBody();
         List<Traveler> travelers = Arrays.asList(travelerArray);
         return travelers;
     }
 
     public List<Friendship> loadAllFriendsForTraveler(String id) {
-        ResponseEntity<Friendship[]> responseData = restTemplate.getForEntity(BASE_URL + id + "/friendships", Friendship[].class);
+        ResponseEntity<Friendship[]> responseData = restTemplate.exchange(BASE_URL + id + "/friendships", HttpMethod.GET, createAuthenticatedRequest(), Friendship[].class);
         Friendship[] travelerArray = responseData.getBody();
         List<Friendship> travelers = Arrays.asList(travelerArray);
         return travelers;
     }
 
     public List<Trip> loadAllTripsForTraveler(String id) {
-        ResponseEntity<Trip[]> responseData = restTemplate.getForEntity(BASE_URL + id + "/trips", Trip[].class);
+        ResponseEntity<Trip[]> responseData = restTemplate.exchange(BASE_URL + id + "/trips", HttpMethod.GET, createAuthenticatedRequest(), Trip[].class);
         Trip[] tripArray = responseData.getBody();
         List<Trip> trips = Arrays.asList(tripArray);
         return trips;
@@ -84,6 +89,11 @@ public class RestUrlAccessor {
     public void registerTraveler(Traveler newTraveler) {    // todo add a return value (string message or else)
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = null;
+        System.out.println(newTraveler.getPersonaldata().getPassword());    // todo delete
+        String encoded = passwordEncoder.encode(newTraveler.getPersonaldata().getPassword());
+        newTraveler.getPersonaldata().setPassword(encoded);
+        if (encoded != null)
+            System.out.println(encoded);
         try {
             json = ow.writeValueAsString(newTraveler);
         } catch (JsonProcessingException e) {
@@ -91,9 +101,12 @@ public class RestUrlAccessor {
         }
         if(json != null){
             JsonNode jsonNode = prepareJsonObject(json);
-            restTemplate.postForObject(URL_TRAVELER, jsonNode, JsonNode.class);
+            //restTemplate.postForObject(URL_TRAVELER, jsonNode, JsonNode.class);
+            // todo: password is not set on server side when registering
+            restTemplate.exchange(URL_TRAVELER, HttpMethod.POST, createAuthenticatedRequestWithData(jsonNode), Object.class, jsonNode);
         }
         System.out.println("Registering new Traveler: " + json);
+        // TODO: add password hashing
     }
 
     /*public void createNewTraveler() {
@@ -134,5 +147,35 @@ public class RestUrlAccessor {
         else {
             System.out.println("No Data found!");
         }
+    }
+
+    private HttpEntity<String> createAuthenticatedRequest() {
+        String plainCreds = "user:user";
+        byte[] plainCredsBytes = plainCreds.getBytes();
+        byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
+        String base64Creds = new String(base64CredsBytes);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Basic " + base64Creds);
+        HttpEntity<String> request = new HttpEntity<String>(headers);
+        return request;
+    }
+
+    private HttpEntity<Map> createAuthenticatedRequestWithData(JsonNode body) {
+        String plainCreds = "user:user";
+        byte[] plainCredsBytes = plainCreds.getBytes();
+        byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
+        String base64Creds = new String(base64CredsBytes);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Basic " + base64Creds);
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = mapper.convertValue(body, Map.class);
+        HttpEntity<Map> request = new HttpEntity<Map>(map, headers);
+        return request;
+    }
+
+    public PersonalData loadPersonalataForTraveler(String name) {
+        ResponseEntity<PersonalData> responseData = restTemplate.exchange(URL_TRAVELER + name + "/personaldata", HttpMethod.GET, createAuthenticatedRequest(), PersonalData.class);
+        PersonalData personalData = responseData.getBody();
+        return personalData;
     }
 }

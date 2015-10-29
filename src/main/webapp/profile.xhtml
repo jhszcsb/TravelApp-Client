@@ -16,5 +16,23 @@
         <ui:param name="active" value="profile" />
     </ui:include>
 
+    <h:form id="profileForm">
+
+        <h:commandButton value="Load" class="btn btn-default"
+                         action="#{travelerController.loadPersonalDataForTraveler()}"/>
+
+        <br/><br/>
+
+        <h:outputLabel value="User Name: #{travelerController.personalData.username}" />
+        <br/>
+        <h:outputLabel value="E-mail: #{travelerController.personalData.email}" />
+        <br/>
+        <h:outputLabel value="First Name: #{travelerController.personalData.firstname}" />
+        <br/>
+        <h:outputLabel value="Last Name: #{travelerController.personalData.lastname}" />
+        <br/>
+
+    </h:form>
+
 </h:body>
 </html>
