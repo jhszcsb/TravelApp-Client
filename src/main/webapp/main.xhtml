@@ -16,7 +16,29 @@
         <ui:param name="active" value="timeline" />
     </ui:include>
 
-    <h:form id="mainForm">
+    <h:form id="timelineForm">
+
+        <h2>Test: load all trips of friends</h2>
+        <h:commandButton value="Load Timeline" class="btn btn-default"
+                         action="#{tripController.loadAllTripsOfFriends()}"/>
+
+        <br/><br/>
+
+        <h:dataTable value="#{tripController.tripsOfFriends}" var="trip" class="table"
+                     rendered="#{!empty tripController.tripsOfFriends}">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{trip.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Timeline ID</f:facet>
+                #{trip.timeline.id}
+            </h:column>
+        </h:dataTable>
+
+    </h:form>
+
+    <h:form id="travelerForm">
 
         <h2>Test: load all travelers from DB</h2>
         <h:commandButton value="Load" class="btn btn-default"

@@ -89,11 +89,11 @@ public class RestUrlAccessor {
     public void registerTraveler(Traveler newTraveler) {    // todo add a return value (string message or else)
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = null;
-        System.out.println(newTraveler.getPersonaldata().getPassword());    // todo delete
+        //System.out.println(newTraveler.getPersonaldata().getPassword());    // todo delete
         String encoded = passwordEncoder.encode(newTraveler.getPersonaldata().getPassword());
         newTraveler.getPersonaldata().setPassword(encoded);
         if (encoded != null)
-            System.out.println(encoded);
+            //System.out.println(encoded);
         try {
             json = ow.writeValueAsString(newTraveler);
         } catch (JsonProcessingException e) {
@@ -177,5 +177,37 @@ public class RestUrlAccessor {
         ResponseEntity<PersonalData> responseData = restTemplate.exchange(URL_TRAVELER + name + "/personaldata", HttpMethod.GET, createAuthenticatedRequest(), PersonalData.class);
         PersonalData personalData = responseData.getBody();
         return personalData;
+    }
+
+    public void updatePersonalDataForTraveler(PersonalData personalData) {
+        // todo: error handling (null)
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = null;
+
+        try {
+            json = ow.writeValueAsString(personalData);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        if(json != null) {
+            JsonNode jsonNode = prepareJsonObject(json);
+            System.out.println(jsonNode);
+            restTemplate.exchange(URL_TRAVELER + personalData.getId() + "/personaldata", HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class, jsonNode);
+        }
+    }
+
+    public Traveler getTravelerByPersonalDataId(int personalDataId) {
+        ResponseEntity<Traveler> responseData = restTemplate.exchange(URL_TRAVELER + "/personaldataid/" + personalDataId, HttpMethod.GET, createAuthenticatedRequest(), Traveler.class);
+        Traveler traveler = responseData.getBody();
+        return traveler;
+    }
+
+    public List<Trip> loadAllTripsOfFriendsForTraveler(String name) {
+        ResponseEntity<Trip[]> responseData = restTemplate.exchange(BASE_URL + name + "/timeline", HttpMethod.GET, createAuthenticatedRequest(), Trip[].class);
+        System.out.println(responseData.getBody());
+        /*Trip[] tripArray = responseData.getBody();
+        List<Trip> trips = Arrays.asList(tripArray);
+        return trips;*/
+        return null;
     }
 }

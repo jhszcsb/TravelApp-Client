@@ -26,11 +26,19 @@
         <h:outputLabel value="User Name: #{travelerController.personalData.username}" />
         <br/>
         <h:outputLabel value="E-mail: #{travelerController.personalData.email}" />
+        <h:inputText value="#{travelerController.personalData.email}" />
         <br/>
         <h:outputLabel value="First Name: #{travelerController.personalData.firstname}" />
+        <h:inputText value="#{travelerController.personalData.firstname}" />
         <br/>
         <h:outputLabel value="Last Name: #{travelerController.personalData.lastname}" />
+        <h:inputText value="#{travelerController.personalData.lastname}" />
         <br/>
+
+        <h:commandButton value="Update" class="btn btn-default"
+                         action="#{travelerController.updatePersonalDataForTraveler()}"/>
+
+
 
     </h:form>
 

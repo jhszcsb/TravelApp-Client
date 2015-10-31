@@ -13,8 +13,11 @@ import java.util.List;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
+import javax.faces.bean.ViewScoped;
+
 @Controller
-@Scope("request")
+@ViewScoped
+//@Scope("view")
 public class TravelerController {
 
     //@Autowired    //todo: add dependency injection
@@ -25,10 +28,15 @@ public class TravelerController {
     private PersonalData personalData = new PersonalData();
 
     public void loadPersonalDataForTraveler() { // add to profilecontroller?
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();   // todo: refactor to a variable
         String name = user.getUsername();
-        System.out.println("User name: " + name);   // todo debug
         personalData = restUrlAccessor.loadPersonalataForTraveler(name);
+        //System.out.println(personalData.getUsername());
+    }
+
+    public void updatePersonalDataForTraveler() { // add to profilecontroller?
+        restUrlAccessor.updatePersonalDataForTraveler(personalData);
+        //System.out.println(personalData.getUsername());
     }
 
     public void loadAllTravelers() {
@@ -36,7 +44,8 @@ public class TravelerController {
     }
 
     public void loadFriendsForTraveler() {  // todo: use traveler type instead of friendship -> fix backend!
-        friendships = restUrlAccessor.loadAllFriendsForTraveler("1");    // todo: id is hardcoded for testing. use the id of the authenticated user
+        loadPersonalDataForTraveler();  // todo: optimize
+        friendships = restUrlAccessor.loadAllFriendsForTraveler(String.valueOf(personalData.getId()));
     }
 
     public List<Traveler> getTravelers() {
