@@ -8,6 +8,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
 @Controller
 @Scope("request")
 public class LoginController {
@@ -41,7 +44,11 @@ public class LoginController {
         personalData.setHometown("dummy");  // todo: use geolocation
         newTraveler.setPersonaldata(personalData);
         accessor.registerTraveler(newTraveler);
-        return "main";
+        // TODO: add error message if registration is not successful (error from backend)
+        FacesMessage message = new FacesMessage("Successful registration!");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, message);
+        return "login";
     }
 
     public String getUsername() {
