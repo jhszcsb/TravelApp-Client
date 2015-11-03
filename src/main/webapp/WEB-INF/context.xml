@@ -40,9 +40,15 @@
         <security:csrf disabled="true"/><!-- todo: use CSRF -->
     </security:http>
 
+    <!-- Encrypter to encrypt password -->
+    <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <constructor-arg value="12"></constructor-arg>
+    </bean>
+
     <security:authentication-manager>
         <security:authentication-provider user-service-ref="customUserDetailsService">
-            <security:password-encoder hash="plaintext"></security:password-encoder><!-- todo: bcrypt not working -->
+            <security:password-encoder ref="encoder" ></security:password-encoder>
+            <!-- todo: bcrypt not working. might be causer by database: too small length of data. set to 200, check Bcrypt again!!! -->
         </security:authentication-provider>
         <security:authentication-provider>
             <security:user-service>

@@ -36,7 +36,7 @@ public class RestUrlAccessor {
     public static final String URL_AUTHENTICATION = "authenticationdata/";
 
     @Autowired
-    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
 
     //@Autowired
     RestTemplate restTemplate = new RestTemplate();
