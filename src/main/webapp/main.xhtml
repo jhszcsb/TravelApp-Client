@@ -22,7 +22,7 @@
         <h:commandButton value="Load Timeline" class="btn btn-default"
                          action="#{tripController.loadAllTripsOfFriends()}"/>
 
-        <br/><br/>
+        <br /><br />
 
         <h:dataTable value="#{tripController.tripsOfFriends}" var="trip" class="table"
                      rendered="#{!empty tripController.tripsOfFriends}">
@@ -44,7 +44,7 @@
         <h:commandButton value="Load" class="btn btn-default"
                          action="#{travelerController.loadAllTravelers()}"/>
 
-        <br/><br/>
+        <br /><br />
 
         <h:dataTable value="#{travelerController.travelers}" var="traveler" class="table"
                     rendered="#{!empty travelerController.travelers}">

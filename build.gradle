@@ -31,7 +31,7 @@ dependencies {
     //compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework:spring-web")
     //compile 'org.springframework:spring-webmvc:4.1.6.RELEASE'
-
+    compile 'org.primefaces:primefaces:5.0'
     compile 'com.sun.faces:jsf-api:2.2.9'
     compile 'com.sun.faces:jsf-impl:2.2.9'
     compile 'javax.servlet:jstl:1.2'

@@ -22,7 +22,9 @@
         <h:commandButton value="Load" class="btn btn-default"
                          action="#{travelerController.loadFriendsForTraveler()}"/>
 
-        <br/><br/>
+        <br /><br />
+
+        <h:outputLabel rendered="#{empty travelerController.friendships}" value="You don't have any friends yet." />
 
         <h:dataTable value="#{travelerController.friendships}" var="friendship" class="table"
                      rendered="#{!empty travelerController.friendships}">

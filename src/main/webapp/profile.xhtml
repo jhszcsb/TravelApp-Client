@@ -21,24 +21,40 @@
         <h:commandButton value="Load" class="btn btn-default"
                          action="#{travelerController.loadPersonalDataForTraveler()}"/>
 
-        <br/><br/>
+        <br /><br />
 
-        <h:outputLabel value="User Name: #{travelerController.personalData.username}" />
-        <br/>
-        <h:outputLabel value="E-mail: #{travelerController.personalData.email}" />
-        <h:inputText value="#{travelerController.personalData.email}" />
-        <br/>
-        <h:outputLabel value="First Name: #{travelerController.personalData.firstname}" />
-        <h:inputText value="#{travelerController.personalData.firstname}" />
-        <br/>
-        <h:outputLabel value="Last Name: #{travelerController.personalData.lastname}" />
-        <h:inputText value="#{travelerController.personalData.lastname}" />
-        <br/>
+        <div id="profilePic" style="width: auto; position: absolute; margin-left: 10%; border: 2px solid #777;
+                                    padding: 20px; border-radius: 30px; border-width: 2px;">
+            <p:graphicImage value="#{travelerController.picture}" />
+        </div>
 
-        <h:commandButton value="Update" class="btn btn-default"
-                         action="#{travelerController.updatePersonalDataForTraveler()}"/>
+        <div style="float:right; margin-right: 30%;" >
 
+            <div id="profileData" style="border: medium solid rgb(119, 119, 119); padding: 20px; margin-right: 20%;
+                                         border-radius: 30px; border-width: 2px;">
+                <h:outputLabel value="User Name: #{travelerController.personalData.username}" />
+                <br />
+                <h:outputLabel value="E-mail: #{travelerController.personalData.email}" />
+                <h:inputText value="#{travelerController.personalData.email}" />
+                <br />
+                <h:outputLabel value="First Name: #{travelerController.personalData.firstname}" />
+                <h:inputText value="#{travelerController.personalData.firstname}" />
+                <br />
+                <h:outputLabel value="Last Name: #{travelerController.personalData.lastname}" />
+                <h:inputText value="#{travelerController.personalData.lastname}" />
+                <br />
 
+                <h:commandButton value="Update" class="btn btn-default"
+                                 action="#{travelerController.updatePersonalDataForTraveler()}"/>
+
+                <h:form enctype="multipart/form-data">
+                    <p:growl id="messages" showDetail="true" />
+                    <p:fileUpload value="#{travelerController.profilePic}" mode="simple" skinSimple="true"/>
+                    <p:commandButton value="Upload Profile Picture" ajax="false" mode="advanced"
+                                     actionListener="#{travelerController.uploadProfilePic}" disabled="true" />
+                </h:form>
+            </div>
+        </div>
 
     </h:form>
 

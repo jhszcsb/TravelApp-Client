@@ -22,7 +22,7 @@
         <h:commandButton value="Load" class="btn btn-default"
                          action="#{tripController.loadTripsForTraveler()}"/>
 
-        <br/><br/>
+        <br /><br />
 
         <h:dataTable value="#{tripController.trips}" var="trip" class="table"
                      rendered="#{!empty tripController.trips}">
