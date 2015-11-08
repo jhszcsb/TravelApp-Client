@@ -18,7 +18,6 @@
 
     <h:form id="friendsForm">
 
-        <h2>TEST: Load Friends for Traveler</h2>
         <h:commandButton value="Load" class="btn btn-default"
                          action="#{travelerController.loadFriendsForTraveler()}"/>
 
@@ -29,6 +28,12 @@
         <h:dataTable value="#{travelerController.friendships}" var="friendship" class="table"
                      rendered="#{!empty travelerController.friendships}">
             <h:column>
+
+                #{friendship.traveler2.personaldata.username}
+
+                <p:graphicImage value="#{friendship.traveler2.personaldata.diplayablePicture}" />
+            </h:column>
+            <!--<h:column>
                 <f:facet name="header">ID</f:facet>
                 #{friendship.traveler2.id}
             </h:column>
@@ -51,7 +56,7 @@
             <h:column>
                 <f:facet name="header">Hometown</f:facet>
                 #{friendship.traveler2.personaldata.hometown}
-            </h:column>
+            </h:column>-->
         </h:dataTable>
 
     </h:form>

@@ -6,7 +6,6 @@ import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import java.io.ByteArrayInputStream;
@@ -30,17 +29,16 @@ public class TravelerController {
     RestUrlAccessor restUrlAccessor = new RestUrlAccessor();
 
     private List<Traveler> travelers = new ArrayList<>();
-    private List<Friendship> friendships = new ArrayList<>();
+    private List<Friendship> friendships = new ArrayList<>(); // todo: optimize: load traveler personaldatas only instead of friendship data
     private PersonalData personalData = new PersonalData();
     private UploadedFile profilePic;
-    private DefaultStreamedContent picture;
 
     public void loadPersonalDataForTraveler() { // add to profilecontroller?
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();   // todo: refactor to a variable
         String name = user.getUsername();
         personalData = restUrlAccessor.loadPersonalataForTraveler(name);
         InputStream stream = new ByteArrayInputStream(personalData.getProfilepic());
-        picture = new DefaultStreamedContent(stream);
+        personalData.setDiplayablePicture(new DefaultStreamedContent(stream));
         //System.out.println(personalData.getUsername());
     }
 
@@ -56,6 +54,13 @@ public class TravelerController {
     public void loadFriendsForTraveler() {  // todo: use traveler type instead of friendship -> fix backend!
         loadPersonalDataForTraveler();      // todo: optimize
         friendships = restUrlAccessor.loadAllFriendsForTraveler(String.valueOf(personalData.getId()));
+
+        for(int i = 0; i < friendships.size(); i++) {
+            InputStream stream = new ByteArrayInputStream(friendships.get(i).getTraveler2().getPersonaldata().getProfilepic());
+            friendships.get(i).getTraveler2().getPersonaldata().setDiplayablePicture(new DefaultStreamedContent(stream));
+            System.out.println("pic: " + friendships.get(i).getTraveler2().getPersonaldata().getProfilepic().length);
+            System.out.println("displayable pic: " + friendships.get(i).getTraveler2().getPersonaldata().getDiplayablePicture().toString());
+        }
     }
 
     public void uploadProfilePic() {
@@ -95,13 +100,5 @@ public class TravelerController {
 
     public void setProfilePic(UploadedFile profilePic) {
         this.profilePic = profilePic;
-    }
-
-    public DefaultStreamedContent getPicture() {
-        return picture;
-    }
-
-    public void setPicture(DefaultStreamedContent picture) {
-        this.picture = picture;
     }
 }

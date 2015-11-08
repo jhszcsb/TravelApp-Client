@@ -1,5 +1,7 @@
 package frontend.domain;
 
+import org.primefaces.model.DefaultStreamedContent;
+
 public class PersonalData {
 
     private int id;
@@ -9,6 +11,8 @@ public class PersonalData {
     private String password;
 
     private byte[] profilepic;
+
+    private DefaultStreamedContent diplayablePicture;
 
     private String firstname;
 
@@ -80,5 +84,13 @@ public class PersonalData {
 
     public void setHometown(String hometown) {
         this.hometown = hometown;
+    }
+
+    public DefaultStreamedContent getDiplayablePicture() {
+        return diplayablePicture;
+    }
+
+    public void setDiplayablePicture(DefaultStreamedContent diplayablePicture) {
+        this.diplayablePicture = diplayablePicture;
     }
 }
