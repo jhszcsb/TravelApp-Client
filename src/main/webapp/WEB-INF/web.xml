@@ -70,6 +70,16 @@
         <url-pattern>*</url-pattern>
     </filter-mapping>
 
+    <!-- This is needed if JSF version is lower than 2.2: -->
+    <filter>
+        <filter-name>primeFacesFileUploadFilter</filter-name>
+        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>primeFacesFileUploadFilter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+
     <!-- Mapping with servlet and url for the http requests. -->
 
     <servlet-mapping>

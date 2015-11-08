@@ -12,6 +12,8 @@ public class Trip {
 
     private Places places;
 
+    private String name;
+
     public int getId() {
         return id;
     }
@@ -50,5 +52,13 @@ public class Trip {
 
     public void setPlaces(Places places) {
         this.places = places;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

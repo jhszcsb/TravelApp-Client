@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import frontend.domain.Friendship;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
@@ -184,6 +185,11 @@ public class RestUrlAccessor {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = null;
 
+        byte[] bytes = personalData.getProfilepic();
+        String base64String = java.util.Base64.getEncoder().encodeToString(bytes);
+        personalData.setProfilepic(null);
+        personalData.setDiplayablePicture(null);
+
         try {
             json = ow.writeValueAsString(personalData);
         } catch (JsonProcessingException e) {
@@ -191,7 +197,9 @@ public class RestUrlAccessor {
         }
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
-            System.out.println(jsonNode);
+            ((ObjectNode)jsonNode).remove("profilepic");
+            ((ObjectNode)jsonNode).put("profilepic", base64String);
+            //System.out.println(jsonNode);
             restTemplate.exchange(URL_TRAVELER + personalData.getId() + "/personaldata", HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class, jsonNode);
         }
     }

@@ -4,6 +4,7 @@ import frontend.RestUrlAccessor;
 import frontend.domain.Friendship;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.stereotype.Controller;
@@ -43,6 +44,9 @@ public class TravelerController {
     }
 
     public void updatePersonalDataForTraveler() { // add to profilecontroller?
+        if(profilePic != null) {
+            personalData.setProfilepic(profilePic.getContents());
+        }
         restUrlAccessor.updatePersonalDataForTraveler(personalData);
         //System.out.println(personalData.getUsername());
     }
@@ -63,11 +67,15 @@ public class TravelerController {
         }
     }
 
-    public void uploadProfilePic() {
-        if(profilePic != null) {
-            FacesMessage message = new FacesMessage("Succesful", profilePic.getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        }
+    public void upload(FileUploadEvent event) {
+    //public void upload() {
+        FacesMessage message = new FacesMessage("INVOKED", "INVOKED");
+        //FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        profilePic = event.getFile();
+        personalData.setProfilepic(profilePic.getContents());
+        System.out.println("Uploaded profile pic: " + profilePic.getContents().length);
+        System.out.println("Profile pic in personaldata: " + personalData.getProfilepic().length);
     }
 
     public List<Traveler> getTravelers() {

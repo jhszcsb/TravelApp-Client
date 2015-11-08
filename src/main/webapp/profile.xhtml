@@ -52,10 +52,9 @@
                         <div />
                         <h:form enctype="multipart/form-data">
                             <p:growl id="messages" showDetail="true"/>
-                            <p:fileUpload value="#{travelerController.profilePic}" mode="simple" skinSimple="true"/>
-                            <p:commandButton value="Upload Profile Picture" ajax="false" mode="advanced"
-                                             actionListener="#{travelerController.uploadProfilePic}"
-                                             disabled="true"/>
+                            <!-- todo: add validations and error messages (size, file type, etc.) -->
+                            <p:fileUpload fileUploadListener="#{travelerController.upload}"
+                                          mode="advanced" skinSimple="true" sizeLimit="65000"/>
                         </h:form>
                     </div>
                 </div>
