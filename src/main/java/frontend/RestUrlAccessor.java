@@ -212,10 +212,8 @@ public class RestUrlAccessor {
 
     public List<Trip> loadAllTripsOfFriendsForTraveler(String name) {
         ResponseEntity<Trip[]> responseData = restTemplate.exchange(BASE_URL + name + "/timeline", HttpMethod.GET, createAuthenticatedRequest(), Trip[].class);
-        System.out.println(responseData.getBody());
-        /*Trip[] tripArray = responseData.getBody();
+        Trip[] tripArray = responseData.getBody();
         List<Trip> trips = Arrays.asList(tripArray);
-        return trips;*/
-        return null;
+        return trips;
     }
 }

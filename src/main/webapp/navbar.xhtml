@@ -25,9 +25,24 @@
                 <ul class="nav navbar-nav">
                     <!-- todo: use different name instead of 'timeline', e.g. 'feed' -->
                     <li class="#{active == 'timeline' ? 'active' : ''}"><a href="main.xhtml">Timeline <span class="sr-only">(current)</span></a></li>
-                    <li class="#{active == 'trips' ? 'active' : ''}"><a href="trips.xhtml">My Trips</a></li>
-                    <li class="#{active == 'profile' ? 'active' : ''}"><a href="profile.xhtml">Profile</a></li>
-                    <li class="#{active == 'friends' ? 'active' : ''}"><a href="friends.xhtml">Friends</a></li>
+                    <li class="#{active == 'trips' ? 'active' : ''}">
+                        <h:commandLink action="#{tripController.loadTripsForTraveler()}" />
+                        <a href="trips.xhtml">
+                            My Trips
+                        </a>
+                    </li>
+                    <li class="#{active == 'profile' ? 'active' : ''}">
+                        <h:commandLink action="#{travelerController.loadPersonalDataForTraveler()}" />
+                        <a href="profile.xhtml">
+                            Profile
+                        </a>
+                    </li>
+                    <li class="#{active == 'friends' ? 'active' : ''}">
+                        <h:commandLink action="#{travelerController.loadFriendsForTraveler()}" />
+                        <a href="friends.xhtml">
+                            Friends
+                        </a>
+                    </li>
                 </ul>
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">

@@ -62,20 +62,18 @@ public class TravelerController {
         for(int i = 0; i < friendships.size(); i++) {
             InputStream stream = new ByteArrayInputStream(friendships.get(i).getTraveler2().getPersonaldata().getProfilepic());
             friendships.get(i).getTraveler2().getPersonaldata().setDiplayablePicture(new DefaultStreamedContent(stream));
-            System.out.println("pic: " + friendships.get(i).getTraveler2().getPersonaldata().getProfilepic().length);
-            System.out.println("displayable pic: " + friendships.get(i).getTraveler2().getPersonaldata().getDiplayablePicture().toString());
+            //System.out.println("pic: " + friendships.get(i).getTraveler2().getPersonaldata().getProfilepic().length);
+            //System.out.println("displayable pic: " + friendships.get(i).getTraveler2().getPersonaldata().getDiplayablePicture().toString());
         }
     }
 
     public void upload(FileUploadEvent event) {
     //public void upload() {
-        FacesMessage message = new FacesMessage("INVOKED", "INVOKED");
+        //FacesMessage message = new FacesMessage("INVOKED", "INVOKED");
         //FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        //FacesContext.getCurrentInstance().addMessage(null, message);
         profilePic = event.getFile();
         personalData.setProfilepic(profilePic.getContents());
-        System.out.println("Uploaded profile pic: " + profilePic.getContents().length);
-        System.out.println("Profile pic in personaldata: " + personalData.getProfilepic().length);
     }
 
     public List<Traveler> getTravelers() {

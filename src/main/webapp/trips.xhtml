@@ -18,10 +18,12 @@
 
     <h:form id="tripsForm">
 
+        <!--
         <h:commandButton value="Load" class="btn btn-default"
                          action="#{tripController.loadTripsForTraveler()}"/>
+                         -->
 
-        <br /><br />
+        <div style="height: 50px;"/>
 
         <h:dataTable value="#{tripController.trips}" var="trip" class="table"
                      rendered="#{!empty tripController.trips}">
