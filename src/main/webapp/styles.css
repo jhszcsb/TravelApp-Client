@@ -4,6 +4,50 @@
     width: 30%;
 }
 
+#vertical-separator {
+	height: 50px;
+}
+
+#profile-form\:update-fields td {
+	padding-right: 10px;
+}
+
+#profile-pic {
+	width: auto;
+	position: absolute;
+	margin-left: 10%;
+	border: 2px solid #777;
+	padding: 20px;
+	border-radius: 30px;
+	border-width: 2px;
+}
+
+#profile-data-container {
+	float:right;
+	margin-right: 30%;
+}
+
+#profile-data {
+	border: medium solid rgb(119, 119, 119);
+	padding: 20px;
+	border-radius: 30px;
+	border-width: 2px;
+}
+
+#profile-form\:update-profile {
+	float: right;
+	margin-top: 10px;
+}
+
+#picture-upload {
+	margin-top: 50px;
+}
+
+#user-name-indicator {
+	padding-top: 15px;
+	padding-right: 15px;
+	color: #777;
+}
 
 .arrow_box {
 	position: relative;

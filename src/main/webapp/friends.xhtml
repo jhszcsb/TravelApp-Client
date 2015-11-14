@@ -16,14 +16,14 @@
         <ui:param name="active" value="friends" />
     </ui:include>
 
-    <h:form id="friendsForm">
+    <h:form id="friends-form">
 
         <!--
         <h:commandButton value="Load" class="btn btn-default"
                          action="#{travelerController.loadFriendsForTraveler()}"/>
                          -->
 
-        <div style="height: 50px;"/>
+        <div id="vertical-separator"/>
 
         <h:outputLabel rendered="#{empty travelerController.friendships}" value="You don't have any friends yet." />
 

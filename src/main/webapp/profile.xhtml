@@ -16,40 +16,38 @@
         <ui:param name="active" value="profile" />
     </ui:include>
 
-    <h:form id="profileForm">
+    <h:form id="profile-form">
 
         <!--
         <h:commandButton value="Load" class="btn btn-default"
                          action="#{travelerController.loadPersonalDataForTraveler()}"/>
                          -->
 
-        <div style="height: 50px;"/>
+        <div id="vertical-separator"/>
 
         <h:panelGroup rendered="#{!empty travelerController.personalData.username}">
-            <div id="profilePic" style="width: auto; position: absolute; margin-left: 10%; border: 2px solid #777;
-                                        padding: 20px; border-radius: 30px; border-width: 2px;">
+            <div id="profile-pic">
                 <p:graphicImage value="#{travelerController.personalData.diplayablePicture}"/>
             </div>
 
-            <div style="float:right; margin-right: 30%;">
-                <div id="profileData" style="border: medium solid rgb(119, 119, 119); padding: 20px;
-                                             border-radius: 30px; border-width: 2px;">
+            <div id="profile-data-container">
+                <div id="profile-data">
                     <div>
                         <h2>#{travelerController.personalData.username}</h2>
                     </div>
-                    <h:panelGrid columns="2">
+                    <h:panelGrid id="update-fields" columns="2">
                         <h:outputLabel value="E-mail: #{travelerController.personalData.email}"/>
-                        <h:inputText value="#{travelerController.personalData.email}"/>
+                        <h:inputText value="#{travelerController.personalData.email}" class="form-control"/>
                         <h:outputLabel value="First Name: #{travelerController.personalData.firstname}"/>
-                        <h:inputText value="#{travelerController.personalData.firstname}"/>
+                        <h:inputText value="#{travelerController.personalData.firstname}" class="form-control"/>
                         <h:outputLabel value="Last Name: #{travelerController.personalData.lastname}"/>
-                        <h:inputText value="#{travelerController.personalData.lastname}"/>
+                        <h:inputText value="#{travelerController.personalData.lastname}" class="form-control"/>
                         <div />
-                        <h:commandButton value="Update" class="btn btn-default" style="float: right; margin-top: 10px;"
+                        <h:commandButton id="update-profile" value="Update" class="btn btn-default"
                                          action="#{travelerController.updatePersonalDataForTraveler()}"/>
                         <div />
                     </h:panelGrid>
-                    <div id="picture-upload" style="margin-top: 50px;">
+                    <div id="picture-upload">
                         <h:outputLabel value="Upload new profile picture"/>
                         <div />
                         <h:form enctype="multipart/form-data">

@@ -16,14 +16,14 @@
         <ui:param name="active" value="trips" />
     </ui:include>
 
-    <h:form id="tripsForm">
+    <h:form id="trips-form">
 
         <!--
         <h:commandButton value="Load" class="btn btn-default"
                          action="#{tripController.loadTripsForTraveler()}"/>
                          -->
 
-        <div style="height: 50px;"/>
+        <div id="vertical-separator"/>
 
         <h:dataTable value="#{tripController.trips}" var="trip" class="table"
                      rendered="#{!empty tripController.trips}">

@@ -47,6 +47,8 @@
     </div>
 
     <!-- todo: use horizontal panels instead of vertical -->
+
+    <!-- todo: refactor css to styles.css, use line separated names -->
     <div style="float:right; margin-right: 20%;" >
         <div id="loginPanel"
              style="border: medium solid rgb(119, 119, 119); padding: 20px; margin-right: 20%;
@@ -61,11 +63,11 @@
                 <table>
                     <tr>
                         <td>User</td>
-                        <td><input type='text' name='j_username' value='' /></td>
+                        <td><input type='text' name='j_username' value='' class="form-control"/></td>
                     </tr>
                     <tr>
                         <td>Password</td>
-                        <td><input type='password' name='j_password' /></td>
+                        <td><input type='password' name='j_password' class="form-control"/></td>
                     </tr>
                     <tr>
                         <td><input name="submit" type="submit" value="Log In" class="btn btn-default" /></td>
