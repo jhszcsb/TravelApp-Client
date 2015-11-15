@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="bootstrap.css" />
+</h:head>
+<h:body>
+
+    <ui:include src="navbar.xhtml">
+        <ui:param name="active" value="friends" />
+    </ui:include>
+
+    <div class="vertical-separator"/>
+
+    <div>
+        <h:form id="friend-profile-form">
+
+            <h:panelGroup rendered="#{!empty friendshipController.selectedFriendProfile.username}">
+                <div id="profile-pic">
+                    <p:graphicImage value="#{friendshipController.selectedFriendProfile.diplayablePicture}"/>
+                </div>
+
+                <div id="profile-data-container">
+                    <div id="profile-data">
+                        <div>
+                            <h2>#{friendshipController.selectedFriendProfile.username}</h2>
+                        </div>
+                        <h:panelGrid id="profile-fields" columns="2">
+                            <h:outputLabel value="E-mail: #{friendshipController.selectedFriendProfile.email}"/>
+                            <div />
+                            <h:outputLabel value="First Name: #{friendshipController.selectedFriendProfile.firstname}"/>
+                            <div />
+                            <h:outputLabel value="Last Name: #{friendshipController.selectedFriendProfile.lastname}"/>
+                            <div />
+                        </h:panelGrid>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </h:form>
+    </div>
+
+    <div class="vertical-separator"/>
+
+    <div>
+        <h:form id="friend-trips-form">
+
+            <h2>Trips</h2>
+
+            <h:dataTable value="#{friendshipController.selectedFriendTrips}" var="trip" class="table"
+                         rendered="#{!empty friendshipController.selectedFriendTrips}">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                    #{trip.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Timeline ID</f:facet>
+                    #{trip.timeline.id}
+                </h:column>
+            </h:dataTable>
+
+        </h:form>
+    </div>
+
+</h:body>
+</html>

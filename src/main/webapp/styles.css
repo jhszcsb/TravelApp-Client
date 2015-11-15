@@ -4,7 +4,7 @@
     width: 30%;
 }
 
-#vertical-separator {
+.vertical-separator {
 	height: 50px;
 }
 
@@ -47,6 +47,10 @@
 	padding-top: 15px;
 	padding-right: 15px;
 	color: #777;
+}
+
+#friend-profile-form {
+	height: 300px;
 }
 
 .arrow_box {

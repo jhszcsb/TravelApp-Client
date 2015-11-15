@@ -72,6 +72,17 @@
                 <f:facet name="header">Hometown</f:facet>
                 #{traveler.personaldata.hometown}
             </h:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <h:commandLink value="Send Friend Request"
+                               action="#{friendshipController.makeFriend(traveler.personaldata.username)}"/>
+                <!-- todo: render only if not the same as the logged in user
+                rendered = traveler.personaldata.username is not currentuser
+                -->
+                 |
+                <h:commandLink value="Profile"
+                               action="#{friendshipController.loadPersonalDataForFriend(traveler.personaldata.username)}" />
+            </h:column>
         </h:dataTable>
 
     </h:form>

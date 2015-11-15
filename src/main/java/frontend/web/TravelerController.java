@@ -38,9 +38,11 @@ public class TravelerController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();   // todo: refactor to a variable
         String name = user.getUsername();
         personalData = restUrlAccessor.loadPersonalataForTraveler(name);
-        InputStream stream = new ByteArrayInputStream(personalData.getProfilepic());
-        personalData.setDiplayablePicture(new DefaultStreamedContent(stream));
-        //System.out.println(personalData.getUsername());
+        byte[] pic = personalData.getProfilepic();
+        if(pic != null) {
+            InputStream stream = new ByteArrayInputStream(pic);
+            personalData.setDiplayablePicture(new DefaultStreamedContent(stream));
+        }
     }
 
     public void updatePersonalDataForTraveler() { // add to profilecontroller?
@@ -60,10 +62,11 @@ public class TravelerController {
         friendships = restUrlAccessor.loadAllFriendsForTraveler(String.valueOf(personalData.getId()));
 
         for(int i = 0; i < friendships.size(); i++) {
-            InputStream stream = new ByteArrayInputStream(friendships.get(i).getTraveler2().getPersonaldata().getProfilepic());
-            friendships.get(i).getTraveler2().getPersonaldata().setDiplayablePicture(new DefaultStreamedContent(stream));
-            //System.out.println("pic: " + friendships.get(i).getTraveler2().getPersonaldata().getProfilepic().length);
-            //System.out.println("displayable pic: " + friendships.get(i).getTraveler2().getPersonaldata().getDiplayablePicture().toString());
+            byte[] pic = friendships.get(i).getTraveler2().getPersonaldata().getProfilepic();
+            if(pic != null) {
+                InputStream stream = new ByteArrayInputStream(pic);
+                friendships.get(i).getTraveler2().getPersonaldata().setDiplayablePicture(new DefaultStreamedContent(stream));
+            }
         }
     }
 

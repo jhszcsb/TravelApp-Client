@@ -23,7 +23,7 @@
                          action="#{travelerController.loadFriendsForTraveler()}"/>
                          -->
 
-        <div id="vertical-separator"/>
+        <div class="vertical-separator"/>
 
         <h:outputLabel rendered="#{empty travelerController.friendships}" value="You don't have any friends yet." />
 
@@ -31,7 +31,9 @@
                      rendered="#{!empty travelerController.friendships}">
             <h:column>
 
-                #{friendship.traveler2.personaldata.username}
+                <h:commandLink
+                        action="#{friendshipController.loadPersonalDataForFriend(friendship.traveler2.personaldata.username)}"
+                        value="#{friendship.traveler2.personaldata.username}" />
 
                 <p:graphicImage value="#{friendship.traveler2.personaldata.diplayablePicture}" />
             </h:column>

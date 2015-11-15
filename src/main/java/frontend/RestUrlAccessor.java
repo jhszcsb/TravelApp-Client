@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import frontend.domain.Friendship;
-import frontend.domain.PersonalData;
-import frontend.domain.Traveler;
-import frontend.domain.Trip;
+import frontend.domain.*;
 import frontend.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -215,5 +212,21 @@ public class RestUrlAccessor {
         Trip[] tripArray = responseData.getBody();
         List<Trip> trips = Arrays.asList(tripArray);
         return trips;
+    }
+
+    public void createFriendship(String traveler1_name, String traveler2_name) {
+        FriendRequest friendRequest = new FriendRequest(traveler1_name, traveler2_name);
+        // todo: error handling (null)
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = null;
+        try {
+            json = ow.writeValueAsString(friendRequest);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        if(json != null) {
+            JsonNode jsonNode = prepareJsonObject(json);
+            restTemplate.exchange(BASE_URL + "/friendships", HttpMethod.POST, createAuthenticatedRequestWithData(jsonNode), Object.class);
+        }
     }
 }
