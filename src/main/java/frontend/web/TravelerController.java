@@ -6,6 +6,7 @@ import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.stereotype.Controller;
 
@@ -17,7 +18,6 @@ import java.util.List;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -65,9 +65,23 @@ public class TravelerController {
             byte[] pic = friendships.get(i).getTraveler2().getPersonaldata().getProfilepic();
             if(pic != null) {
                 InputStream stream = new ByteArrayInputStream(pic);
-                friendships.get(i).getTraveler2().getPersonaldata().setDiplayablePicture(new DefaultStreamedContent(stream));
+                PersonalData traveler2 = friendships.get(i).getTraveler2().getPersonaldata();
+                traveler2.setDiplayablePicture(new DefaultStreamedContent(stream));
             }
         }
+    }
+
+    public StreamedContent getDynamicTravelerImage() {
+        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("picture_id");
+        if(id!=null && this.friendships!=null && !this.friendships.isEmpty()){
+            Integer pictureId = Integer.parseInt(id);
+            for(Friendship friendshipTemp : this.friendships){
+                if(friendshipTemp.getTraveler2().getId() == pictureId){
+                    return friendshipTemp.getTraveler2().getPersonaldata().getDiplayablePicture();
+                }
+            }
+        }
+        return new DefaultStreamedContent();
     }
 
     public void upload(FileUploadEvent event) {
