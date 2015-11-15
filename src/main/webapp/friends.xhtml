@@ -29,41 +29,25 @@
 
         <h:outputLabel rendered="#{empty travelerController.friendships}" value="You don't have any friends yet." />
 
-        <h:dataTable value="#{travelerController.friendships}" var="friendship" class="table"
+        <h2>Friends</h2>
+        <h:dataTable id="friends-table" value="#{travelerController.friendships}" var="friendship" class="table"
                      rendered="#{!empty travelerController.friendships}">
             <h:column>
-                <h:commandLink
-                        action="#{friendshipController.loadPersonalDataForFriend(friendship.traveler2.personaldata.username)}"
-                        value="#{friendship.traveler2.personaldata.username}" />
                 <div>
+                    <h:commandLink
+                            action="#{friendshipController.loadPersonalDataForFriend(friendship.traveler2.personaldata.username)}"
+                            value="#{friendship.traveler2.personaldata.username}">
+                    </h:commandLink>
+                </div>
+                <h:commandLink action="#{friendshipController.loadPersonalDataForFriend(friendship.traveler2.personaldata.username)}">
                     <p:graphicImage value="#{travelerController.dynamicTravelerImage}" >
                         <f:param name="picture_id" value="#{friendship.traveler2.id}"/>
                     </p:graphicImage>
-                </div>
+                </h:commandLink>
             </h:column>
             <!--<h:column>
                 <f:facet name="header">ID</f:facet>
                 #{friendship.traveler2.id}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Username</f:facet>
-                #{friendship.traveler2.personaldata.username}
-            </h:column>
-            <h:column>
-                <f:facet name="header">E-mail</f:facet>
-                #{friendship.traveler2.personaldata.email}
-            </h:column>
-            <h:column>
-                <f:facet name="header">First Name</f:facet>
-                #{friendship.traveler2.personaldata.firstname}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Last Name</f:facet>
-                #{friendship.traveler2.personaldata.lastname}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Hometown</f:facet>
-                #{friendship.traveler2.personaldata.hometown}
             </h:column>-->
         </h:dataTable>
 
