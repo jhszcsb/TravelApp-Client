@@ -27,7 +27,8 @@
 
         <h:panelGroup rendered="#{!empty travelerController.personalData.username}">
             <div id="profile-pic">
-                <p:graphicImage value="#{travelerController.personalData.diplayablePicture}"/>
+                <p:graphicImage value="#{travelerController.personalData.diplayablePicture}"
+                                width="200" />
             </div>
 
             <div id="profile-data-container">
@@ -53,7 +54,8 @@
                         <h:form enctype="multipart/form-data">
                             <!-- todo: add validations and error messages (size, file type, etc.) -->
                             <p:fileUpload fileUploadListener="#{travelerController.upload}"
-                                          mode="advanced" skinSimple="true" sizeLimit="65000"/>
+                                          mode="advanced" skinSimple="true" sizeLimit="3145728"/>
+                            <!-- size limit: 3MB -->
                         </h:form>
                     </div>
                 </div>

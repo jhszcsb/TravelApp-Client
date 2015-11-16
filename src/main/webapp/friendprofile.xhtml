@@ -22,11 +22,13 @@
         <h:form id="friend-profile-form">
 
             <h:commandLink value="Send Friend Request"
-                           action="#{friendshipController.makeFriend(friendshipController.selectedFriendProfile.username)}" />
+                           action="#{friendshipController.makeFriend(friendshipController.selectedFriendProfile.username)}"
+                           rendered="#{!travelerController.isFriend(friendshipController.selectedFriendProfile.username)}" />
 
             <h:panelGroup rendered="#{!empty friendshipController.selectedFriendProfile.username}">
                 <div id="profile-pic">
-                    <p:graphicImage value="#{friendshipController.selectedFriendProfile.diplayablePicture}"/>
+                    <p:graphicImage value="#{friendshipController.selectedFriendProfile.diplayablePicture}"
+                                    width="200" />
                 </div>
 
                 <div id="profile-data-container">

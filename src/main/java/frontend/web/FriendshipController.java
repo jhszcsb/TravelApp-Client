@@ -43,9 +43,7 @@ public class FriendshipController {
     public void makeFriend(String name) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();   // todo: refactor to a spring bean
         String loggedInUserName = user.getUsername();
-        String traveler1_name = loggedInUserName;
-        String traveler2_name = name;
-        restUrlAccessor.createFriendship(traveler1_name, traveler2_name);
+        restUrlAccessor.createFriendship(loggedInUserName, name);
     }
 
     public PersonalData getSelectedFriendProfile() {

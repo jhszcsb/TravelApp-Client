@@ -40,7 +40,8 @@
                     </h:commandLink>
                 </div>
                 <h:commandLink action="#{friendshipController.loadPersonalDataForFriend(friendship.traveler2.personaldata.username)}">
-                    <p:graphicImage value="#{travelerController.dynamicTravelerImage}" >
+                    <p:graphicImage value="#{travelerController.dynamicTravelerImage}"
+                                    width="100" >
                         <f:param name="picture_id" value="#{friendship.traveler2.id}"/>
                     </p:graphicImage>
                 </h:commandLink>

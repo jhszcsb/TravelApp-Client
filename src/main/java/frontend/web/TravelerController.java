@@ -71,6 +71,19 @@ public class TravelerController {
         }
     }
 
+    public boolean isFriend(String name) {    // todo cache this or add to a viewscope constant
+        if(friendships.isEmpty()) {
+            loadFriendsForTraveler();
+        }
+        boolean isFriend = false;
+        for(Friendship f : friendships) {   // todo: check java8 stream
+            if(name.equals(f.getTraveler2().getPersonaldata().getUsername())) {
+                isFriend = true;
+            }
+        }
+        return isFriend;
+    }
+
     public StreamedContent getDynamicTravelerImage() {
         String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("picture_id");
         if(id!=null && this.friendships!=null && !this.friendships.isEmpty()){

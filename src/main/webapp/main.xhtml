@@ -74,12 +74,12 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Action</f:facet>
-                <h:commandLink value="Send Friend Request"
-                               action="#{friendshipController.makeFriend(traveler.personaldata.username)}"/>
+                <h:commandLink value="Send Friend Request | "
+                               action="#{friendshipController.makeFriend(traveler.personaldata.username)}"
+                               rendered="#{!travelerController.isFriend(traveler.personaldata.username)}" />
                 <!-- todo: render only if not the same as the logged in user
                 rendered = traveler.personaldata.username is not currentuser
                 -->
-                 |
                 <h:commandLink value="Profile"
                                action="#{friendshipController.loadPersonalDataForFriend(traveler.personaldata.username)}" />
             </h:column>
