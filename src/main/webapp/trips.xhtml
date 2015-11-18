@@ -28,12 +28,16 @@
         <h:dataTable value="#{tripController.trips}" var="trip" class="table"
                      rendered="#{!empty tripController.trips}">
             <h:column>
-                <f:facet name="header">ID</f:facet>
-                #{trip.id}
+                <f:facet name="header">Name</f:facet>
+                #{trip.name}
             </h:column>
             <h:column>
                 <f:facet name="header">Timeline ID</f:facet>
                 #{trip.timeline.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <h:commandLink action="#{tripController.loadTrip(trip)}" value="Select"/>
             </h:column>
         </h:dataTable>
 

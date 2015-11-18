@@ -21,7 +21,7 @@
         <!-- TODO: add other version numbers here -->
         <spring.version>4.2.1.RELEASE</spring.version>
         <spring.security.version>4.0.2.RELEASE</spring.security.version>
-        <jsf.version>2.1.7</jsf.version>
+        <jsf.version>2.2.12</jsf.version>
     </properties>
 
     <dependencies>

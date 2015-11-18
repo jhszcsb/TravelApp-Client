@@ -20,8 +20,8 @@ public class TripController {
     RestUrlAccessor restUrlAccessor = new RestUrlAccessor();
 
     private List<Trip> trips = new ArrayList<>();
-
     private List<Trip> tripsOfFriends = new ArrayList<>();
+    private Trip selectedTrip;
 
     public void loadTripsForTraveler() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();   // todo: refactor to a variable
@@ -35,6 +35,11 @@ public class TripController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();   // todo: refactor to a variable
         String name = user.getUsername();
         tripsOfFriends = restUrlAccessor.loadAllTripsOfFriendsForTraveler(name);
+    }
+
+    public String loadTrip(Trip trip) {
+        selectedTrip = trip;
+        return "tripprofile";
     }
 
     public List<Trip> getTrips() {
@@ -51,5 +56,13 @@ public class TripController {
 
     public void setTripsOfFriends(List<Trip> tripsOfFriends) {
         this.tripsOfFriends = tripsOfFriends;
+    }
+
+    public Trip getSelectedTrip() {
+        return selectedTrip;
+    }
+
+    public void setSelectedTrip(Trip selectedTrip) {
+        this.selectedTrip = selectedTrip;
     }
 }

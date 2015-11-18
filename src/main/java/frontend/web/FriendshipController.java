@@ -9,7 +9,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
@@ -44,6 +46,9 @@ public class FriendshipController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();   // todo: refactor to a spring bean
         String loggedInUserName = user.getUsername();
         restUrlAccessor.createFriendship(loggedInUserName, name);
+        FacesMessage message = new FacesMessage("Friend added!");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, message);
     }
 
     public PersonalData getSelectedFriendProfile() {
