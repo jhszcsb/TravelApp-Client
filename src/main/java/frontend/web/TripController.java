@@ -4,20 +4,23 @@ import frontend.RestUrlAccessor;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
 import frontend.domain.Trip;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 
+import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@Scope("request")
+@ViewScoped
+//@Scope("request")
 public class TripController {
 
-    //@Autowired    //todo: add dependency injection
-    RestUrlAccessor restUrlAccessor = new RestUrlAccessor();
+    @Autowired
+    RestUrlAccessor restUrlAccessor;
 
     private List<Trip> trips = new ArrayList<>();
     private List<Trip> tripsOfFriends = new ArrayList<>();

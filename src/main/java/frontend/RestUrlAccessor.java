@@ -36,7 +36,7 @@ public class RestUrlAccessor {
     @Autowired
     PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
 
-    //@Autowired
+    //@Autowired    // todo: fix this injection
     RestTemplate restTemplate = new RestTemplate();
 
     public User loadUserByUsername(String username) {

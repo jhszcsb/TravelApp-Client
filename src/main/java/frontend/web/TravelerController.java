@@ -8,6 +8,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.ByteArrayInputStream;
@@ -26,8 +27,8 @@ import javax.faces.context.FacesContext;
 //@Scope("view")
 public class TravelerController {
 
-    //@Autowired    //todo: add dependency injection
-    RestUrlAccessor restUrlAccessor = new RestUrlAccessor();
+    @Autowired
+    RestUrlAccessor restUrlAccessor;
 
     private List<Traveler> travelers = new ArrayList<>();
     private List<Friendship> friendships = new ArrayList<>(); // todo: optimize: load traveler personaldatas only instead of friendship data

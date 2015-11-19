@@ -5,6 +5,7 @@ import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
 import frontend.domain.Trip;
 import org.primefaces.model.DefaultStreamedContent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,8 @@ import java.util.List;
 @ViewScoped
 public class FriendshipController {
 
-    //@Autowired    //todo: add dependency injection
-    RestUrlAccessor restUrlAccessor = new RestUrlAccessor();
+    @Autowired
+    RestUrlAccessor restUrlAccessor;
 
     private PersonalData selectedFriendProfile;
     private List<Trip> selectedFriendTrips;

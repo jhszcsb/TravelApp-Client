@@ -3,6 +3,7 @@ package frontend.web;
 import frontend.RestUrlAccessor;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -24,6 +25,9 @@ public class LoginController {
     private String registerFirstname;
     private String registerLastname;
 
+    @Autowired
+    RestUrlAccessor restUrlAccessor;
+
     public String getCurrentUserName() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String name = user.getUsername();
@@ -32,7 +36,6 @@ public class LoginController {
     }
 
     public String register() {    // todo: use spring ModelAndView?
-        RestUrlAccessor accessor = new RestUrlAccessor();
         // todo: check for duplicate users
         Traveler newTraveler = new Traveler();
         PersonalData personalData = new PersonalData();
@@ -43,7 +46,7 @@ public class LoginController {
         personalData.setLastname(registerLastname);
         personalData.setHometown("dummy");  // todo: use geolocation
         newTraveler.setPersonaldata(personalData);
-        accessor.registerTraveler(newTraveler);
+        restUrlAccessor.registerTraveler(newTraveler);
         // TODO: add error message if registration is not successful (error from backend)
         FacesMessage message = new FacesMessage("Successful registration!");
         FacesContext context = FacesContext.getCurrentInstance();
