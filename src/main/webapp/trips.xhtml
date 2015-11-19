@@ -25,7 +25,7 @@
 
         <div class="vertical-separator"/>
 
-        <h:dataTable value="#{tripController.trips}" var="trip" class="table"
+        <h:dataTable id="my-trips-table" value="#{tripController.trips}" var="trip" class="table"
                      rendered="#{!empty tripController.trips}">
             <h:column>
                 <f:facet name="header">Name</f:facet>

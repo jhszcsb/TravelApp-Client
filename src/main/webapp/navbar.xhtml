@@ -32,23 +32,13 @@
                             </a>
                         </li>
                         <li class="#{active == 'trips' ? 'active' : ''}">
-                            <h:commandLink action="#{tripController.loadTripsForTraveler()}" />
-                            <a href="trips.xhtml">
-                                My Trips
-                            </a>
-                            <!-- TODO: fix this: commandLink makes it look bad. add display:none to <a> in css -->
+                            <h:commandLink action="#{tripController.loadTripsForTraveler()}" value="My Trips" />
                         </li>
                         <li class="#{active == 'profile' ? 'active' : ''}">
-                            <h:commandLink action="#{travelerController.loadPersonalDataForTraveler()}" />
-                            <a href="profile.xhtml">
-                                Profile
-                            </a>
+                            <h:commandLink action="#{travelerController.loadPersonalDataForTraveler()}" value="Profile" />
                         </li>
                         <li class="#{active == 'friends' ? 'active' : ''}">
-                            <h:commandLink action="#{travelerController.loadFriendsForTraveler()}" />
-                            <a href="friends.xhtml">
-                                Friends
-                            </a>
+                            <h:commandLink action="#{travelerController.loadFriendsForTraveler()}" value="Friends" />
                         </li>
                     </ul>
                     <!--    todo: temporarily commented out

@@ -23,12 +23,13 @@ public class TripController {
     private List<Trip> tripsOfFriends = new ArrayList<>();
     private Trip selectedTrip;
 
-    public void loadTripsForTraveler() {
+    public String loadTripsForTraveler() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();   // todo: refactor to a variable
         String name = user.getUsername();
         PersonalData personalData = restUrlAccessor.loadPersonalataForTraveler(name);   // todo: optimize (move all queries to backend)
         Traveler traveler = restUrlAccessor.getTravelerByPersonalDataId(personalData.getId());
         trips = restUrlAccessor.loadAllTripsForTraveler(String.valueOf(traveler.getId()));
+        return "trips";
     }
 
     public void loadAllTripsOfFriends() {

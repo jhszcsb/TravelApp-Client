@@ -36,16 +36,32 @@
                     <div>
                         <h2>#{travelerController.personalData.username}</h2>
                     </div>
+                    <div style="float:right;">
+                        <h:commandButton value="Edit" action="#{travelerController.setEditingMode(true)}"
+                                         rendered="#{!travelerController.isEditingMode()}" class="btn btn-default" />
+                    </div>
                     <h:panelGrid id="update-fields" columns="2">
-                        <h:outputLabel value="E-mail: #{travelerController.personalData.email}"/>
-                        <h:inputText value="#{travelerController.personalData.email}" class="form-control"/>
-                        <h:outputLabel value="First Name: #{travelerController.personalData.firstname}"/>
-                        <h:inputText value="#{travelerController.personalData.firstname}" class="form-control"/>
-                        <h:outputLabel value="Last Name: #{travelerController.personalData.lastname}"/>
-                        <h:inputText value="#{travelerController.personalData.lastname}" class="form-control"/>
+                        <h:outputLabel value="E-mail: " />
+                        <h:outputLabel value="#{travelerController.personalData.email}"
+                                       rendered="#{!travelerController.isEditingMode()}"/>
+                        <h:inputText value="#{travelerController.personalData.email}" class="form-control"
+                                     rendered="#{travelerController.isEditingMode()}" />
+
+                        <h:outputLabel value="First Name: "/>
+                        <h:outputLabel value="#{travelerController.personalData.firstname}"
+                                       rendered="#{!travelerController.isEditingMode()}"/>
+                        <h:inputText value="#{travelerController.personalData.firstname}" class="form-control"
+                                     rendered="#{travelerController.isEditingMode()}" />
+
+                        <h:outputLabel value="Last Name: "/>
+                        <h:outputLabel value="#{travelerController.personalData.lastname}"
+                                       rendered="#{!travelerController.isEditingMode()}"/>
+                        <h:inputText value="#{travelerController.personalData.lastname}" class="form-control"
+                                     rendered="#{travelerController.isEditingMode()}" />
                         <div />
                         <h:commandButton id="update-profile" value="Update" class="btn btn-default"
-                                         action="#{travelerController.updatePersonalDataForTraveler()}"/>
+                                         action="#{travelerController.updatePersonalDataForTraveler()}"
+                                         rendered="#{travelerController.isEditingMode()}" />
                         <div />
                     </h:panelGrid>
                     <div id="picture-upload">

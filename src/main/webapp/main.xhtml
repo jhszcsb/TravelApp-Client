@@ -24,7 +24,7 @@
 
         <br /><br />
 
-        <h:dataTable value="#{tripController.tripsOfFriends}" var="trip" class="table"
+        <h:dataTable id="trips-of-friends-table" value="#{tripController.tripsOfFriends}" var="trip" class="table"
                      rendered="#{!empty tripController.tripsOfFriends}">
             <h:column>
                 <f:facet name="header">ID</f:facet>
@@ -48,7 +48,7 @@
 
         <br /><br />
 
-        <h:dataTable value="#{travelerController.travelers}" var="traveler" class="table"
+        <h:dataTable id="travelers-table" value="#{travelerController.travelers}" var="traveler" class="table"
                     rendered="#{!empty travelerController.travelers}">
             <h:column>
                 <f:facet name="header">ID</f:facet>

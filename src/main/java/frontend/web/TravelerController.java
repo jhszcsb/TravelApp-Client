@@ -33,8 +33,9 @@ public class TravelerController {
     private List<Friendship> friendships = new ArrayList<>(); // todo: optimize: load traveler personaldatas only instead of friendship data
     private PersonalData personalData = new PersonalData();
     private UploadedFile profilePic;
+    private boolean editingMode = false;
 
-    public void loadPersonalDataForTraveler() { // add to profilecontroller?
+    public String loadPersonalDataForTraveler() { // add to profilecontroller?
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();   // todo: refactor to a variable
         String name = user.getUsername();
         personalData = restUrlAccessor.loadPersonalataForTraveler(name);
@@ -43,6 +44,7 @@ public class TravelerController {
             InputStream stream = new ByteArrayInputStream(pic);
             personalData.setDiplayablePicture(new DefaultStreamedContent(stream));
         }
+        return "profile";
     }
 
     public void updatePersonalDataForTraveler() { // add to profilecontroller?
@@ -50,14 +52,14 @@ public class TravelerController {
             personalData.setProfilepic(profilePic.getContents());
         }
         restUrlAccessor.updatePersonalDataForTraveler(personalData);
-        //System.out.println(personalData.getUsername());
+        setEditingMode(false);
     }
 
     public void loadAllTravelers() {
         travelers = restUrlAccessor.loadAllTravelers();
     }
 
-    public void loadFriendsForTraveler() {  // todo: use traveler type instead of friendship -> fix backend!
+    public String loadFriendsForTraveler() {  // todo: use traveler type instead of friendship -> fix backend!
         loadPersonalDataForTraveler();      // todo: optimize
         friendships = restUrlAccessor.loadAllFriendsForTraveler(String.valueOf(personalData.getId()));
 
@@ -69,6 +71,7 @@ public class TravelerController {
                 traveler2.setDiplayablePicture(new DefaultStreamedContent(stream));
             }
         }
+        return "friends";
     }
 
     public boolean isFriend(String name) {    // todo cache this or add to a viewscope constant
@@ -136,5 +139,13 @@ public class TravelerController {
 
     public void setProfilePic(UploadedFile profilePic) {
         this.profilePic = profilePic;
+    }
+
+    public boolean isEditingMode() {
+        return editingMode;
+    }
+
+    public void setEditingMode(boolean editingMode) {
+        this.editingMode = editingMode;
     }
 }

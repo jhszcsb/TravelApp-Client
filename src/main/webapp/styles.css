@@ -60,6 +60,17 @@
 	font-size: 1.5em;
 }
 
+#timeline-form\:trips-of-friends-table,
+#trips-form\:my-trips-table {
+	width: 400px;
+    margin-left: 100px;
+}
+
+#traveler-form\:travelers-table {
+	width: 1000px;
+    margin-left: 100px;
+}
+
 .arrow_box {
 	position: relative;
 	background: #88b7d5;
