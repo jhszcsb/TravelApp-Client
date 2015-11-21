@@ -211,7 +211,7 @@ public class RestUrlAccessor {
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
             ((ObjectNode)jsonNode).remove("profilepic");
-            ((ObjectNode)jsonNode).put("profilepic", base64String);
+            ((ObjectNode)jsonNode).put("profilepic", base64String); // encode picture for json
             //System.out.println(jsonNode);
             restTemplate.exchange(URL_TRAVELER + personalData.getId() + "/personaldata", HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class, jsonNode);
         }
@@ -260,7 +260,7 @@ public class RestUrlAccessor {
         }
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
-            System.out.println(jsonNode.asText());
+            ((ObjectNode)jsonNode).remove("traveler");  // traveler node is no needed
             restTemplate.exchange(BASE_URL + "/trips", HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class);
         }
     }

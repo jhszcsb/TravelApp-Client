@@ -28,25 +28,24 @@ public class TripController {
     private boolean editingMode = false;
 
     public String loadTripsForTraveler() {
-        Traveler traveler = currentUserService.getTraveler();
-        trips = restUrlAccessor.loadAllTripsForTraveler(String.valueOf(traveler.getId()));
+        trips = restUrlAccessor.loadAllTripsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
         return "trips";
     }
 
     public void loadAllTripsOfFriends() {
-        String name = currentUserService.getName();
-        tripsOfFriends = restUrlAccessor.loadAllTripsOfFriendsForTraveler(name);
+        tripsOfFriends = restUrlAccessor.loadAllTripsOfFriendsForTraveler(currentUserService.getName());
     }
 
     public String loadTrip(Trip trip) {
+        setEditingMode(false);
         selectedTrip = trip;
         return "tripprofile";
     }
 
-    public void createNew() {
-        Traveler traveler = currentUserService.getTraveler();
-        Trip trip = restUrlAccessor.createTrip(traveler.getId());
-        loadTrip(trip);
+    public String createNew() {
+        Trip trip = restUrlAccessor.createTrip(currentUserService.getTraveler().getId());
+        setEditingMode(true);
+        return loadTrip(trip);
     }
 
     public void updateSelectedTrip() {
