@@ -264,4 +264,23 @@ public class RestUrlAccessor {
             restTemplate.exchange(BASE_URL + "/trips", HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class);
         }
     }
+
+    public void deleteTrip(int selectedTripId) {
+        restTemplate.exchange(BASE_URL + "/trips/" + selectedTripId, HttpMethod.DELETE, createAuthenticatedRequest(), Object.class);
+    }
+
+    public void addPlaceForTrip(Places newPlace, int tripId) {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = null;
+        try {
+            json = ow.writeValueAsString(newPlace);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        if(json != null) {
+            JsonNode jsonNode = prepareJsonObject(json);
+            restTemplate.exchange(BASE_URL + "/trips/" + tripId + "/places", HttpMethod.POST,
+                    createAuthenticatedRequestWithData(jsonNode), Object.class);
+        }
+    }
 }

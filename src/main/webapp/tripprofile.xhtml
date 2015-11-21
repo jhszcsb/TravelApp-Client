@@ -20,7 +20,9 @@
 
         <h2>#{tripController.selectedTrip.name}</h2>
 
-        <h:commandButton value="Edit" action="#{tripController.setEditingMode(true)}"
+        <h:commandButton id="delete-button" value="Delete" action="#{tripController.deleteSelectedTrip()}"
+                         rendered="#{!tripController.isEditingMode()}" class="btn btn-default" />
+        <h:commandButton id="edit-button" value="Edit" action="#{tripController.setEditingMode(true)}"
                          rendered="#{!tripController.isEditingMode()}" class="btn btn-default" />
         <h:panelGrid id="update-fields" columns="2">
             <h:outputLabel value="Trip Name: " />
@@ -29,12 +31,40 @@
             <h:inputText value="#{tripController.selectedTrip.name}" class="form-control"
                          rendered="#{tripController.isEditingMode()}" />
 
-            <h:commandButton value="Cancel" action="#{tripController.setEditingMode(false)}"
+            <h:commandButton id="cancel-button" value="Cancel" action="#{tripController.setEditingMode(false)}"
                              rendered="#{tripController.isEditingMode()}" class="btn btn-default" />
-            <h:commandButton id="update-trip" value="Update" class="btn btn-default"
+            <h:commandButton id="update-button" value="Update" class="btn btn-default"
                              action="#{tripController.updateSelectedTrip()}"
                              rendered="#{tripController.isEditingMode()}" />
             <div />
+        </h:panelGrid>
+
+        <div>
+            <div class="vertical-separator"/>
+            <h:outputLabel value="Place Name: " />
+            <h:inputText value="#{tripController.newPlace.name}" class="form-control"
+                         rendered="#{tripController.isEditingMode()}" />
+            <h:outputLabel value="Place Description: " />
+            <h:inputText value="#{tripController.newPlace.description}" class="form-control"
+                         rendered="#{tripController.isEditingMode()}" />
+
+            <h:commandButton id="add-place-button" value="Add Place" action="#{tripController.addPlace()}"
+                             rendered="#{tripController.isEditingMode()}" class="btn btn-default" />
+
+        </div>
+
+        <h:panelGrid rendered="#{tripController.isEditingMode()}" >
+            <div id="picture-upload">
+                <h:outputLabel value="Upload pictures"/>
+                <div />
+                <h:form enctype="multipart/form-data">
+                    <!-- todo: add validations and error messages (size, file type, etc.) -->
+                    <p:fileUpload fileUploadListener="#{tripController.upload}"
+                                  mode="advanced" skinSimple="true" sizeLimit="3145728" multiple="true"
+                                  fileLimit="5" dragDropSupport="false" />
+                    <!-- size limit: 3MB -->
+                </h:form>
+            </div>
         </h:panelGrid>
 
 

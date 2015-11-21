@@ -66,6 +66,23 @@
     margin-left: 100px;
 }
 
+#trip-profile-form\:edit-button,
+#trip-profile-form\:delete-button,
+#trip-profile-form\:cancel-button,
+#trip-profile-form\:update-button {
+    float: right;
+}
+
+#trip-profile-form\:delete-button {
+    margin-left: 30px;
+}
+
+
+
+
+
+
+
 #traveler-form\:travelers-table {
 	width: 1000px;
     margin-left: 100px;

@@ -27,6 +27,8 @@
 
         <h:commandButton value="Create New Trip" action="#{tripController.createNew()}" class="btn btn-default" />
 
+        <div class="vertical-separator"/>
+
         <h:dataTable id="my-trips-table" value="#{tripController.trips}" var="trip" class="table"
                      rendered="#{!empty tripController.trips}">
             <h:column>
