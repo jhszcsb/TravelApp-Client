@@ -28,11 +28,11 @@ public class LoginController {
     @Autowired
     RestUrlAccessor restUrlAccessor;
 
+    @Autowired
+    CurrentUserService currentUserService;
+
     public String getCurrentUserName() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String name = user.getUsername();
-        return name;
-        //return "ASD";
+        return currentUserService.getName();
     }
 
     public String register() {    // todo: use spring ModelAndView?

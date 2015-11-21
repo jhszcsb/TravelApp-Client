@@ -24,11 +24,14 @@ public class FriendshipController {
     @Autowired
     RestUrlAccessor restUrlAccessor;
 
+    @Autowired
+    CurrentUserService currentUserService;
+
     private PersonalData selectedFriendProfile;
     private List<Trip> selectedFriendTrips;
 
     public String loadPersonalDataForFriend(String name) {
-        selectedFriendProfile = restUrlAccessor.loadPersonalataForTraveler(name);
+        selectedFriendProfile = restUrlAccessor.loadPersonalDataForTraveler(name);
         byte[] pic = selectedFriendProfile.getProfilepic();
         if(pic != null) {
             InputStream stream = new ByteArrayInputStream(pic);
@@ -44,8 +47,7 @@ public class FriendshipController {
     }
 
     public void makeFriend(String name) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();   // todo: refactor to a spring bean
-        String loggedInUserName = user.getUsername();
+        String loggedInUserName = currentUserService.getName();
         restUrlAccessor.createFriendship(loggedInUserName, name);
         FacesMessage message = new FacesMessage("Friend added!");
         FacesContext context = FacesContext.getCurrentInstance();

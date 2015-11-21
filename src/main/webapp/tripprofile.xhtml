@@ -20,6 +20,21 @@
 
         Trip: #{tripController.selectedTrip.name}
 
+        <h:commandButton value="Edit" action="#{tripController.setEditingMode(true)}"
+                         rendered="#{!tripController.isEditingMode()}" class="btn btn-default" />
+        <h:panelGrid id="update-fields" columns="2">
+            <h:outputLabel value="Trip Name: " />
+            <h:outputLabel value="#{tripController.selectedTrip.name}"
+                           rendered="#{!travelerController.isEditingMode()}"/>
+            <h:inputText value="#{tripController.selectedTrip.name}" class="form-control"
+                         rendered="#{tripController.isEditingMode()}" />
+
+            <div />
+            <h:commandButton id="update-trip" value="Update" class="btn btn-default"
+                             action="#{tripController.updateSelectedTrip()}"
+                             rendered="#{tripController.isEditingMode()}" />
+            <div />
+        </h:panelGrid>
 
 
     </h:form>

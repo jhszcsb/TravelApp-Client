@@ -1,6 +1,7 @@
 package frontend.security;
 
 import frontend.RestUrlAccessor;
+import frontend.web.CurrentUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,8 +20,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     RestUrlAccessor restUrlAccessor;
 
+    @Autowired
+    CurrentUserService currentUserService;
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        currentUserService.clearData(); // todo: invoke this on logout
         boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;

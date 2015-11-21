@@ -30,6 +30,9 @@ public class TravelerController {
     @Autowired
     RestUrlAccessor restUrlAccessor;
 
+    @Autowired
+    CurrentUserService currentUserService;
+
     private List<Traveler> travelers = new ArrayList<>();
     private List<Friendship> friendships = new ArrayList<>(); // todo: optimize: load traveler personaldatas only instead of friendship data
     private PersonalData personalData = new PersonalData();
@@ -37,9 +40,7 @@ public class TravelerController {
     private boolean editingMode = false;
 
     public String loadPersonalDataForTraveler() { // add to profilecontroller?
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();   // todo: refactor to a variable
-        String name = user.getUsername();
-        personalData = restUrlAccessor.loadPersonalataForTraveler(name);
+        personalData = currentUserService.getPersonalData();
         byte[] pic = personalData.getProfilepic();
         if(pic != null) {
             InputStream stream = new ByteArrayInputStream(pic);

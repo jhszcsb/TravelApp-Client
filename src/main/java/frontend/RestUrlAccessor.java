@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import frontend.domain.*;
 import frontend.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -171,11 +174,24 @@ public class RestUrlAccessor {
         return request;
     }
 
-    public PersonalData loadPersonalataForTraveler(String name) {
+    public PersonalData loadPersonalDataForTraveler(String name) {
         ResponseEntity<PersonalData> responseData = restTemplate.exchange(URL_TRAVELER + name + "/personaldata", HttpMethod.GET, createAuthenticatedRequest(), PersonalData.class);
         PersonalData personalData = responseData.getBody();
         return personalData;
     }
+
+    /*
+    public PersonalData loadPersonalDataForTraveler(String name) {
+        ResponseEntity<Resource<PersonalData>> responseData =
+                restTemplate.exchange(
+                        URL_TRAVELER + name + "/personaldata",
+                        HttpMethod.GET, createAuthenticatedRequest(),
+                        new ParameterizedTypeReference<Resource<PersonalData>>() {},
+                        Collections.emptyMap());
+        Resource<PersonalData> personalData = responseData.getBody();
+        // todo: error handling, like http error codes, etc.
+        return personalData.getContent();
+    }*/
 
     public void updatePersonalDataForTraveler(PersonalData personalData) {
         // todo: error handling (null)
@@ -227,6 +243,25 @@ public class RestUrlAccessor {
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
             restTemplate.exchange(BASE_URL + "/friendships", HttpMethod.POST, createAuthenticatedRequestWithData(jsonNode), Object.class);
+        }
+    }
+
+    public Trip createTrip(int id) {
+        return restTemplate.exchange(BASE_URL + id + "/trips", HttpMethod.POST, createAuthenticatedRequest(), Trip.class).getBody();
+    }
+
+    public void updateTrip(Trip trip) {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = null;
+        try {
+            json = ow.writeValueAsString(trip);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        if(json != null) {
+            JsonNode jsonNode = prepareJsonObject(json);
+            System.out.println(jsonNode.asText());
+            restTemplate.exchange(BASE_URL + "/trips", HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class);
         }
     }
 }
