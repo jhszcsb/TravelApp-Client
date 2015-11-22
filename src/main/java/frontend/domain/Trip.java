@@ -1,5 +1,7 @@
 package frontend.domain;
 
+import java.util.List;
+
 public class Trip {
 
     private int id;
@@ -10,9 +12,11 @@ public class Trip {
 
     private Gallery gallery;
 
-    private Places places;
+    private List<Places> places;
 
     private String name;
+
+    private String description;
 
     public int getId() {
         return id;
@@ -46,11 +50,11 @@ public class Trip {
         this.gallery = gallery;
     }
 
-    public Places getPlaces() {
+    public List<Places> getPlaces() {
         return places;
     }
 
-    public void setPlaces(Places places) {
+    public void setPlaces(List<Places> places) {
         this.places = places;
     }
 
@@ -60,5 +64,13 @@ public class Trip {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

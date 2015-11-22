@@ -1,5 +1,7 @@
 package frontend.domain;
 
+import java.util.Date;
+
 public class Places {
 
     private int id;
@@ -7,6 +9,12 @@ public class Places {
     private String name;
 
     private String description;
+
+    private int trip;
+
+    private Date arrived;
+
+    private Date left;
 
     public int getId() {
         return id;
@@ -30,5 +38,29 @@ public class Places {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getTrip() {
+        return trip;
+    }
+
+    public void setTrip(int trip) {
+        this.trip = trip;
+    }
+
+    public Date getArrived() {
+        return arrived;
+    }
+
+    public void setArrived(Date arrived) {
+        this.arrived = arrived;
+    }
+
+    public Date getLeft() {
+        return left;
+    }
+
+    public void setLeft(Date left) {
+        this.left = left;
     }
 }

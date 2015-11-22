@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import frontend.domain.*;
 import frontend.security.User;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.Resource;
@@ -260,7 +261,9 @@ public class RestUrlAccessor {
         }
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
-            ((ObjectNode)jsonNode).remove("traveler");  // traveler node is no needed
+            ((ObjectNode)jsonNode).remove("traveler");  // traveler node is not needed
+            ((ObjectNode)jsonNode).remove("gallery");  // gallery node is not needed
+            ((ObjectNode)jsonNode).remove("places");  // places node is not needed
             restTemplate.exchange(BASE_URL + "/trips", HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class);
         }
     }
@@ -281,6 +284,24 @@ public class RestUrlAccessor {
             JsonNode jsonNode = prepareJsonObject(json);
             restTemplate.exchange(BASE_URL + "/trips/" + tripId + "/places", HttpMethod.POST,
                     createAuthenticatedRequestWithData(jsonNode), Object.class);
+        }
+    }
+
+    public void uploadPicturesForTrip(int galleryId, List<Picture> pictures) {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = null;
+        for(Picture picture : pictures) {
+            try {
+                json = ow.writeValueAsString(picture);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            if(json != null) {
+                JsonNode jsonNode = prepareJsonObject(json);
+                // todo: base64 encode
+                restTemplate.exchange(BASE_URL + "/gallery/" + galleryId + "/pictures", HttpMethod.POST,
+                        createAuthenticatedRequestWithData(jsonNode), Object.class);
+            }
         }
     }
 }

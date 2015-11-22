@@ -66,17 +66,21 @@
     margin-left: 100px;
 }
 
+#trip-profile-form {
+    width: 50%;
+}
+
 #trip-profile-form\:edit-button,
 #trip-profile-form\:delete-button,
 #trip-profile-form\:cancel-button,
-#trip-profile-form\:update-button {
+#trip-profile-form\:update-button,
+#trip-profile-form\:add-place-button {
     float: right;
 }
 
 #trip-profile-form\:delete-button {
     margin-left: 30px;
 }
-
 
 
 

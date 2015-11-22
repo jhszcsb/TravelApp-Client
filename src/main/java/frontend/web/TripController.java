@@ -5,8 +5,6 @@ import frontend.domain.*;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 
 import javax.faces.bean.ViewScoped;
@@ -28,8 +26,9 @@ public class TripController {
     private List<Trip> tripsOfFriends = new ArrayList<>();
     private Trip selectedTrip;
     private boolean editingMode = false;
-    private List<UploadedFile> uploadedFiles = new ArrayList<>();
+    private List<Picture> uploadedPictures = new ArrayList<>();
     private Places newPlace = new Places();
+    private Places selectedPlaces;
 
     public String loadTripsForTraveler() {
         trips = restUrlAccessor.loadAllTripsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
@@ -40,20 +39,35 @@ public class TripController {
         tripsOfFriends = restUrlAccessor.loadAllTripsOfFriendsForTraveler(currentUserService.getName());
     }
 
-    public String loadTrip(Trip trip) {
-        setEditingMode(false);
+    public String loadTrip(Trip trip, boolean editingMode) {
+        setEditingMode(editingMode);
         selectedTrip = trip;
         return "tripprofile";
     }
 
     public String createNew() {
         Trip trip = restUrlAccessor.createTrip(currentUserService.getTraveler().getId());
-        setEditingMode(true);
-        return loadTrip(trip);
+        return loadTrip(trip, true);
     }
 
     public void updateSelectedTrip() {
         restUrlAccessor.updateTrip(selectedTrip);
+
+        /*if(!uploadedFiles.isEmpty()) {
+            List<Picture> pictures = new ArrayList<>();
+            for (UploadedFile file : uploadedFiles) {
+                Picture pic = new Picture();
+                pic.setData(file.getContents());
+                pic.setGallery_id(selectedTrip.getGallery().getId());
+                pictures.add(pic);
+            }
+            restUrlAccessor.uploadPicturesForTrip(selectedTrip.getGallery().getId(), pictures);
+            uploadedFiles = null;
+        }*/
+        if(!uploadedPictures.isEmpty()) {
+            restUrlAccessor.uploadPicturesForTrip(selectedTrip.getGallery().getId(), uploadedPictures);
+        }
+
         setEditingMode(false);
     }
 
@@ -68,8 +82,17 @@ public class TripController {
         restUrlAccessor.addPlaceForTrip(newPlace, selectedTrip.getId());
     }
 
+    public String loadPlaces(Places places) {
+        selectedPlaces = places;
+        return "placeprofile";
+    }
+
     public void upload(FileUploadEvent event) {
-        uploadedFiles.add(event.getFile());
+        UploadedFile f = event.getFile();
+        Picture pic = new Picture();
+        pic.setGallery_id(selectedTrip.getGallery().getId());   // todo: gallery is null
+        pic.setData(f.getContents());
+        uploadedPictures.add(pic);
     }
 
     public List<Trip> getTrips() {
@@ -104,12 +127,12 @@ public class TripController {
         this.editingMode = editingMode;
     }
 
-    public List<UploadedFile> getUploadedFiles() {
-        return uploadedFiles;
+    public List<Picture> getUploadedPictures() {
+        return uploadedPictures;
     }
 
-    public void setUploadedFiles(List<UploadedFile> uploadedFiles) {
-        this.uploadedFiles = uploadedFiles;
+    public void setUploadedPictures(List<Picture> uploadedPictures) {
+        this.uploadedPictures = uploadedPictures;
     }
 
     public Places getNewPlace() {
@@ -118,5 +141,13 @@ public class TripController {
 
     public void setNewPlace(Places newPlace) {
         this.newPlace = newPlace;
+    }
+
+    public Places getSelectedPlaces() {
+        return selectedPlaces;
+    }
+
+    public void setSelectedPlaces(Places selectedPlaces) {
+        this.selectedPlaces = selectedPlaces;
     }
 }
