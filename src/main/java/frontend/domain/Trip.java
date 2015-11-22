@@ -12,7 +12,7 @@ public class Trip {
 
     private Gallery gallery;
 
-    private List<Places> places;
+    private List<Place> place;
 
     private String name;
 
@@ -50,12 +50,12 @@ public class Trip {
         this.gallery = gallery;
     }
 
-    public List<Places> getPlaces() {
-        return places;
+    public List<Place> getPlace() {
+        return place;
     }
 
-    public void setPlaces(List<Places> places) {
-        this.places = places;
+    public void setPlace(List<Place> place) {
+        this.place = place;
     }
 
     public String getName() {

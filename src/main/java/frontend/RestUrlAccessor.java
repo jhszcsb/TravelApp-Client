@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import frontend.domain.*;
 import frontend.security.User;
-import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,12 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -214,12 +209,12 @@ public class RestUrlAccessor {
             ((ObjectNode)jsonNode).remove("profilepic");
             ((ObjectNode)jsonNode).put("profilepic", base64String); // encode picture for json
             //System.out.println(jsonNode);
-            restTemplate.exchange(URL_TRAVELER + personalData.getId() + "/personaldata", HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class, jsonNode);
+            restTemplate.exchange(URL_TRAVELER + "/personaldata/" + personalData.getId(), HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class, jsonNode);
         }
     }
 
     public Traveler getTravelerByPersonalDataId(int personalDataId) {
-        ResponseEntity<Traveler> responseData = restTemplate.exchange(URL_TRAVELER + "/personaldataid/" + personalDataId, HttpMethod.GET, createAuthenticatedRequest(), Traveler.class);
+        ResponseEntity<Traveler> responseData = restTemplate.exchange(URL_TRAVELER + "/personaldata/" + personalDataId, HttpMethod.GET, createAuthenticatedRequest(), Traveler.class);
         Traveler traveler = responseData.getBody();
         return traveler;
     }
@@ -263,7 +258,7 @@ public class RestUrlAccessor {
             JsonNode jsonNode = prepareJsonObject(json);
             ((ObjectNode)jsonNode).remove("traveler");  // traveler node is not needed
             ((ObjectNode)jsonNode).remove("gallery");  // gallery node is not needed
-            ((ObjectNode)jsonNode).remove("places");  // places node is not needed
+            ((ObjectNode)jsonNode).remove("place");  // place node is not needed
             restTemplate.exchange(BASE_URL + "/trips", HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class);
         }
     }
@@ -272,7 +267,7 @@ public class RestUrlAccessor {
         restTemplate.exchange(BASE_URL + "/trips/" + selectedTripId, HttpMethod.DELETE, createAuthenticatedRequest(), Object.class);
     }
 
-    public void addPlaceForTrip(Places newPlace, int tripId) {
+    public void addPlaceForTrip(Place newPlace, int tripId) {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = null;
         try {
@@ -282,7 +277,7 @@ public class RestUrlAccessor {
         }
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
-            restTemplate.exchange(BASE_URL + "/trips/" + tripId + "/places", HttpMethod.POST,
+            restTemplate.exchange(BASE_URL + "/trips/" + tripId + "/place", HttpMethod.POST,
                     createAuthenticatedRequestWithData(jsonNode), Object.class);
         }
     }

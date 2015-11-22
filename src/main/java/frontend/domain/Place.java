@@ -2,7 +2,7 @@ package frontend.domain;
 
 import java.util.Date;
 
-public class Places {
+public class Place {
 
     private int id;
 

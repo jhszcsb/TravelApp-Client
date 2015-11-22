@@ -8,7 +8,7 @@ public class Picture {
 
     private int gallery_id;
 
-    private int places_id;
+    private int place_id;
 
     public int getId() {
         return id;
@@ -34,11 +34,11 @@ public class Picture {
         this.gallery_id = gallery_id;
     }
 
-    public int getPlaces_id() {
-        return places_id;
+    public int getPlace_id() {
+        return place_id;
     }
 
-    public void setPlaces_id(int places_id) {
-        this.places_id = places_id;
+    public void setPlace_id(int place_id) {
+        this.place_id = place_id;
     }
 }

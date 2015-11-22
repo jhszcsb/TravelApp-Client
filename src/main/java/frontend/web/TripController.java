@@ -27,8 +27,8 @@ public class TripController {
     private Trip selectedTrip;
     private boolean editingMode = false;
     private List<Picture> uploadedPictures = new ArrayList<>();
-    private Places newPlace = new Places();
-    private Places selectedPlaces;
+    private Place newPlace = new Place();
+    private Place selectedPlace;
 
     public String loadTripsForTraveler() {
         trips = restUrlAccessor.loadAllTripsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
@@ -82,8 +82,8 @@ public class TripController {
         restUrlAccessor.addPlaceForTrip(newPlace, selectedTrip.getId());
     }
 
-    public String loadPlaces(Places places) {
-        selectedPlaces = places;
+    public String loadPlace(Place place) {
+        selectedPlace = place;
         return "placeprofile";
     }
 
@@ -135,19 +135,19 @@ public class TripController {
         this.uploadedPictures = uploadedPictures;
     }
 
-    public Places getNewPlace() {
+    public Place getNewPlace() {
         return newPlace;
     }
 
-    public void setNewPlace(Places newPlace) {
+    public void setNewPlace(Place newPlace) {
         this.newPlace = newPlace;
     }
 
-    public Places getSelectedPlaces() {
-        return selectedPlaces;
+    public Place getSelectedPlace() {
+        return selectedPlace;
     }
 
-    public void setSelectedPlaces(Places selectedPlaces) {
-        this.selectedPlaces = selectedPlaces;
+    public void setSelectedPlace(Place selectedPlace) {
+        this.selectedPlace = selectedPlace;
     }
 }
