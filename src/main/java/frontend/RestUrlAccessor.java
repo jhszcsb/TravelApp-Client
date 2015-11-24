@@ -26,21 +26,25 @@ import org.apache.commons.codec.binary.Base64;
 
 @Component
 public class RestUrlAccessor {
-//todo: create universal resturl accessor (base url + scope from parameter)
+    public static final String HOST = "localhost";
+    public static final String PORT = "8099";
+    public static final String BASE_URL = "http://" + HOST + ":" + PORT + "/";
+    public static final String URL_TRAVELER = BASE_URL + "travelers/";
+    public static final String URL_TRIP = BASE_URL + "trips/";
+    public static final String URL_FRIENDSHIP= BASE_URL + "friendships/";
 
-    public static final String URL_TRAVELER = "http://localhost:8099/travelers/";
-    public static final String BASE_URL = "http://localhost:8099/";
     public static final String URL_AUTHENTICATION = "authenticationdata/";
+
+    ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
     @Autowired
     PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
 
-    //@Autowired    // todo: fix this injection
+    //@Autowired // fix this injection
     RestTemplate restTemplate = new RestTemplate();
 
     public User loadUserByUsername(String username) {
         User user = new User();
-        // TODO: add auth for other services
         ResponseEntity<User> responseData = restTemplate.exchange(
                 BASE_URL + URL_AUTHENTICATION + username,
                 HttpMethod.GET,
@@ -52,7 +56,6 @@ public class RestUrlAccessor {
     }
 
     public List<Traveler> loadAllTravelers() {
-        //ResponseEntity<Traveler[]> responseData = restTemplate.getForEntity(URL_TRAVELER, Traveler[].class);
         ResponseEntity<Traveler[]> responseData = restTemplate.exchange(URL_TRAVELER, HttpMethod.GET, createAuthenticatedRequest(), Traveler[].class);
         Traveler[] travelerArray = responseData.getBody();
         List<Traveler> travelers = Arrays.asList(travelerArray);
@@ -67,7 +70,7 @@ public class RestUrlAccessor {
     }
 
     public List<Trip> loadAllTripsForTraveler(String id) {
-        ResponseEntity<Trip[]> responseData = restTemplate.exchange(BASE_URL + id + "/trips", HttpMethod.GET, createAuthenticatedRequest(), Trip[].class);
+        ResponseEntity<Trip[]> responseData = restTemplate.exchange(URL_TRIP, HttpMethod.GET, createAuthenticatedRequest(), Trip[].class);
         Trip[] tripArray = responseData.getBody();
         List<Trip> trips = Arrays.asList(tripArray);
         return trips;
@@ -84,42 +87,15 @@ public class RestUrlAccessor {
     }
 
     public void registerTraveler(Traveler newTraveler) {    // todo add a return value (string message or else)
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = null;
-        //System.out.println(newTraveler.getPersonaldata().getPassword());    // todo delete
         String encoded = passwordEncoder.encode(newTraveler.getPersonaldata().getPassword());
         newTraveler.getPersonaldata().setPassword(encoded);
-        if (encoded != null)
-            //System.out.println(encoded);
-        try {
-            json = ow.writeValueAsString(newTraveler);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        if (encoded != null) json = writeValue(newTraveler);
         if(json != null){
             JsonNode jsonNode = prepareJsonObject(json);
-            //restTemplate.postForObject(URL_TRAVELER, jsonNode, JsonNode.class);
-            // todo: password is not set on server side when registering
             restTemplate.exchange(URL_TRAVELER, HttpMethod.POST, createAuthenticatedRequestWithData(jsonNode), Object.class, jsonNode);
         }
-        System.out.println("Registering new Traveler: " + json);
-        // TODO: add password hashing
     }
-
-    /*public void createNewTraveler() {
-        // todo: use more universal json parsing (from object)
-        JsonNode node = prepareJsonObject("{\"id\":3,\"personaldata\":null,\"socialdata\":null,\"friendshipdata\":{\"id\":1}}");
-        restTemplate.postForObject(URL_TRAVELER, node, JsonNode.class);
-    }
-
-    public void updateTraveler(String id) {
-        JsonNode node = prepareJsonObject("{\"id\":" + id + ",\"personaldata\":null,\"socialdata\":null,\"friendshipdata\":{\"id\":2}}");
-        restTemplate.put(URL_TRAVELER, node);
-    }
-
-    public void deleteTraveler(String id) {
-        restTemplate.delete(URL_TRAVELER + id);
-    }*/
 
     private JsonNode prepareJsonObject(String jsonString) {
         ObjectMapper mapper = new ObjectMapper();
@@ -176,39 +152,17 @@ public class RestUrlAccessor {
         return personalData;
     }
 
-    /*
-    public PersonalData loadPersonalDataForTraveler(String name) {
-        ResponseEntity<Resource<PersonalData>> responseData =
-                restTemplate.exchange(
-                        URL_TRAVELER + name + "/personaldata",
-                        HttpMethod.GET, createAuthenticatedRequest(),
-                        new ParameterizedTypeReference<Resource<PersonalData>>() {},
-                        Collections.emptyMap());
-        Resource<PersonalData> personalData = responseData.getBody();
-        // todo: error handling, like http error codes, etc.
-        return personalData.getContent();
-    }*/
-
     public void updatePersonalDataForTraveler(PersonalData personalData) {
-        // todo: error handling (null)
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = null;
-
         byte[] bytes = personalData.getProfilepic();
         String base64String = java.util.Base64.getEncoder().encodeToString(bytes);
         personalData.setProfilepic(null);
         personalData.setDiplayablePicture(null);
 
-        try {
-            json = ow.writeValueAsString(personalData);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        String json = writeValue(personalData);
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
             ((ObjectNode)jsonNode).remove("profilepic");
             ((ObjectNode)jsonNode).put("profilepic", base64String); // encode picture for json
-            //System.out.println(jsonNode);
             restTemplate.exchange(URL_TRAVELER + "/personaldata/" + personalData.getId(), HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class, jsonNode);
         }
     }
@@ -228,14 +182,7 @@ public class RestUrlAccessor {
 
     public void createFriendship(String traveler1_name, String traveler2_name) {
         FriendRequest friendRequest = new FriendRequest(traveler1_name, traveler2_name);
-        // todo: error handling (null)
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = null;
-        try {
-            json = ow.writeValueAsString(friendRequest);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        String json = writeValue(friendRequest);
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
             restTemplate.exchange(BASE_URL + "/friendships", HttpMethod.POST, createAuthenticatedRequestWithData(jsonNode), Object.class);
@@ -247,50 +194,35 @@ public class RestUrlAccessor {
     }
 
     public void updateTrip(Trip trip) {
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = null;
-        try {
-            json = ow.writeValueAsString(trip);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        String json = writeValue(trip);
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
             ((ObjectNode)jsonNode).remove("traveler");  // traveler node is not needed
             ((ObjectNode)jsonNode).remove("gallery");  // gallery node is not needed
             ((ObjectNode)jsonNode).remove("place");  // place node is not needed
-            restTemplate.exchange(BASE_URL + "/trips", HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class);
+            restTemplate.exchange(URL_TRIP, HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class);
         }
     }
 
     public void deleteTrip(int selectedTripId) {
-        restTemplate.exchange(BASE_URL + "/trips/" + selectedTripId, HttpMethod.DELETE, createAuthenticatedRequest(), Object.class);
+        restTemplate.exchange(URL_TRIP + selectedTripId, HttpMethod.DELETE, createAuthenticatedRequest(), Object.class);
     }
 
     public void addPlaceForTrip(Place newPlace, int tripId) {
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = null;
-        try {
-            json = ow.writeValueAsString(newPlace);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        String json = writeValue(newPlace);
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
-            restTemplate.exchange(BASE_URL + "/trips/" + tripId + "/place", HttpMethod.POST,
+            restTemplate.exchange(URL_TRIP + tripId + "/place", HttpMethod.POST,
                     createAuthenticatedRequestWithData(jsonNode), Object.class);
         }
     }
 
+
+
     public void uploadPicturesForTrip(int galleryId, List<Picture> pictures) {
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = null;
         for(Picture picture : pictures) {
-            try {
-                json = ow.writeValueAsString(picture);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
+            json = writeValue(picture);
             if(json != null) {
                 JsonNode jsonNode = prepareJsonObject(json);
                 // todo: base64 encode
@@ -298,5 +230,15 @@ public class RestUrlAccessor {
                         createAuthenticatedRequestWithData(jsonNode), Object.class);
             }
         }
+    }
+
+    private String writeValue(Object o) {
+        String json = null;
+        try {
+            json = ow.writeValueAsString(o);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

@@ -73,7 +73,7 @@ public class TripController {
 
     public String deleteSelectedTrip() {
         restUrlAccessor.deleteTrip(selectedTrip.getId());
-        // todo: facesmessage after successful delete
+        // todo: add facesmessage after successful delete
         selectedTrip = null;
         return "trips";
     }
