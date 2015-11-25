@@ -18,14 +18,14 @@
 
     <h:form id="timeline-form">
 
-        <h2>Test: load all trips of friends</h2>
+        <h2>Test: load all trips of followed travelers</h2>
         <h:commandButton value="Load Timeline" class="btn btn-default"
-                         action="#{tripController.loadAllTripsOfFriends()}"/>
+                         action="#{tripController.loadAllTripsOfFolloweds()}"/>
 
         <br /><br />
 
-        <h:dataTable id="trips-of-friends-table" value="#{tripController.tripsOfFriends}" var="trip" class="table"
-                     rendered="#{!empty tripController.tripsOfFriends}">
+        <h:dataTable id="trips-of-followeds-table" value="#{tripController.tripsOfFolloweds}" var="trip" class="table"
+                     rendered="#{!empty tripController.tripsOfFolloweds}">
             <h:column>
                 <f:facet name="header">ID</f:facet>
                 #{trip.id}
@@ -76,14 +76,14 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Action</f:facet>
-                <h:commandLink value="Send Friend Request | "
-                               action="#{friendshipController.makeFriend(traveler.personaldata.username)}"
-                               rendered="#{!travelerController.isFriend(traveler.personaldata.username)}" />
+                <h:commandLink value="Follow | "
+                               action="#{followController.makeFollowed(traveler.personaldata.username)}"
+                               rendered="#{!travelerController.isFollowed(traveler.personaldata.username)}" />
                 <!-- todo: render only if not the same as the logged in user
                 rendered = traveler.personaldata.username is not currentuser
                 -->
                 <h:commandLink value="Profile"
-                               action="#{friendshipController.loadPersonalDataForFriend(traveler.personaldata.username)}" />
+                               action="#{followController.loadPersonalDataForFollowed(traveler.personaldata.username)}" />
             </h:column>
         </h:dataTable>
 

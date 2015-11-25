@@ -37,8 +37,8 @@
                         <li class="#{active == 'profile' ? 'active' : ''}">
                             <h:commandLink action="#{travelerController.loadPersonalDataForTraveler()}" value="Profile" />
                         </li>
-                        <li class="#{active == 'friends' ? 'active' : ''}">
-                            <h:commandLink action="#{travelerController.loadFriendsForTraveler()}" value="Friends" />
+                        <li class="#{active == 'follows' ? 'active' : ''}">
+                            <h:commandLink action="#{travelerController.loadFollowedsForTraveler()}" value="Followed Travelers" />
                         </li>
                     </ul>
                     <!--    todo: temporarily commented out

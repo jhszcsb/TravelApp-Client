@@ -26,7 +26,7 @@
         <security:intercept-url pattern="/main.xhtml" access="isAuthenticated()" />
         <security:intercept-url pattern="/about.xhtml" access="isAuthenticated()" />
         <security:intercept-url pattern="/main.xhtml" access="isAuthenticated()" />
-        <security:intercept-url pattern="/friends.xhtml" access="isAuthenticated()" />
+        <security:intercept-url pattern="/follows.xhtml" access="isAuthenticated()" />
         <security:intercept-url pattern="/trips.xhtml" access="isAuthenticated()" />
         <!-- <intercept-url pattern="/*" requires-channel="https" /> -->
 

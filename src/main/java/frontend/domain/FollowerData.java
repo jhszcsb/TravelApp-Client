@@ -1,6 +1,6 @@
 package frontend.domain;
 
-public class Friendship {
+public class FollowerData {
 
     private int id;
 

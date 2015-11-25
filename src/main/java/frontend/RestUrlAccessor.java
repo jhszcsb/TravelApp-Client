@@ -31,7 +31,7 @@ public class RestUrlAccessor {
     public static final String BASE_URL = "http://" + HOST + ":" + PORT + "/";
     public static final String URL_TRAVELER = BASE_URL + "travelers/";
     public static final String URL_TRIP = BASE_URL + "trips/";
-    public static final String URL_FRIENDSHIP= BASE_URL + "friendships/";
+    public static final String URL_FOLLOW= BASE_URL + "follows/";
 
     public static final String URL_AUTHENTICATION = "authenticationdata/";
 
@@ -62,10 +62,10 @@ public class RestUrlAccessor {
         return travelers;
     }
 
-    public List<Friendship> loadAllFriendsForTraveler(String id) {
-        ResponseEntity<Friendship[]> responseData = restTemplate.exchange(BASE_URL + id + "/friendships", HttpMethod.GET, createAuthenticatedRequest(), Friendship[].class);
-        Friendship[] travelerArray = responseData.getBody();
-        List<Friendship> travelers = Arrays.asList(travelerArray);
+    public List<FollowerData> loadAllFollowsForTraveler(String id) {
+        ResponseEntity<FollowerData[]> responseData = restTemplate.exchange(BASE_URL + id + "/follows", HttpMethod.GET, createAuthenticatedRequest(), FollowerData[].class);
+        FollowerData[] travelerArray = responseData.getBody();
+        List<FollowerData> travelers = Arrays.asList(travelerArray);
         return travelers;
     }
 
@@ -173,19 +173,19 @@ public class RestUrlAccessor {
         return traveler;
     }
 
-    public List<Trip> loadAllTripsOfFriendsForTraveler(String name) {
+    public List<Trip> loadAllTripsOfFollowedsForTraveler(String name) {
         ResponseEntity<Trip[]> responseData = restTemplate.exchange(BASE_URL + name + "/timeline", HttpMethod.GET, createAuthenticatedRequest(), Trip[].class);
         Trip[] tripArray = responseData.getBody();
         List<Trip> trips = Arrays.asList(tripArray);
         return trips;
     }
 
-    public void createFriendship(String traveler1_name, String traveler2_name) {
-        FriendRequest friendRequest = new FriendRequest(traveler1_name, traveler2_name);
-        String json = writeValue(friendRequest);
+    public void createFollowed(String traveler1_name, String traveler2_name) {
+        FollowRequest followRequest = new FollowRequest(traveler1_name, traveler2_name);
+        String json = writeValue(followRequest);
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
-            restTemplate.exchange(BASE_URL + "/friendships", HttpMethod.POST, createAuthenticatedRequestWithData(jsonNode), Object.class);
+            restTemplate.exchange(BASE_URL + "/follows", HttpMethod.POST, createAuthenticatedRequestWithData(jsonNode), Object.class);
         }
     }
 

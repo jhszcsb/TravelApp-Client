@@ -1,7 +1,7 @@
 package frontend.web;
 
 import frontend.RestUrlAccessor;
-import frontend.domain.Friendship;
+import frontend.domain.FollowerData;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
 import org.primefaces.event.FileUploadEvent;
@@ -15,9 +15,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -34,7 +31,7 @@ public class TravelerController {
     CurrentUserService currentUserService;
 
     private List<Traveler> travelers = new ArrayList<>();
-    private List<Friendship> friendships = new ArrayList<>(); // todo: optimize: load traveler personaldatas only instead of friendship data
+    private List<FollowerData> followerDatas = new ArrayList<>(); // todo: optimize: load traveler personaldatas only instead of followed data
     private PersonalData personalData = new PersonalData();
     private UploadedFile profilePic;
     private boolean editingMode = false;
@@ -61,41 +58,41 @@ public class TravelerController {
         travelers = restUrlAccessor.loadAllTravelers();
     }
 
-    public String loadFriendsForTraveler() {  // todo: use traveler type instead of friendship -> fix backend!
+    public String loadFollowedsForTraveler() {  // todo: use traveler type instead of follows -> fix backend!
         loadPersonalDataForTraveler();      // todo: optimize
-        friendships = restUrlAccessor.loadAllFriendsForTraveler(String.valueOf(personalData.getId()));
+        followerDatas = restUrlAccessor.loadAllFollowsForTraveler(String.valueOf(personalData.getId()));
 
-        for(int i = 0; i < friendships.size(); i++) {
-            byte[] pic = friendships.get(i).getTraveler2().getPersonaldata().getProfilepic();
+        for(int i = 0; i < followerDatas.size(); i++) {
+            byte[] pic = followerDatas.get(i).getTraveler2().getPersonaldata().getProfilepic();
             if(pic != null) {
                 InputStream stream = new ByteArrayInputStream(pic);
-                PersonalData traveler2 = friendships.get(i).getTraveler2().getPersonaldata();
+                PersonalData traveler2 = followerDatas.get(i).getTraveler2().getPersonaldata();
                 traveler2.setDiplayablePicture(new DefaultStreamedContent(stream));
             }
         }
-        return "friends";
+        return "follows";
     }
 
-    public boolean isFriend(String name) {    // todo cache this or add to a viewscope constant
-        if(friendships.isEmpty()) {
-            loadFriendsForTraveler();
+    public boolean isFollowed(String name) {    // todo cache this or add to a viewscope constant
+        if(followerDatas.isEmpty()) {
+            loadFollowedsForTraveler();
         }
-        boolean isFriend = false;
-        for(Friendship f : friendships) {   // todo: check java8 stream
+        boolean isFollowed = false;
+        for(FollowerData f : followerDatas) {   // todo: check java8 stream
             if(name.equals(f.getTraveler2().getPersonaldata().getUsername())) {
-                isFriend = true;
+                isFollowed = true;
             }
         }
-        return isFriend;
+        return isFollowed;
     }
 
     public StreamedContent getDynamicTravelerImage() {
         String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("picture_id");
-        if(id!=null && this.friendships!=null && !this.friendships.isEmpty()){
+        if(id!=null && this.followerDatas !=null && !this.followerDatas.isEmpty()){
             Integer pictureId = Integer.parseInt(id);
-            for(Friendship friendshipTemp : this.friendships){
-                if(friendshipTemp.getTraveler2().getId() == pictureId){
-                    return friendshipTemp.getTraveler2().getPersonaldata().getDiplayablePicture();
+            for(FollowerData followerDataTemp : this.followerDatas){
+                if(followerDataTemp.getTraveler2().getId() == pictureId){
+                    return followerDataTemp.getTraveler2().getPersonaldata().getDiplayablePicture();
                 }
             }
         }
@@ -119,12 +116,12 @@ public class TravelerController {
         this.travelers = travelers;
     }
 
-    public List<Friendship> getFriendships() {
-        return friendships;
+    public List<FollowerData> getFollowerDatas() {
+        return followerDatas;
     }
 
-    public void setFriendships(List<Friendship> friendships) {
-        this.friendships = friendships;
+    public void setFollowerDatas(List<FollowerData> followerDatas) {
+        this.followerDatas = followerDatas;
     }
 
     public PersonalData getPersonalData() {

@@ -23,7 +23,7 @@ public class TripController {
     CurrentUserService currentUserService;
 
     private List<Trip> trips = new ArrayList<>();
-    private List<Trip> tripsOfFriends = new ArrayList<>();
+    private List<Trip> tripsOfFolloweds = new ArrayList<>();
     private Trip selectedTrip;
     private boolean editingMode = false;
     private List<Picture> uploadedPictures = new ArrayList<>();
@@ -35,8 +35,8 @@ public class TripController {
         return "trips";
     }
 
-    public void loadAllTripsOfFriends() {
-        tripsOfFriends = restUrlAccessor.loadAllTripsOfFriendsForTraveler(currentUserService.getName());
+    public void loadAllTripsOfFolloweds() {
+        tripsOfFolloweds = restUrlAccessor.loadAllTripsOfFollowedsForTraveler(currentUserService.getName());
     }
 
     public String loadTrip(Trip trip, boolean editingMode) {
@@ -103,12 +103,12 @@ public class TripController {
         this.trips = trips;
     }
 
-    public List<Trip> getTripsOfFriends() {
-        return tripsOfFriends;
+    public List<Trip> getTripsOfFolloweds() {
+        return tripsOfFolloweds;
     }
 
-    public void setTripsOfFriends(List<Trip> tripsOfFriends) {
-        this.tripsOfFriends = tripsOfFriends;
+    public void setTripsOfFolloweds(List<Trip> tripsOfFolloweds) {
+        this.tripsOfFolloweds = tripsOfFolloweds;
     }
 
     public Trip getSelectedTrip() {

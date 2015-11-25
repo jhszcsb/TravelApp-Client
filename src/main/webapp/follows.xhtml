@@ -7,48 +7,48 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-    <title>Friends</title>
+    <title>Followed</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="bootstrap.css" />
 </h:head>
 <h:body>
 
     <ui:include src="navbar.xhtml">
-        <ui:param name="active" value="friends" />
+        <ui:param name="active" value="follows" />
     </ui:include>
 
-    <h:form id="friends-form">
+    <h:form id="follow-form">
 
 
         <!--
         <h:commandButton value="Load" class="btn btn-default"
-                         action="#{travelerController.loadFriendsForTraveler()}"/>
+                         action="#{travelerController.loadFollowedsForTraveler()}"/>
                          -->
 
         <div class="vertical-separator"/>
 
-        <h:outputLabel rendered="#{empty travelerController.friendships}" value="You don't have any friends yet." />
+        <h:outputLabel rendered="#{empty travelerController.followerDatas}" value="You don't have any followed travelers yet." />
 
-        <h2>Friends</h2>
-        <h:dataTable id="friends-table" value="#{travelerController.friendships}" var="friendship" class="table"
-                     rendered="#{!empty travelerController.friendships}">
+        <h2>Followed</h2>
+        <h:dataTable id="followeds-table" value="#{travelerController.followerDatas}" var="followed" class="table"
+                     rendered="#{!empty travelerController.followerDatas}">
             <h:column>
                 <div>
                     <h:commandLink
-                            action="#{friendshipController.loadPersonalDataForFriend(friendship.traveler2.personaldata.username)}"
-                            value="#{friendship.traveler2.personaldata.username}">
+                            action="#{followController.loadPersonalDataForFollowed(followed.traveler2.personaldata.username)}"
+                            value="#{followed.traveler2.personaldata.username}">
                     </h:commandLink>
                 </div>
-                <h:commandLink action="#{friendshipController.loadPersonalDataForFriend(friendship.traveler2.personaldata.username)}">
+                <h:commandLink action="#{followController.loadPersonalDataForFollowed(followed.traveler2.personaldata.username)}">
                     <p:graphicImage value="#{travelerController.dynamicTravelerImage}"
                                     width="100" >
-                        <f:param name="picture_id" value="#{friendship.traveler2.id}"/>
+                        <f:param name="picture_id" value="#{followed.traveler2.id}"/>
                     </p:graphicImage>
                 </h:commandLink>
             </h:column>
             <!--<h:column>
                 <f:facet name="header">ID</f:facet>
-                #{friendship.traveler2.id}
+                #{followed.traveler2.id}
             </h:column>-->
         </h:dataTable>
 

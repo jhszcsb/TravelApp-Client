@@ -49,18 +49,18 @@
 	color: #777;
 }
 
-#friend-profile-form {
+#follow-profile-form {
 	height: 300px;
 }
 
-#friends-form\:friends-table {
+#follow-form\:followeds-table {
 	width: 400px;
 	margin-left: 100px;
 	text-align: center;
 	font-size: 1.5em;
 }
 
-#timeline-form\:trips-of-friends-table,
+#timeline-form\:trips-of-followeds-table,
 #trips-form\:my-trips-table {
 	width: 400px;
     margin-left: 100px;

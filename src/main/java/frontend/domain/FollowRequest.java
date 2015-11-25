@@ -1,14 +1,14 @@
 package frontend.domain;
 
-public class FriendRequest {
+public class FollowRequest {
 
     private String traveler1_name;
 
     private String traveler2_name;
 
-    public FriendRequest() {}
+    public FollowRequest() {}
 
-    public FriendRequest(String traveler1_name, String traveler2_name) {
+    public FollowRequest(String traveler1_name, String traveler2_name) {
         this.traveler1_name = traveler1_name;
         this.traveler2_name = traveler2_name;
     }

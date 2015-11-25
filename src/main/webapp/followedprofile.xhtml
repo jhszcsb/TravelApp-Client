@@ -13,37 +13,37 @@
 <h:body>
 
     <ui:include src="navbar.xhtml">
-        <ui:param name="active" value="friends" />
+        <ui:param name="active" value="follows" />
     </ui:include>
 
     <div class="vertical-separator"/>
 
     <div>
-        <h:form id="friend-profile-form">
+        <h:form id="follow-profile-form">
 
             <h:messages />
 
-            <h:commandLink value="Send Friend Request"
-                           action="#{friendshipController.makeFriend(friendshipController.selectedFriendProfile.username)}"
-                           rendered="#{!travelerController.isFriend(friendshipController.selectedFriendProfile.username)}" />
+            <h:commandLink value="Follow"
+                           action="#{followController.makeFollowed(followController.selectedFollowedProfile.username)}"
+                           rendered="#{!travelerController.isFollowed(followController.selectedFollowedProfile.username)}" />
 
-            <h:panelGroup rendered="#{!empty friendshipController.selectedFriendProfile.username}">
+            <h:panelGroup rendered="#{!empty followController.selectedFollowedProfile.username}">
                 <div id="profile-pic">
-                    <p:graphicImage value="#{friendshipController.selectedFriendProfile.diplayablePicture}"
+                    <p:graphicImage value="#{followController.selectedFollowedProfile.diplayablePicture}"
                                     width="200" />
                 </div>
 
                 <div id="profile-data-container">
                     <div id="profile-data">
                         <div>
-                            <h2>#{friendshipController.selectedFriendProfile.username}</h2>
+                            <h2>#{followController.selectedFollowedProfile.username}</h2>
                         </div>
                         <h:panelGrid id="profile-fields" columns="2">
-                            <h:outputLabel value="E-mail: #{friendshipController.selectedFriendProfile.email}"/>
+                            <h:outputLabel value="E-mail: #{followController.selectedFollowedProfile.email}"/>
                             <div />
-                            <h:outputLabel value="First Name: #{friendshipController.selectedFriendProfile.firstname}"/>
+                            <h:outputLabel value="First Name: #{followController.selectedFollowedProfile.firstname}"/>
                             <div />
-                            <h:outputLabel value="Last Name: #{friendshipController.selectedFriendProfile.lastname}"/>
+                            <h:outputLabel value="Last Name: #{followController.selectedFollowedProfile.lastname}"/>
                             <div />
                         </h:panelGrid>
                     </div>
@@ -55,12 +55,12 @@
     <div class="vertical-separator"/>
 
     <div>
-        <h:form id="friend-trips-form">
+        <h:form id="follow-trips-form">
 
             <h2>Trips</h2>
 
-            <h:dataTable value="#{friendshipController.selectedFriendTrips}" var="trip" class="table"
-                         rendered="#{!empty friendshipController.selectedFriendTrips}">
+            <h:dataTable value="#{followController.selectedFollowedTrips}" var="trip" class="table"
+                         rendered="#{!empty followController.selectedFollowedTrips}">
                 <h:column>
                     <f:facet name="header">Name</f:facet>
                     #{trip.name}
