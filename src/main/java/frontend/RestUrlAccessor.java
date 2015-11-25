@@ -70,7 +70,7 @@ public class RestUrlAccessor {
     }
 
     public List<Trip> loadAllTripsForTraveler(String id) {
-        ResponseEntity<Trip[]> responseData = restTemplate.exchange(URL_TRIP, HttpMethod.GET, createAuthenticatedRequest(), Trip[].class);
+        ResponseEntity<Trip[]> responseData = restTemplate.exchange(BASE_URL + id + "/trips", HttpMethod.GET, createAuthenticatedRequest(), Trip[].class);
         Trip[] tripArray = responseData.getBody();
         List<Trip> trips = Arrays.asList(tripArray);
         return trips;
