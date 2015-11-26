@@ -56,6 +56,7 @@ public class TravelerController {
 
     public void loadAllTravelers() {
         travelers = restUrlAccessor.loadAllTravelers();
+        loadFollowedsForTraveler(); // todo: optimize this
     }
 
     public String loadFollowedsForTraveler() {  // todo: use traveler type instead of follows -> fix backend!

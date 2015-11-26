@@ -64,6 +64,9 @@ public class TripController {
             restUrlAccessor.uploadPicturesForTrip(selectedTrip.getGallery().getId(), pictures);
             uploadedFiles = null;
         }*/
+
+        // todo !!!!!!!!!!!!!!!!!!!!!!!!!!
+        // TODO: add this to a different method, not the update trip profile!!!!!!!!!!!!!!!
         if(!uploadedPictures.isEmpty()) {
             restUrlAccessor.uploadPicturesForTrip(selectedTrip.getGallery().getId(), uploadedPictures);
         }
@@ -78,8 +81,11 @@ public class TripController {
         return "trips";
     }
 
-    public void addPlace() {
+    public String addPlace() {
         restUrlAccessor.addPlaceForTrip(newPlace, selectedTrip.getId());
+        // todo: move to place profile after adding it
+        //selectedPlace = ...;
+        return "placeprofile";
     }
 
     public String loadPlace(Place place) {
@@ -90,6 +96,7 @@ public class TripController {
     public void upload(FileUploadEvent event) {
         UploadedFile f = event.getFile();
         Picture pic = new Picture();
+        System.out.println("Gallery id: " + selectedTrip.getGallery().getId());
         pic.setGallery_id(selectedTrip.getGallery().getId());   // todo: gallery is null
         pic.setData(f.getContents());
         uploadedPictures.add(pic);

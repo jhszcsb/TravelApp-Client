@@ -209,9 +209,11 @@ public class RestUrlAccessor {
     }
 
     public void addPlaceForTrip(Place newPlace, int tripId) {
+        newPlace.setTrip(tripId);
         String json = writeValue(newPlace);
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
+            ((ObjectNode)jsonNode).remove("trip");  // trip node is not needed
             restTemplate.exchange(URL_TRIP + tripId + "/place", HttpMethod.POST,
                     createAuthenticatedRequestWithData(jsonNode), Object.class);
         }

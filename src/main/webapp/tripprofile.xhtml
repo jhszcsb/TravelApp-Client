@@ -34,15 +34,14 @@
                            rendered="#{!tripController.isEditingMode()}"/>
             <h:inputText value="#{tripController.selectedTrip.name}" class="form-control"
                          rendered="#{tripController.isEditingMode()}" />
-
-            <h:commandButton id="cancel-button" value="Cancel" action="#{tripController.setEditingMode(false)}"
-                             rendered="#{tripController.isEditingMode()}" class="btn btn-default" />
-            <!-- todo: delete using cancel button if this is a new trip -->
-            <h:commandButton id="update-button" value="Save" class="btn btn-default"
-                             action="#{tripController.updateSelectedTrip()}"
-                             rendered="#{tripController.isEditingMode()}" />
-            <div />
         </h:panelGrid>
+        <h:commandButton id="cancel-button" value="Cancel" action="#{tripController.setEditingMode(false)}"
+                         rendered="#{tripController.isEditingMode()}" class="btn btn-default" />
+        <!-- todo: delete using cancel button if this is a new trip -->
+        <h:commandButton id="update-button" value="Save" class="btn btn-default"
+                         action="#{tripController.updateSelectedTrip()}"
+                         rendered="#{tripController.isEditingMode()}" />
+
 
         <h:panelGrid rendered="#{!empty tripController.selectedTrip.place and !tripController.isEditingMode()}">
             <div class="vertical-separator"/>
