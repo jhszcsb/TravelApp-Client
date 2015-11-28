@@ -54,16 +54,14 @@ public class PlaceController {
 
     public void updateSelectedPlace() {
         //restUrlAccessor.updatePlace(selectedPlace); // TODO: implement
-
         if(!uploadedPictures.isEmpty()) {
             restUrlAccessor.uploadPicturesForTrip(selectedTrip.getGallery().getId(), selectedPlace.getId(), uploadedPictures);
         }
-
         setEditingMode(false);
     }
 
     public void deleteSelectedTrip() {
-
+        // TODO: implement
     }
 
     public boolean isEditingMode() {

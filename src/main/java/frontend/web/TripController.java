@@ -3,11 +3,16 @@ package frontend.web;
 import frontend.RestUrlAccessor;
 import frontend.domain.*;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +32,7 @@ public class TripController {
     private List<Trip> trips = new ArrayList<>();
     private List<Trip> tripsOfFolloweds = new ArrayList<>();
     private Trip selectedTrip;
+    private List<Picture> selectedTripPictures = new ArrayList<>();
     private boolean editingMode = false;
     private List<Picture> uploadedPictures = new ArrayList<>();
 
@@ -42,7 +48,19 @@ public class TripController {
     public String loadTrip(Trip trip, boolean editingMode) {
         setEditingMode(editingMode);
         selectedTrip = trip;
+        loadPicturesForTrip(trip.getGallery().getId());
         return "tripprofile";
+    }
+
+    private void loadPicturesForTrip(int galleryId) {
+        selectedTripPictures = restUrlAccessor.loadPicturesForTripByGalleryId(galleryId);
+        for(int i = 0; i < selectedTripPictures.size(); i++) {
+            byte[] pic = selectedTripPictures.get(i).getData();
+            if(pic != null) {
+                InputStream stream = new ByteArrayInputStream(pic);
+                selectedTripPictures.get(i).setDiplayablePicture(new DefaultStreamedContent(stream));
+            }
+        }
     }
 
     public String createNew() {
@@ -75,6 +93,19 @@ public class TripController {
         pic.setGallery(selectedTrip.getGallery().getId());
         pic.setData(f.getContents());
         uploadedPictures.add(pic);
+    }
+
+    public StreamedContent getDynamicTripImage() {
+        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("picture_id");
+        if(id != null && this.selectedTripPictures != null && !this.selectedTripPictures.isEmpty()){
+            Integer pictureId = Integer.parseInt(id);
+            for(Picture picture : this.selectedTripPictures){
+                if(picture.getId() == pictureId){
+                    return picture.getDiplayablePicture();
+                }
+            }
+        }
+        return new DefaultStreamedContent();
     }
 
     public List<Trip> getTrips() {
@@ -115,5 +146,13 @@ public class TripController {
 
     public void setUploadedPictures(List<Picture> uploadedPictures) {
         this.uploadedPictures = uploadedPictures;
+    }
+
+    public List<Picture> getSelectedTripPictures() {
+        return selectedTripPictures;
+    }
+
+    public void setSelectedTripPictures(List<Picture> selectedTripPictures) {
+        this.selectedTripPictures = selectedTripPictures;
     }
 }

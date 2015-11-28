@@ -228,6 +228,7 @@ public class RestUrlAccessor {
 
         for(Picture picture : pictures) {
             picture.setPlace(placeId);    // todo: add place
+            picture.setDiplayablePicture(null);
             byte[] bytes = picture.getData();
             String base64String = java.util.Base64.getEncoder().encodeToString(bytes);
             json = writeValue(picture);
@@ -249,5 +250,12 @@ public class RestUrlAccessor {
             e.printStackTrace();
         }
         return json;
+    }
+
+    public List<Picture> loadPicturesForTripByGalleryId(int galleryId) {
+        ResponseEntity<Picture[]> responseData = restTemplate.exchange(BASE_URL + "gallery/" + galleryId + "/pictures", HttpMethod.GET, createAuthenticatedRequest(), Picture[].class);
+        Picture[] pictureArray = responseData.getBody();
+        List<Picture> pictures = Arrays.asList(pictureArray);
+        return pictures;
     }
 }

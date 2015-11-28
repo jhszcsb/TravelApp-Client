@@ -67,6 +67,15 @@
         <h:panelGrid rendered="#{!empty tripController.selectedTrip.gallery and !tripController.isEditingMode()}">
             <div class="vertical-separator"/>
             <h3>Gallery</h3>
+
+            <h:dataTable id="pictures-table" value="#{tripController.selectedTripPictures}" var="picture" class="table"
+                         rendered="#{!empty tripController.selectedTripPictures}">
+                <h:column>
+                    <p:graphicImage value="#{tripController.dynamicTripImage}" width="100" >
+                        <f:param name="picture_id" value="#{picture.id}"/>
+                    </p:graphicImage>
+                </h:column>
+            </h:dataTable>
         </h:panelGrid>
 
     </h:form>

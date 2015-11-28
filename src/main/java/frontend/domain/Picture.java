@@ -1,10 +1,14 @@
 package frontend.domain;
 
+import org.primefaces.model.DefaultStreamedContent;
+
 public class Picture {
 
     private int id;
 
     private byte[] data;
+
+    private DefaultStreamedContent diplayablePicture;
 
     private int gallery;
 
@@ -40,5 +44,13 @@ public class Picture {
 
     public void setPlace(int place) {
         this.place = place;
+    }
+
+    public DefaultStreamedContent getDiplayablePicture() {
+        return diplayablePicture;
+    }
+
+    public void setDiplayablePicture(DefaultStreamedContent diplayablePicture) {
+        this.diplayablePicture = diplayablePicture;
     }
 }

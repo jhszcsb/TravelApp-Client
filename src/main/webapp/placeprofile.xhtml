@@ -37,11 +37,11 @@
             <h:panelGrid id="add-place-fields" columns="2">
                 <h:outputLabel value="Place Name: "
                                rendered="#{placeController.isEditingMode()}"/>
-                <h:inputText value="#{placeController.newPlace.name}" class="form-control"
+                <h:inputText value="#{placeController.selectedPlace.name}" class="form-control"
                              rendered="#{placeController.isEditingMode()}" />
                 <h:outputLabel value="Place Description: "
                                rendered="#{placeController.isEditingMode()}"/>
-                <h:inputText value="#{placeController.newPlace.description}" class="form-control"
+                <h:inputText value="#{placeController.selectedPlace.description}" class="form-control"
                              rendered="#{placeController.isEditingMode()}" />
                 <div/>
             </h:panelGrid>
