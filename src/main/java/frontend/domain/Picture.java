@@ -6,9 +6,9 @@ public class Picture {
 
     private byte[] data;
 
-    private int gallery_id;
+    private int gallery;
 
-    private int place_id;
+    private int place;
 
     public int getId() {
         return id;
@@ -26,19 +26,19 @@ public class Picture {
         this.data = data;
     }
 
-    public int getGallery_id() {
-        return gallery_id;
+    public int getGallery() {
+        return gallery;
     }
 
-    public void setGallery_id(int gallery_id) {
-        this.gallery_id = gallery_id;
+    public void setGallery(int gallery) {
+        this.gallery = gallery;
     }
 
-    public int getPlace_id() {
-        return place_id;
+    public int getPlace() {
+        return place;
     }
 
-    public void setPlace_id(int place_id) {
-        this.place_id = place_id;
+    public void setPlace(int place) {
+        this.place = place;
     }
 }

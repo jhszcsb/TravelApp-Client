@@ -97,7 +97,7 @@ public class TripController {
         UploadedFile f = event.getFile();
         Picture pic = new Picture();
         System.out.println("Gallery id: " + selectedTrip.getGallery().getId());
-        pic.setGallery_id(selectedTrip.getGallery().getId());   // todo: gallery is null
+        pic.setGallery(selectedTrip.getGallery().getId());   // todo: gallery is null
         pic.setData(f.getContents());
         uploadedPictures.add(pic);
     }

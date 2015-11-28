@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -198,7 +199,7 @@ public class RestUrlAccessor {
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
             ((ObjectNode)jsonNode).remove("traveler");  // traveler node is not needed
-            ((ObjectNode)jsonNode).remove("gallery");  // gallery node is not needed
+            ((ObjectNode)jsonNode).remove("gallery");  // gallery node is not needed    // todo: remove is not needed, it is not updatable in backend
             ((ObjectNode)jsonNode).remove("place");  // place node is not needed
             restTemplate.exchange(URL_TRIP, HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class);
         }
@@ -223,11 +224,17 @@ public class RestUrlAccessor {
 
     public void uploadPicturesForTrip(int galleryId, List<Picture> pictures) {
         String json = null;
+        // improvement: use one http request for multiple images?
+
         for(Picture picture : pictures) {
+            picture.setPlace(1);    // todo: add place
+            byte[] bytes = picture.getData();
+            String base64String = java.util.Base64.getEncoder().encodeToString(bytes);
             json = writeValue(picture);
             if(json != null) {
                 JsonNode jsonNode = prepareJsonObject(json);
-                // todo: base64 encode
+                ((ObjectNode)jsonNode).remove("data");
+                ((ObjectNode)jsonNode).put("data", base64String); // encode picture for json
                 restTemplate.exchange(BASE_URL + "/gallery/" + galleryId + "/pictures", HttpMethod.POST,
                         createAuthenticatedRequestWithData(jsonNode), Object.class);
             }
