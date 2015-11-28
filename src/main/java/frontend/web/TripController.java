@@ -1,11 +1,10 @@
 package frontend.web;
 
 import frontend.RestUrlAccessor;
-import frontend.domain.*;
-import org.primefaces.event.FileUploadEvent;
+import frontend.domain.Picture;
+import frontend.domain.Trip;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -21,8 +20,6 @@ import java.util.List;
 //@Scope("request")
 public class TripController {
 
-    // todo: remove place methods, add them to placecontroller
-
     @Autowired
     RestUrlAccessor restUrlAccessor;
 
@@ -34,7 +31,6 @@ public class TripController {
     private Trip selectedTrip;
     private List<Picture> selectedTripPictures = new ArrayList<>();
     private boolean editingMode = false;
-    private List<Picture> uploadedPictures = new ArrayList<>();
 
     public String loadTripsForTraveler() {
         trips = restUrlAccessor.loadAllTripsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
@@ -68,15 +64,8 @@ public class TripController {
         return loadTrip(trip, true);
     }
 
-    // todo: picture uploading is at places, and will be deleted from here
     public void updateSelectedTrip() {
         restUrlAccessor.updateTrip(selectedTrip);
-
-        // TODO: add this to a different method, not the update trip profile?
-        if(!uploadedPictures.isEmpty()) {
-            restUrlAccessor.uploadPicturesForTrip(selectedTrip.getGallery().getId(), 1, uploadedPictures);  // todo: set place
-        }
-
         setEditingMode(false);
     }
 
@@ -85,14 +74,6 @@ public class TripController {
         // todo: add facesmessage after successful delete
         selectedTrip = null;
         return "trips";
-    }
-
-    public void upload(FileUploadEvent event) {
-        UploadedFile f = event.getFile();
-        Picture pic = new Picture();
-        pic.setGallery(selectedTrip.getGallery().getId());
-        pic.setData(f.getContents());
-        uploadedPictures.add(pic);
     }
 
     public StreamedContent getDynamicTripImage() {
@@ -143,14 +124,6 @@ public class TripController {
 
     public void setEditingMode(boolean editingMode) {
         this.editingMode = editingMode;
-    }
-
-    public List<Picture> getUploadedPictures() {
-        return uploadedPictures;
-    }
-
-    public void setUploadedPictures(List<Picture> uploadedPictures) {
-        this.uploadedPictures = uploadedPictures;
     }
 
     public List<Picture> getSelectedTripPictures() {

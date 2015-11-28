@@ -23,7 +23,6 @@ public class CurrentUserService /*implements LogoutSuccessHandler*/ {
         clearData();
     }*/
 
-    // todo: use with logout filter
     public void clearData() {
         name = null;
         personalData = null;
@@ -57,7 +56,7 @@ public class CurrentUserService /*implements LogoutSuccessHandler*/ {
         if(personalData != null) {
             loadCurrentUserTravelerData();
         }
-        // todo: error handling
+        // todo: other error handling?
     }
 
     public String getName() {

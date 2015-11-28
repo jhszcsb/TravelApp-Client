@@ -199,7 +199,6 @@ public class RestUrlAccessor {
         if(json != null) {
             JsonNode jsonNode = prepareJsonObject(json);
             ((ObjectNode)jsonNode).remove("traveler");  // traveler node is not needed
-            ((ObjectNode)jsonNode).remove("gallery");  // gallery node is not needed    // todo: remove is not needed, it is not updatable in backend
             ((ObjectNode)jsonNode).remove("place");  // place node is not needed
             restTemplate.exchange(URL_TRIP, HttpMethod.PUT, createAuthenticatedRequestWithData(jsonNode), Object.class);
         }
@@ -227,7 +226,7 @@ public class RestUrlAccessor {
         // improvement: use one http request for multiple images?
 
         for(Picture picture : pictures) {
-            picture.setPlace(placeId);    // todo: add place
+            picture.setPlace(placeId);
             picture.setDiplayablePicture(null);
             byte[] bytes = picture.getData();
             String base64String = java.util.Base64.getEncoder().encodeToString(bytes);

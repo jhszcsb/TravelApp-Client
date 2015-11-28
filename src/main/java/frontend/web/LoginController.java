@@ -35,8 +35,7 @@ public class LoginController {
         return currentUserService.getName();
     }
 
-    public String register() {    // todo: use spring ModelAndView?
-        // todo: check for duplicate users
+    public String register() {
         Traveler newTraveler = new Traveler();
         PersonalData personalData = new PersonalData();
         personalData.setPassword(registerPassword);
@@ -47,7 +46,7 @@ public class LoginController {
         personalData.setHometown("dummy");  // todo: use geolocation
         newTraveler.setPersonaldata(personalData);
         restUrlAccessor.registerTraveler(newTraveler);
-        // TODO: add error message if registration is not successful (error from backend)
+        // TODO: add error message if registration is not successful (error from backend). check for duplicate users in backend
         FacesMessage message = new FacesMessage("Successful registration!");
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, message);

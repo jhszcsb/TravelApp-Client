@@ -31,7 +31,7 @@ public class TravelerController {
     CurrentUserService currentUserService;
 
     private List<Traveler> travelers = new ArrayList<>();
-    private List<FollowerData> followerDatas = new ArrayList<>(); // todo: optimize: load traveler personaldatas only instead of followed data
+    private List<FollowerData> followerDatas = new ArrayList<>(); // optimize: load traveler personaldatas only instead of followed data
     private PersonalData personalData = new PersonalData();
     private UploadedFile profilePic;
     private boolean editingMode = false;
@@ -60,7 +60,6 @@ public class TravelerController {
     }
 
     public String loadFollowedsForTraveler() {  // todo: use traveler type instead of follows -> fix backend!
-        //loadPersonalDataForTraveler();      // todo: optimize
         followerDatas = restUrlAccessor.loadAllFollowsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
 
         for(int i = 0; i < followerDatas.size(); i++) {
@@ -74,7 +73,7 @@ public class TravelerController {
         return "follows";
     }
 
-    public boolean isFollowed(String name) {    // todo cache this
+    public boolean isFollowed(String name) { // todo cache this
         if(followerDatas.isEmpty()) {
             loadFollowedsForTraveler();
         }
