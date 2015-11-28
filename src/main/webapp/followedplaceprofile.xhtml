@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Place</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="bootstrap.css" />
+</h:head>
+<h:body>
+
+    <ui:include src="navbar.xhtml">
+        <ui:param name="active" value="follows" />
+    </ui:include>
+
+    <h:form id="place-profile-form">
+
+        <div class="vertical-separator"/>
+
+        <h2>
+            #{placeController.selectedPlace.name}
+        </h2>
+        <h:commandLink value="#{placeController.selectedTrip.name}"
+                       action="#{tripController.loadTripForFollowed(placeController.selectedTrip)}" />
+        <br/>
+
+        <div class="vertical-separator"/>
+        <h:panelGrid rendered="#{placeController.isEditingMode()}" >
+            <h3>Pictures</h3>
+            <h:dataTable id="pictures-table" value="#{placeController.selectedPlacePictures}" var="picture" class="table"
+                         rendered="#{!empty placeController.selectedPlacePictures and !placeController.isEditingMode()}">
+                <h:column>
+                    <p:graphicImage value="#{placeController.dynamicPlaceImage}" width="100" >
+                        <f:param name="picture_id" value="#{picture.id}"/>
+                    </p:graphicImage>
+                </h:column>
+            </h:dataTable>
+        </h:panelGrid>
+
+    </h:form>
+
+</h:body>
+</html>

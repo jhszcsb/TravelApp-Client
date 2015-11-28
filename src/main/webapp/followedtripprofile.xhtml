@@ -39,7 +39,7 @@
                          rendered="#{!empty tripController.selectedTrip.place}" >
                 <h:column>
                     <!--<f:facet name="header">Name</f:facet>-->
-                    <h:commandLink value="#{place.name}" action="#{placeController.loadPlace(place, tripController.selectedTrip, false)}" />
+                    <h:commandLink value="#{place.name}" action="#{placeController.loadPlaceForFollowed(place, tripController.selectedTrip, false)}" />
                 </h:column>
             </h:dataTable>
         </h:panelGrid>
@@ -56,8 +56,6 @@
                     </p:graphicImage>
                 </h:column>
             </h:dataTable>
-
-            <!-- todo: followedplaceprofile with disabled editing -->
 
         </h:panelGrid>
 

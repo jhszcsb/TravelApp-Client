@@ -91,6 +91,11 @@ public class PlaceController {
         setEditingMode(false);
     }
 
+    public String loadPlaceForFollowed(Place place, Trip trip, boolean isEditingMode) {
+        loadPlace(place, trip, isEditingMode);
+        return "followedplaceprofile";
+    }
+
     public void deleteSelectedTrip() {
         // TODO: implement
     }
