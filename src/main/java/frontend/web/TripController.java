@@ -108,6 +108,11 @@ public class TripController {
         return new DefaultStreamedContent();
     }
 
+    public String loadTripForFollowed(Trip trip) {
+        loadTrip(trip, false);
+        return "followedtripprofile";
+    }
+
     public List<Trip> getTrips() {
         return trips;
     }

@@ -60,10 +60,10 @@
             <h2>Trips</h2>
 
             <h:dataTable value="#{followController.selectedFollowedTrips}" var="trip" class="table"
-                         rendered="#{!empty followController.selectedFollowedTrips}">
+                         rendered="#{!empty followController.selectedFollowedTrips}" style="width:600px;" >
                 <h:column>
                     <f:facet name="header">Name</f:facet>
-                    #{trip.name}
+                    <h:commandLink value="#{trip.name}" action="#{tripController.loadTripForFollowed(trip)}" />
                 </h:column>
             </h:dataTable>
 

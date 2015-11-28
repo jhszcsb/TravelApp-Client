@@ -60,8 +60,8 @@ public class TravelerController {
     }
 
     public String loadFollowedsForTraveler() {  // todo: use traveler type instead of follows -> fix backend!
-        loadPersonalDataForTraveler();      // todo: optimize
-        followerDatas = restUrlAccessor.loadAllFollowsForTraveler(String.valueOf(personalData.getId()));
+        //loadPersonalDataForTraveler();      // todo: optimize
+        followerDatas = restUrlAccessor.loadAllFollowsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
 
         for(int i = 0; i < followerDatas.size(); i++) {
             byte[] pic = followerDatas.get(i).getTraveler2().getPersonaldata().getProfilepic();
@@ -74,12 +74,12 @@ public class TravelerController {
         return "follows";
     }
 
-    public boolean isFollowed(String name) {    // todo cache this or add to a viewscope constant
+    public boolean isFollowed(String name) {    // todo cache this
         if(followerDatas.isEmpty()) {
             loadFollowedsForTraveler();
         }
         boolean isFollowed = false;
-        for(FollowerData f : followerDatas) {   // todo: check java8 stream
+        for(FollowerData f : followerDatas) {   // improvement: check java8 stream
             if(name.equals(f.getTraveler2().getPersonaldata().getUsername())) {
                 isFollowed = true;
             }

@@ -6,19 +6,19 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-    <title>Trip</title>
+    <title>Trip Profile</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="bootstrap.css" />
 </h:head>
 <h:body>
 
     <ui:include src="navbar.xhtml">
-        <ui:param name="active" value="trips" />
+        <ui:param name="active" value="follows" />
     </ui:include>
 
-    <h:form id="trip-profile-form">
+    <div class="vertical-separator"/>
 
-        <div class="vertical-separator"/>
+    <h:form>
 
         <h2>
             #{tripController.selectedTrip.name}
@@ -26,31 +26,15 @@
 
         <div class="vertical-separator"/>
 
-        <h:commandButton id="delete-button" value="Delete" action="#{tripController.deleteSelectedTrip()}"
-                         rendered="#{!tripController.isEditingMode()}" class="btn btn-default" />
-        <h:commandButton id="edit-button" value="Edit" action="#{tripController.setEditingMode(true)}"
-                         rendered="#{!tripController.isEditingMode()}" class="btn btn-default" />
         <h:panelGrid id="update-fields" columns="2">
             <h:outputLabel value="Trip Name: " />
             <h:outputLabel value="#{tripController.selectedTrip.name}"
                            rendered="#{!tripController.isEditingMode()}"/>
-            <h:inputText value="#{tripController.selectedTrip.name}" class="form-control"
-                         rendered="#{tripController.isEditingMode()}" />
         </h:panelGrid>
-        <h:commandButton id="cancel-button" value="Cancel" action="#{tripController.setEditingMode(false)}"
-                         rendered="#{tripController.isEditingMode()}" class="btn btn-default" />
-        <!-- todo: delete using cancel button if this is a new trip -->
-        <h:commandButton id="update-button" value="Save" class="btn btn-default"
-                         action="#{tripController.updateSelectedTrip()}"
-                         rendered="#{tripController.isEditingMode()}" />
-
 
         <h:panelGrid style="width:100%" rendered="#{!empty tripController.selectedTrip.place and !tripController.isEditingMode()}">
             <div class="vertical-separator"/>
             <h3>Places</h3>
-            <h:commandButton id="add-place-button" value="Add Place" class="btn btn-default" style="margin-bottom:20px;"
-                             action="#{placeController.addPlace(tripController.selectedTrip)}"
-                             rendered="#{!tripController.isEditingMode()}" />
             <h:dataTable id="place-table" value="#{tripController.selectedTrip.place}" var="place" class="table"
                          rendered="#{!empty tripController.selectedTrip.place}" >
                 <h:column>
@@ -73,14 +57,8 @@
                 </h:column>
             </h:dataTable>
 
-            <!--
-            <br/><br/><br/><br/><br/>
-            <ui:repeat var="picture_id" value="#{tripController.selectedTripPictures}" >
-                <p:graphicImage value="#{tripController.dynamicTripImage}" width="100" >
-                    <f:param name="picture_id" value="#{picture.id}"/>
-                </p:graphicImage>
-            </ui:repeat>
-            -->
+            <!-- todo: followedplaceprofile with disabled editing -->
+
         </h:panelGrid>
 
     </h:form>
