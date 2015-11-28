@@ -67,6 +67,18 @@
         <h:commandButton id="cancel-button" value="Cancel" action="#{placeController.setEditingMode(false)}"
                          rendered="#{placeController.isEditingMode()}" class="btn btn-default" />
 
+        <div class="vertical-separator"/>
+        <h3>Pictures</h3>
+
+        <h:dataTable id="pictures-table" value="#{placeController.selectedPlacePictures}" var="picture" class="table"
+                     rendered="#{!empty placeController.selectedPlacePictures}">
+            <h:column>
+                <p:graphicImage value="#{placeController.dynamicPlaceImage}" width="100" >
+                    <f:param name="picture_id" value="#{picture.id}"/>
+                </p:graphicImage>
+            </h:column>
+        </h:dataTable>
+
     </h:form>
 
 

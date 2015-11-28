@@ -258,4 +258,11 @@ public class RestUrlAccessor {
         List<Picture> pictures = Arrays.asList(pictureArray);
         return pictures;
     }
+
+    public List<Picture> loadPicturesForPlaceByPlaceId(int placeId) {
+        ResponseEntity<Picture[]> responseData = restTemplate.exchange(BASE_URL + "place/" + placeId + "/pictures", HttpMethod.GET, createAuthenticatedRequest(), Picture[].class);
+        Picture[] pictureArray = responseData.getBody();
+        List<Picture> pictures = Arrays.asList(pictureArray);
+        return pictures;
+    }
 }

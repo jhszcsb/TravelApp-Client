@@ -5,11 +5,16 @@ import frontend.domain.Picture;
 import frontend.domain.Place;
 import frontend.domain.Trip;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +33,38 @@ public class PlaceController {
     private Place selectedPlace;
     private Place newPlace = new Place();
     private List<Picture> uploadedPictures = new ArrayList<>();
+    private List<Picture> selectedPlacePictures;
 
     public String loadPlace(Place place, Trip trip, boolean editingMode) {
         setEditingMode(editingMode);
         selectedTrip = trip;
         selectedPlace = place;
+        loadPicturesForPlace(selectedPlace.getId());
         return "placeprofile";
+    }
+
+    private void loadPicturesForPlace(int placeId) {
+        selectedPlacePictures = restUrlAccessor.loadPicturesForPlaceByPlaceId(placeId);
+        for(int i = 0; i < selectedPlacePictures.size(); i++) {
+            byte[] pic = selectedPlacePictures.get(i).getData();
+            if(pic != null) {
+                InputStream stream = new ByteArrayInputStream(pic);
+                selectedPlacePictures.get(i).setDiplayablePicture(new DefaultStreamedContent(stream));
+            }
+        }
+    }
+
+    public StreamedContent getDynamicPlaceImage() {
+        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("picture_id");
+        if(id != null && this.selectedPlacePictures != null && !this.selectedPlacePictures.isEmpty()){
+            Integer pictureId = Integer.parseInt(id);
+            for(Picture picture : this.selectedPlacePictures){
+                if(picture.getId() == pictureId){
+                    return picture.getDiplayablePicture();
+                }
+            }
+        }
+        return new DefaultStreamedContent();
     }
 
     public String addPlace(Trip trip) {
@@ -102,5 +133,13 @@ public class PlaceController {
 
     public void setNewPlace(Place newPlace) {
         this.newPlace = newPlace;
+    }
+
+    public List<Picture> getSelectedPlacePictures() {
+        return selectedPlacePictures;
+    }
+
+    public void setSelectedPlacePictures(List<Picture> selectedPlacePictures) {
+        this.selectedPlacePictures = selectedPlacePictures;
     }
 }
