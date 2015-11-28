@@ -36,10 +36,6 @@
                 #{trip.name}
             </h:column>
             <h:column>
-                <f:facet name="header">Timeline ID</f:facet>
-                #{trip.timeline.id}
-            </h:column>
-            <h:column>
                 <f:facet name="header">Action</f:facet>
                 <h:commandLink value="Select" action="#{tripController.loadTrip(trip, false)}" />
             </h:column>

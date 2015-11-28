@@ -20,7 +20,9 @@
 
         <div class="vertical-separator"/>
 
-        <h2>#{tripController.selectedTrip.name}</h2>
+        <h2>
+            #{tripController.selectedTrip.name}
+        </h2>
 
         <div class="vertical-separator"/>
 
@@ -46,11 +48,14 @@
         <h:panelGrid rendered="#{!empty tripController.selectedTrip.place and !tripController.isEditingMode()}">
             <div class="vertical-separator"/>
             <h3>Places</h3>
+            <h:commandButton id="add-place-button2" value="Add Place" class="btn btn-default"
+                             action="#{placeController.addPlace(tripController.selectedTrip)}"
+                             rendered="#{!tripController.isEditingMode()}" />
             <h:dataTable id="place-table" value="#{tripController.selectedTrip.place}" var="place" class="table"
                          rendered="#{!empty tripController.selectedTrip.place}" >
                 <h:column>
                     <f:facet name="header">Name</f:facet>
-                    <h:commandLink value="#{place.name}" action="#{tripController.loadPlace(place)}" />
+                    <h:commandLink value="#{place.name}" action="#{placeController.loadPlace(place, tripController.selectedTrip, false)}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header">Description</f:facet>
@@ -63,39 +68,6 @@
             <div class="vertical-separator"/>
             <h3>Gallery</h3>
         </h:panelGrid>
-
-        <div>
-            <div class="vertical-separator"/>
-            <h:panelGrid id="add-place-fields" columns="2">
-                <h:outputLabel value="Place Name: "
-                               rendered="#{tripController.isEditingMode()}"/>
-                <h:inputText value="#{tripController.newPlace.name}" class="form-control"
-                             rendered="#{tripController.isEditingMode()}" />
-                <h:outputLabel value="Place Description: "
-                               rendered="#{tripController.isEditingMode()}"/>
-                <h:inputText value="#{tripController.newPlace.description}" class="form-control"
-                             rendered="#{tripController.isEditingMode()}" />
-                <div/>
-                <h:commandButton id="add-place-button" value="Add Place" action="#{tripController.addPlace()}"
-                                 rendered="#{tripController.isEditingMode()}" class="btn btn-default" />
-            </h:panelGrid>
-
-        </div>
-
-        <h:panelGrid rendered="#{tripController.isEditingMode()}" >
-            <div id="picture-upload">
-                <h:outputLabel value="Upload pictures"/>
-                <div />
-                <h:form enctype="multipart/form-data">
-                    <!-- todo: add validations and error messages (size, file type, etc.) -->
-                    <p:fileUpload fileUploadListener="#{tripController.upload}"
-                                  mode="advanced" skinSimple="true" sizeLimit="3145728" multiple="true"
-                                  fileLimit="5" dragDropSupport="false" />
-                    <!-- size limit: 3MB -->
-                </h:form>
-            </div>
-        </h:panelGrid>
-
 
     </h:form>
 

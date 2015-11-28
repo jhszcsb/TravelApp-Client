@@ -27,10 +27,6 @@
         <h:dataTable id="trips-of-followeds-table" value="#{tripController.tripsOfFolloweds}" var="trip" class="table"
                      rendered="#{!empty tripController.tripsOfFolloweds}">
             <h:column>
-                <f:facet name="header">ID</f:facet>
-                #{trip.id}
-            </h:column>
-            <h:column>
                 <f:facet name="header">Trip Name</f:facet>
                 #{trip.name}
             </h:column>
@@ -50,10 +46,6 @@
 
         <h:dataTable id="travelers-table" value="#{travelerController.travelers}" var="traveler" class="table"
                     rendered="#{!empty travelerController.travelers}">
-            <h:column>
-                <f:facet name="header">ID</f:facet>
-                #{traveler.id}
-            </h:column>
             <h:column>
                 <f:facet name="header">Username</f:facet>
                 #{traveler.personaldata.username}

@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-    <title>Trip</title>
+    <title>Place</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="bootstrap.css" />
 </h:head>
@@ -16,14 +16,56 @@
         <ui:param name="active" value="trips" />
     </ui:include>
 
-    <h:form id="trip-profile-form">
+    <h:form id="place-profile-form">
 
         <div class="vertical-separator"/>
 
-        <h2>#{tripController.selectedPlace.name}</h2>
+        <h2>
+            #{placeController.selectedPlace.name}
+        </h2>
+        <h:commandLink value="#{placeController.selectedTrip.name}"
+                       action="#{tripController.loadTrip(placeController.selectedTrip, false)}" />
+        <br/>
 
+        <h:commandButton id="delete-button" value="Delete" action="#{placeController.deleteSelectedPlace()}"
+                         rendered="#{!placeController.isEditingMode()}" class="btn btn-default" />
+        <h:commandButton id="edit-button" value="Edit" action="#{placeController.setEditingMode(true)}"
+                         rendered="#{!placeController.isEditingMode()}" class="btn btn-default" />
 
+        <div>
+            <div class="vertical-separator"/>
+            <h:panelGrid id="add-place-fields" columns="2">
+                <h:outputLabel value="Place Name: "
+                               rendered="#{placeController.isEditingMode()}"/>
+                <h:inputText value="#{placeController.newPlace.name}" class="form-control"
+                             rendered="#{placeController.isEditingMode()}" />
+                <h:outputLabel value="Place Description: "
+                               rendered="#{placeController.isEditingMode()}"/>
+                <h:inputText value="#{placeController.newPlace.description}" class="form-control"
+                             rendered="#{placeController.isEditingMode()}" />
+                <div/>
+            </h:panelGrid>
+        </div>
 
+        <h:panelGrid rendered="#{placeController.isEditingMode()}" >
+            <div id="picture-upload">
+                <h:outputLabel value="Upload pictures"/>
+                <div />
+                <h:form enctype="multipart/form-data">
+                    <!-- todo: add validations and error messages (size, file type, etc.) -->
+                    <p:fileUpload fileUploadListener="#{placeController.upload}"
+                                  mode="advanced" skinSimple="true" sizeLimit="3145728" multiple="true"
+                                  fileLimit="5" dragDropSupport="false" />
+                    <!-- size limit: 3MB -->
+                </h:form>
+            </div>
+        </h:panelGrid>
+
+        <h:commandButton id="update-button" value="Save" class="btn btn-default"
+                         action="#{placeController.updateSelectedPlace()}"
+                         rendered="#{placeController.isEditingMode()}" />
+        <h:commandButton id="cancel-button" value="Cancel" action="#{placeController.setEditingMode(false)}"
+                         rendered="#{placeController.isEditingMode()}" class="btn btn-default" />
 
     </h:form>
 

@@ -222,12 +222,12 @@ public class RestUrlAccessor {
 
 
 
-    public void uploadPicturesForTrip(int galleryId, List<Picture> pictures) {
+    public void uploadPicturesForTrip(int galleryId, int placeId, List<Picture> pictures) {
         String json = null;
         // improvement: use one http request for multiple images?
 
         for(Picture picture : pictures) {
-            picture.setPlace(1);    // todo: add place
+            picture.setPlace(placeId);    // todo: add place
             byte[] bytes = picture.getData();
             String base64String = java.util.Base64.getEncoder().encodeToString(bytes);
             json = writeValue(picture);
