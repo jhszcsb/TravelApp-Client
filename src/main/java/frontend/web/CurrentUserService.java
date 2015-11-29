@@ -1,8 +1,9 @@
 package frontend.web;
 
-import frontend.RestUrlAccessor;
+import frontend.rest.RestHelper;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
+import frontend.rest.TravelerResourceHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -12,7 +13,10 @@ import org.springframework.stereotype.Service;
 public class CurrentUserService /*implements LogoutSuccessHandler*/ {
 
     @Autowired
-    RestUrlAccessor restUrlAccessor;
+    RestHelper restHelper;
+
+    @Autowired
+    TravelerResourceHelper travelerResourceHelper;
 
     private String name;
     private PersonalData personalData;
@@ -38,14 +42,14 @@ public class CurrentUserService /*implements LogoutSuccessHandler*/ {
         if(name == null) {
             loadCurrentUserName();
         }
-        personalData = restUrlAccessor.loadPersonalDataForTraveler(name);
+        personalData = travelerResourceHelper.loadPersonalDataForTraveler(name);
     }
 
     public void loadCurrentUserTravelerData() {
         if (personalData == null) {
             loadCurrentUserPersonalData();
         }
-        traveler = restUrlAccessor.getTravelerByPersonalDataId(personalData.getId());
+        traveler = travelerResourceHelper.getTravelerByPersonalDataId(personalData.getId());
     }
 
     public void loadAllData() {

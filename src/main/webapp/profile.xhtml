@@ -20,15 +20,18 @@
 
         <!--
         <h:commandButton value="Load" class="btn btn-default"
-                         action="#{travelerController.loadPersonalDataForTraveler()}"/>
+                         action="#{travelerController.loadOrReloadPersonalDataForTraveler(false)}"/>
                          -->
 
         <div class="vertical-separator"/>
 
         <h:panelGroup rendered="#{!empty travelerController.personalData.username}">
             <div id="profile-pic">
-                <p:graphicImage value="#{travelerController.personalData.diplayablePicture}"
+                <!--<p:graphicImage value="#{travelerController.personalData.diplayablePicture}"
+                                width="200" />-->
+                <p:graphicImage value="#{travelerController.dynamicTravelerProfileImage}"
                                 width="200" />
+                <!-- TODO: add image id (peronaldata id to enable browser caching)-->
             </div>
 
             <div id="profile-data-container">

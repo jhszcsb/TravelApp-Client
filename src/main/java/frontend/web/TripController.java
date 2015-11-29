@@ -1,8 +1,9 @@
 package frontend.web;
 
-import frontend.RestUrlAccessor;
+import frontend.rest.RestHelper;
 import frontend.domain.Picture;
 import frontend.domain.Trip;
+import frontend.rest.TripResourceHelper;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,13 @@ import java.util.List;
 public class TripController {
 
     @Autowired
-    RestUrlAccessor restUrlAccessor;
+    RestHelper restHelper;
 
     @Autowired
     CurrentUserService currentUserService;
+
+    @Autowired
+    TripResourceHelper tripResourceHelper;
 
     private List<Trip> trips = new ArrayList<>();
     private List<Trip> tripsOfFolloweds = new ArrayList<>();
@@ -33,12 +37,12 @@ public class TripController {
     private boolean editingMode = false;
 
     public String loadTripsForTraveler() {
-        trips = restUrlAccessor.loadAllTripsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
+        trips = tripResourceHelper.loadAllTripsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
         return "trips";
     }
 
     public void loadAllTripsOfFolloweds() {
-        tripsOfFolloweds = restUrlAccessor.loadAllTripsOfFollowedsForTraveler(currentUserService.getName());
+        tripsOfFolloweds = tripResourceHelper.loadAllTripsOfFollowedsForTraveler(currentUserService.getName());
     }
 
     public String loadTrip(Trip trip, boolean editingMode) {
@@ -49,7 +53,7 @@ public class TripController {
     }
 
     private void loadPicturesForTrip(int galleryId) {
-        selectedTripPictures = restUrlAccessor.loadPicturesForTripByGalleryId(galleryId);
+        selectedTripPictures = tripResourceHelper.loadPicturesForTripByGalleryId(galleryId);
         for(int i = 0; i < selectedTripPictures.size(); i++) {
             byte[] pic = selectedTripPictures.get(i).getData();
             if(pic != null) {
@@ -60,17 +64,17 @@ public class TripController {
     }
 
     public String createNew() {
-        Trip trip = restUrlAccessor.createTrip(currentUserService.getTraveler().getId());
+        Trip trip = tripResourceHelper.createTrip(currentUserService.getTraveler().getId());
         return loadTrip(trip, true);
     }
 
     public void updateSelectedTrip() {
-        restUrlAccessor.updateTrip(selectedTrip);
+        tripResourceHelper.updateTrip(selectedTrip);
         setEditingMode(false);
     }
 
     public String deleteSelectedTrip() {
-        restUrlAccessor.deleteTrip(selectedTrip.getId());
+        tripResourceHelper.deleteTrip(selectedTrip.getId());
         // todo: add facesmessage after successful delete
         selectedTrip = null;
         return "trips";

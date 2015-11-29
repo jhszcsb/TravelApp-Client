@@ -1,12 +1,11 @@
 package frontend.web;
 
-import frontend.RestUrlAccessor;
+import frontend.rest.RestHelper;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
+import frontend.rest.TravelerResourceHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 
 import javax.faces.application.FacesMessage;
@@ -26,10 +25,13 @@ public class LoginController {
     private String registerLastname;
 
     @Autowired
-    RestUrlAccessor restUrlAccessor;
+    RestHelper restHelper;
 
     @Autowired
     CurrentUserService currentUserService;
+
+    @Autowired
+    TravelerResourceHelper travelerResourceHelper;
 
     public String getCurrentUserName() {
         return currentUserService.getName();
@@ -45,7 +47,7 @@ public class LoginController {
         personalData.setLastname(registerLastname);
         personalData.setHometown("dummy");  // todo: use geolocation
         newTraveler.setPersonaldata(personalData);
-        restUrlAccessor.registerTraveler(newTraveler);
+        travelerResourceHelper.registerTraveler(newTraveler);
         // TODO: add error message if registration is not successful (error from backend). check for duplicate users in backend
         FacesMessage message = new FacesMessage("Successful registration!");
         FacesContext context = FacesContext.getCurrentInstance();

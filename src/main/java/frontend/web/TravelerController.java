@@ -1,9 +1,11 @@
 package frontend.web;
 
-import frontend.RestUrlAccessor;
+import frontend.rest.FollowerResourceHelper;
+import frontend.rest.RestHelper;
 import frontend.domain.FollowerData;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
+import frontend.rest.TravelerResourceHelper;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -18,6 +20,7 @@ import java.util.List;
 
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 
 @Controller
 @ViewScoped
@@ -25,16 +28,29 @@ import javax.faces.context.FacesContext;
 public class TravelerController {
 
     @Autowired
-    RestUrlAccessor restUrlAccessor;
+    RestHelper restHelper;
 
     @Autowired
     CurrentUserService currentUserService;
+
+    @Autowired
+    TravelerResourceHelper travelerResourceHelper;
+
+    @Autowired
+    FollowerResourceHelper followerResourceHelper;
 
     private List<Traveler> travelers = new ArrayList<>();
     private List<FollowerData> followerDatas = new ArrayList<>(); // optimize: load traveler personaldatas only instead of followed data
     private PersonalData personalData = new PersonalData();
     private UploadedFile profilePic;
     private boolean editingMode = false;
+
+    public String loadOrReloadPersonalDataForTraveler(boolean reload) {
+        if(personalData.getDiplayablePicture() == null || reload == true) {
+            return loadPersonalDataForTraveler();
+        }
+        return "profile";
+    }
 
     public String loadPersonalDataForTraveler() { // add to profilecontroller?
         personalData = currentUserService.getPersonalData();
@@ -50,17 +66,18 @@ public class TravelerController {
         if(profilePic != null) {
             personalData.setProfilepic(profilePic.getContents());
         }
-        restUrlAccessor.updatePersonalDataForTraveler(personalData);
+        travelerResourceHelper.updatePersonalDataForTraveler(personalData);
+        // reload here?
         setEditingMode(false);
     }
 
     public void loadAllTravelers() {
-        travelers = restUrlAccessor.loadAllTravelers();
+        travelers = travelerResourceHelper.loadAllTravelers();
         loadFollowedsForTraveler(); // todo: optimize this
     }
 
     public String loadFollowedsForTraveler() {  // todo: use traveler type instead of follows -> fix backend!
-        followerDatas = restUrlAccessor.loadAllFollowsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
+        followerDatas = followerResourceHelper.loadAllFollowsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
 
         for(int i = 0; i < followerDatas.size(); i++) {
             byte[] pic = followerDatas.get(i).getTraveler2().getPersonaldata().getProfilepic();
@@ -97,6 +114,31 @@ public class TravelerController {
             }
         }
         return new DefaultStreamedContent();
+    }
+
+    // http://stackoverflow.com/questions/8304967/how-to-use-pgraphicimage-with-streamedcontent-within-pdatatable
+
+    public StreamedContent getDynamicTravelerProfileImage() {
+        //return personalData.getDiplayablePicture();
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        }
+        else {
+            // So, browser is requesting the image. Get ID value from actual request param.
+            return personalData.getDiplayablePicture();
+        }
+
+/*
+        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("profile_id");
+        Integer pictureId = Integer.parseInt(id);
+        if(personalData.getDiplayablePicture() != null) {
+            return personalData.getDiplayablePicture();
+        }
+        return new DefaultStreamedContent();*/
     }
 
     public void upload(FileUploadEvent event) {

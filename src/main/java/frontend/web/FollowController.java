@@ -1,9 +1,12 @@
 package frontend.web;
 
-import frontend.RestUrlAccessor;
+import frontend.rest.FollowerResourceHelper;
+import frontend.rest.RestHelper;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
 import frontend.domain.Trip;
+import frontend.rest.TravelerResourceHelper;
+import frontend.rest.TripResourceHelper;
 import org.primefaces.model.DefaultStreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,16 +23,25 @@ import java.util.List;
 public class FollowController {
 
     @Autowired
-    RestUrlAccessor restUrlAccessor;
+    RestHelper restHelper;
 
     @Autowired
     CurrentUserService currentUserService;
+
+    @Autowired
+    TravelerResourceHelper travelerResourceHelper;
+
+    @Autowired
+    TripResourceHelper tripResourceHelper;
+
+    @Autowired
+    FollowerResourceHelper followerResourceHelper;
 
     private PersonalData selectedFollowedProfile;
     private List<Trip> selectedFollowedTrips;
 
     public String loadPersonalDataForFollowed(String name) {
-        selectedFollowedProfile = restUrlAccessor.loadPersonalDataForTraveler(name);
+        selectedFollowedProfile = travelerResourceHelper.loadPersonalDataForTraveler(name);
         byte[] pic = selectedFollowedProfile.getProfilepic();
         if(pic != null) {
             InputStream stream = new ByteArrayInputStream(pic);
@@ -40,13 +52,13 @@ public class FollowController {
     }
 
     public void loadTripsForFollowed() {
-        Traveler traveler = restUrlAccessor.getTravelerByPersonalDataId(selectedFollowedProfile.getId());
-        selectedFollowedTrips = restUrlAccessor.loadAllTripsForTraveler(String.valueOf(traveler.getId()));
+        Traveler traveler = travelerResourceHelper.getTravelerByPersonalDataId(selectedFollowedProfile.getId());
+        selectedFollowedTrips = tripResourceHelper.loadAllTripsForTraveler(String.valueOf(traveler.getId()));
     }
 
     public void makeFollowed(String name) {
         String loggedInUserName = currentUserService.getName();
-        restUrlAccessor.createFollowed(loggedInUserName, name);
+        followerResourceHelper.createFollowed(loggedInUserName, name);
         FacesMessage message = new FacesMessage("Followed!");
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, message);

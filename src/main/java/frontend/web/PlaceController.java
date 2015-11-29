@@ -1,9 +1,10 @@
 package frontend.web;
 
-import frontend.RestUrlAccessor;
+import frontend.rest.RestHelper;
 import frontend.domain.Picture;
 import frontend.domain.Place;
 import frontend.domain.Trip;
+import frontend.rest.TripResourceHelper;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -23,10 +24,13 @@ import java.util.List;
 public class PlaceController {
 
     @Autowired
-    RestUrlAccessor restUrlAccessor;
+    RestHelper restHelper;
 
     @Autowired
     CurrentUserService currentUserService;
+
+    @Autowired
+    TripResourceHelper tripResourceHelper;
 
     private boolean editingMode = false;
     private Trip selectedTrip;
@@ -44,7 +48,7 @@ public class PlaceController {
     }
 
     private void loadPicturesForPlace(int placeId) {
-        selectedPlacePictures = restUrlAccessor.loadPicturesForPlaceByPlaceId(placeId);
+        selectedPlacePictures = tripResourceHelper.loadPicturesForPlaceByPlaceId(placeId);
         for(int i = 0; i < selectedPlacePictures.size(); i++) {
             byte[] pic = selectedPlacePictures.get(i).getData();
             if(pic != null) {
@@ -70,7 +74,7 @@ public class PlaceController {
     public String addPlace(Trip trip) {
         newPlace.setName("new place");
         newPlace.setDescription("new place");
-        restUrlAccessor.addPlaceForTrip(newPlace, trip.getId());
+        tripResourceHelper.addPlaceForTrip(newPlace, trip.getId());
         selectedPlace = newPlace;
         return loadPlace(selectedPlace, trip, true);
     }
@@ -84,9 +88,9 @@ public class PlaceController {
     }
 
     public void updateSelectedPlace() {
-        //restUrlAccessor.updatePlace(selectedPlace); // TODO: implement
+        //tripResourceHelper.updatePlace(selectedPlace); // TODO: implement
         if(!uploadedPictures.isEmpty()) {
-            restUrlAccessor.uploadPicturesForTrip(selectedTrip.getGallery().getId(), selectedPlace.getId(), uploadedPictures);
+            tripResourceHelper.uploadPicturesForTrip(selectedTrip.getGallery().getId(), selectedPlace.getId(), uploadedPictures);
         }
         setEditingMode(false);
     }

@@ -1,6 +1,7 @@
 package frontend;
 
 
+import frontend.rest.RestHelper;
 
 //@ComponentScan
 //@Configuration
@@ -11,7 +12,7 @@ public class Application {
 
         //SpringApplication.run(Application.class, args);
 
-        RestUrlAccessor accessor = new RestUrlAccessor();
+        RestHelper accessor = new RestHelper();
 
         //System.out.println("Reading ALL Travelers: ");
         //accessor.getTravelers();

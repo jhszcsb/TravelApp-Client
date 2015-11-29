@@ -1,6 +1,6 @@
 package frontend.security;
 
-import frontend.RestUrlAccessor;
+import frontend.rest.RestHelper;
 import frontend.web.CurrentUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,7 +18,7 @@ import java.util.List;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    RestUrlAccessor restUrlAccessor;
+    RestHelper restHelper;
 
     @Autowired
     CurrentUserService currentUserService;
@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> authList = new ArrayList<>();
         authList.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-        frontend.security.User user = restUrlAccessor.loadUserByUsername(s);
+        frontend.security.User user = restHelper.loadUserByUsername(s);
         return new User(user.getUsername(), user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authList);
     }
 
