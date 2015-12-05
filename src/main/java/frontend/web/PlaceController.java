@@ -1,10 +1,10 @@
 package frontend.web;
 
-import frontend.rest.RestHelper;
+import frontend.resthelper.RestHelper;
 import frontend.domain.Picture;
 import frontend.domain.Place;
 import frontend.domain.Trip;
-import frontend.rest.TripResourceHelper;
+import frontend.resthelper.TripResourceHelper;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;

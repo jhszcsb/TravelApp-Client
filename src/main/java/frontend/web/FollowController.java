@@ -1,12 +1,12 @@
 package frontend.web;
 
-import frontend.rest.FollowerResourceHelper;
-import frontend.rest.RestHelper;
+import frontend.resthelper.FollowerResourceHelper;
+import frontend.resthelper.RestHelper;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
 import frontend.domain.Trip;
-import frontend.rest.TravelerResourceHelper;
-import frontend.rest.TripResourceHelper;
+import frontend.resthelper.TravelerResourceHelper;
+import frontend.resthelper.TripResourceHelper;
 import org.primefaces.model.DefaultStreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

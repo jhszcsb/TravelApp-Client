@@ -2,7 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
@@ -16,70 +15,104 @@
         <ui:param name="active" value="timeline" />
     </ui:include>
 
-    <h:form id="timeline-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2" style="border: 2px solid #777;">
+                Asdf
+            </div>
+            <div class="col-md-2" style="border: 2px solid #777;">
+                Asdf
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="border: 2px solid #777;">
+                <div class="col-md-2">
+                    outer
+                </div>
+                <div class="col-md-8">
+                    inner
+                </div>
+                <div class="col-md-2">
+                    outer
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <h2>Test: load all trips of followed travelers</h2>
-        <h:commandButton value="Load Timeline" class="btn btn-default"
-                         action="#{tripController.loadAllTripsOfFolloweds()}"/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"/>
+            <div class="col-md-8">
+                <h:form id="timeline-form">
 
-        <br /><br />
+                    <h2>Test: load all trips of followed travelers</h2>
+                    <h:commandButton value="Load Timeline" class="btn btn-default"
+                                     action="#{tripController.loadAllTripsOfFolloweds()}"/>
 
-        <h:dataTable id="trips-of-followeds-table" value="#{tripController.tripsOfFolloweds}" var="trip" class="table"
-                     rendered="#{!empty tripController.tripsOfFolloweds}">
-            <h:column>
-                <f:facet name="header">Trip Name</f:facet>
-                #{trip.name}
-            </h:column>
-        </h:dataTable>
+                    <br/><br/>
 
-    </h:form>
+                    <h:dataTable id="trips-of-followeds-table" value="#{tripController.tripsOfFolloweds}" var="trip"
+                                 class="table"
+                                 rendered="#{!empty tripController.tripsOfFolloweds}">
+                        <h:column>
+                            <f:facet name="header">Trip Name</f:facet>
+                            #{trip.name}
+                        </h:column>
+                    </h:dataTable>
 
-    <h:form id="traveler-form">
+                </h:form>
 
-        <h:messages />
+                <h:form id="traveler-form">
 
-        <h2>Test: load all travelers from DB</h2>
-        <h:commandButton value="Load" class="btn btn-default"
-                         action="#{travelerController.loadAllTravelers()}" />
+                    <h:messages/>
 
-        <br /><br />
+                    <h2>Test: load all travelers from DB</h2>
+                    <h:commandButton value="Load" class="btn btn-default"
+                                     action="#{travelerController.loadAllTravelers()}"/>
 
-        <h:dataTable id="travelers-table" value="#{travelerController.travelers}" var="traveler" class="table"
-                    rendered="#{!empty travelerController.travelers}">
-            <h:column>
-                <f:facet name="header">Username</f:facet>
-                #{traveler.personaldata.username}
-            </h:column>
-            <h:column>
-                <f:facet name="header">E-mail</f:facet>
-                #{traveler.personaldata.email}
-            </h:column>
-            <h:column>
-                <f:facet name="header">First Name</f:facet>
-                #{traveler.personaldata.firstname}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Last Name</f:facet>
-                #{traveler.personaldata.lastname}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Hometown</f:facet>
-                #{traveler.personaldata.hometown}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <h:commandLink value="Follow | "
-                               action="#{followController.makeFollowed(traveler.personaldata.username)}"
-                               rendered="#{!travelerController.isFollowed(traveler.personaldata.username)}" />
-                <!-- todo: render only if not the same as the logged in user
-                rendered = traveler.personaldata.username is not currentuser
-                -->
-                <h:commandLink value="Profile"
-                               action="#{followController.loadPersonalDataForFollowed(traveler.personaldata.username)}" />
-            </h:column>
-        </h:dataTable>
+                    <br/><br/>
 
-    </h:form>
+                    <h:dataTable id="travelers-table" value="#{travelerController.travelers}" var="traveler"
+                                 class="table"
+                                 rendered="#{!empty travelerController.travelers}">
+                        <h:column>
+                            <f:facet name="header">Username</f:facet>
+                            #{traveler.personaldata.username}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">E-mail</f:facet>
+                            #{traveler.personaldata.email}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">First Name</f:facet>
+                            #{traveler.personaldata.firstname}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Last Name</f:facet>
+                            #{traveler.personaldata.lastname}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Hometown</f:facet>
+                            #{traveler.personaldata.hometown}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Action</f:facet>
+                            <h:commandLink value="Follow | "
+                                           action="#{followController.makeFollowed(traveler.personaldata.username)}"
+                                           rendered="#{!travelerController.isFollowed(traveler.personaldata.username)}"/>
+                            <!-- todo: render only if not the same as the logged in user
+                            rendered = traveler.personaldata.username is not currentuser
+                            -->
+                            <h:commandLink value="Profile"
+                                           action="#{followController.loadPersonalDataForFollowed(traveler.personaldata.username)}"/>
+                        </h:column>
+                    </h:dataTable>
+
+                </h:form>
+            </div>
+            <div class="col-md-2"/>
+        </div>
+    </div>
 
 </h:body>
 </html>

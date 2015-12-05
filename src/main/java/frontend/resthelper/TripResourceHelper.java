@@ -1,4 +1,4 @@
-package frontend.rest;
+package frontend.resthelper;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -6,6 +6,9 @@ import frontend.domain.Picture;
 import frontend.domain.Place;
 import frontend.domain.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -102,5 +105,27 @@ public class TripResourceHelper {
         Picture[] pictureArray = responseData.getBody();
         List<Picture> pictures = Arrays.asList(pictureArray);
         return pictures;
+    }
+
+    public Resources<Place> loadAllPlacesForTrip(int trip_id) {
+        ResponseEntity<Resource[]> responseData = restTemplate.exchange(
+                BASE_URL + "hateoas/trips/" + trip_id + "/place",
+                HttpMethod.GET,
+                restHelper.createAuthenticatedRequest(),
+                Resource[].class
+        );
+        return null;
+        //List<Place> places = placeResources.stream().map(Resource<Place>::getContent).collect(Collectors.toList());
+        //return places;
+    }
+
+    public Resource<Place> loadOnePlace() {
+        ResponseEntity<Resource<Place>> responseData = restTemplate.exchange(
+                BASE_URL + "hateoas/one/trips/place/",
+                HttpMethod.GET,
+                restHelper.createAuthenticatedRequest(),
+                new ParameterizedTypeReference<Resource<Place>>() {}
+        );
+        return null;
     }
 }

@@ -16,28 +16,42 @@
         <ui:param name="active" value="trips" />
     </ui:include>
 
-    <h:form id="trips-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"/>
+            <div class="col-md-8">
 
-        <!--
-        <h:commandButton value="Load" class="btn btn-default"
-                         action="#{tripController.loadTripsForTraveler()}"/>
-                         -->
+                <h:form id="trips-form">
 
-        <div class="vertical-separator"/>
+                    <h2>
+                        My Trips
+                    </h2>
 
-        <h:commandButton value="Create New Trip" action="#{tripController.createNew()}" class="btn btn-default" />
+                    <!--
+                    <h:commandButton value="Load" class="btn btn-default"
+                                     action="#{tripController.loadTripsForTraveler()}"/>
+                                     -->
 
-        <div class="vertical-separator"/>
+                    <div class="vertical-separator"/>
 
-        <h:dataTable id="my-trips-table" value="#{tripController.trips}" var="trip" class="table"
-                     rendered="#{!empty tripController.trips}">
-            <h:column>
-                <!--<f:facet name="header">Name</f:facet>-->
-                <h:commandLink value="#{trip.name}" action="#{tripController.loadTrip(trip, false)}" />
-            </h:column>
-        </h:dataTable>
+                    <h:commandButton id="create-trip" value="Create New Trip"
+                                     action="#{tripController.createNew()}" class="btn btn-default"/>
 
-    </h:form>
+                    <div class="vertical-separator"/>
+
+                    <h:dataTable id="my-trips-table" value="#{tripController.trips}" var="trip" class="table"
+                                 rendered="#{!empty tripController.trips}">
+                        <h:column>
+                            <!--<f:facet name="header">Name</f:facet>-->
+                            <h:commandLink value="#{trip.name}" action="#{tripController.loadTrip(trip, false)}"/>
+                        </h:column>
+                    </h:dataTable>
+
+                </h:form>
+            </div>
+            <div class="col-md-2"/>
+        </div>
+    </div>
 
 </h:body>
 </html>

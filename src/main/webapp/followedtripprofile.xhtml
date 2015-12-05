@@ -18,48 +18,81 @@
 
     <div class="vertical-separator"/>
 
-    <h:form>
+    <div class="container">
 
-        <h2>
-            #{tripController.selectedTrip.name}
-        </h2>
+        <h:form>
 
-        <div class="vertical-separator"/>
+            <div class="row">
+                <div class="col-md-2"/>
+                <div class="col-md-8">
 
-        <h:panelGrid id="update-fields" columns="2">
-            <h:outputLabel value="Trip Name: " />
-            <h:outputLabel value="#{tripController.selectedTrip.name}"
-                           rendered="#{!tripController.isEditingMode()}"/>
-        </h:panelGrid>
+                    <h2>
+                        #{tripController.selectedTrip.name}
+                    </h2>
 
-        <h:panelGrid style="width:100%" rendered="#{!empty tripController.selectedTrip.place and !tripController.isEditingMode()}">
-            <div class="vertical-separator"/>
-            <h3>Places</h3>
-            <h:dataTable id="place-table" value="#{tripController.selectedTrip.place}" var="place" class="table"
-                         rendered="#{!empty tripController.selectedTrip.place}" >
-                <h:column>
-                    <!--<f:facet name="header">Name</f:facet>-->
-                    <h:commandLink value="#{place.name}" action="#{placeController.loadPlaceForFollowed(place, tripController.selectedTrip, false)}" />
-                </h:column>
-            </h:dataTable>
-        </h:panelGrid>
+                    <div class="vertical-separator"/>
 
-        <h:panelGrid rendered="#{!empty tripController.selectedTrip.gallery and !tripController.isEditingMode()}">
-            <div class="vertical-separator"/>
-            <h3>Gallery</h3>
+                    <h:panelGrid id="update-fields" columns="2">
+                        <h:outputLabel value="Trip Name: "/>
+                        <h:outputLabel value="#{tripController.selectedTrip.name}"
+                                       rendered="#{!tripController.isEditingMode()}"/>
+                    </h:panelGrid>
 
-            <h:dataTable id="pictures-table" value="#{tripController.selectedTripPictures}" var="picture" class="table"
-                         rendered="#{!empty tripController.selectedTripPictures}">
-                <h:column>
-                    <p:graphicImage value="#{tripController.dynamicTripImage}" width="100" >
-                        <f:param name="picture_id" value="#{picture.id}"/>
-                    </p:graphicImage>
-                </h:column>
-            </h:dataTable>
+                </div>
+                <div class="col-md-2"/>
+            </div>
 
-        </h:panelGrid>
+            <div class="row">
+                <div class="col-md-2"/>
+                <div class="col-md-8">
 
-    </h:form>
+                    <h:panelGrid style="width:100%"
+                                 rendered="#{!empty tripController.selectedTrip.place and !tripController.isEditingMode()}">
+                        <div class="vertical-separator"/>
+                        <h3>Places</h3>
+                        <h:dataTable id="place-table" value="#{tripController.selectedTrip.place}" var="place"
+                                     class="table"
+                                     rendered="#{!empty tripController.selectedTrip.place}">
+                            <h:column>
+                                <!--<f:facet name="header">Name</f:facet>-->
+                                <h:commandLink value="#{place.name}"
+                                               action="#{placeController.loadPlaceForFollowed(place, tripController.selectedTrip, false)}"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGrid>
+
+                </div>
+                <div class="col-md-2"/>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2"/>
+                <div class="col-md-8">
+
+                    <h:panelGrid
+                            rendered="#{!empty tripController.selectedTrip.gallery and !tripController.isEditingMode()}">
+                        <div class="vertical-separator"/>
+                        <h3>Gallery</h3>
+
+                        <h:dataTable id="pictures-table" value="#{tripController.selectedTripPictures}" var="picture"
+                                     class="table"
+                                     rendered="#{!empty tripController.selectedTripPictures}">
+                            <h:column>
+                                <p:graphicImage value="#{tripController.dynamicTripImage}" width="100">
+                                    <f:param name="picture_id" value="#{picture.id}"/>
+                                </p:graphicImage>
+                            </h:column>
+                        </h:dataTable>
+
+                    </h:panelGrid>
+
+                </div>
+                <div class="col-md-2"/>
+            </div>
+
+        </h:form>
+
+    </div>
 
 
 </h:body>

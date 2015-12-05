@@ -1,9 +1,9 @@
 package frontend.web;
 
-import frontend.rest.RestHelper;
+import frontend.resthelper.RestHelper;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
-import frontend.rest.TravelerResourceHelper;
+import frontend.resthelper.TravelerResourceHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;

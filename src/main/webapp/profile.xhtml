@@ -16,72 +16,89 @@
         <ui:param name="active" value="profile" />
     </ui:include>
 
-    <h:form id="profile-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"/>
+            <div class="col-md-8">
 
-        <!--
-        <h:commandButton value="Load" class="btn btn-default"
-                         action="#{travelerController.loadOrReloadPersonalDataForTraveler(false)}"/>
-                         -->
+                <h:form id="profile-form">
 
-        <div class="vertical-separator"/>
+                    <!--
+                    <h:commandButton value="Load" class="btn btn-default"
+                                     action="#{travelerController.loadOrReloadPersonalDataForTraveler(false)}"/>
+                                     -->
 
-        <h:panelGroup rendered="#{!empty travelerController.personalData.username}">
-            <div id="profile-pic">
-                <!--<p:graphicImage value="#{travelerController.personalData.diplayablePicture}"
-                                width="200" />-->
-                <p:graphicImage value="#{travelerController.dynamicTravelerProfileImage}"
-                                width="200" />
-                <!-- TODO: add image id (peronaldata id to enable browser caching)-->
+                    <div class="vertical-separator"/>
+
+                    <h:panelGroup rendered="#{!empty travelerController.personalData.username}">
+                        <div id="profile-pic">
+                            <!--<p:graphicImage value="#{travelerController.personalData.diplayablePicture}"
+                                            width="200" />-->
+                            <p:graphicImage value="#{travelerController.dynamicTravelerProfileImage}"
+                                            width="200"/>
+                            <!-- TODO: add image id (peronaldata id to enable browser caching)-->
+                        </div>
+
+                        <div id="profile-data-container">
+                            <div id="profile-data">
+                                <div>
+                                    <h2>#{travelerController.personalData.username}</h2>
+                                </div>
+                                <div style="float:right;">
+                                    <h:commandButton value="Edit" action="#{travelerController.setEditingMode(true)}"
+                                                     rendered="#{!travelerController.isEditingMode()}"
+                                                     class="btn btn-default"/>
+                                </div>
+                                <h:panelGrid id="update-fields" columns="2">
+                                    <h:outputLabel value="E-mail: "/>
+                                    <h:outputLabel value="#{travelerController.personalData.email}"
+                                                   rendered="#{!travelerController.isEditingMode()}"/>
+                                    <h:inputText value="#{travelerController.personalData.email}" class="form-control"
+                                                 rendered="#{travelerController.isEditingMode()}"/>
+
+                                    <h:outputLabel value="First Name: "/>
+                                    <h:outputLabel value="#{travelerController.personalData.firstname}"
+                                                   rendered="#{!travelerController.isEditingMode()}"/>
+                                    <h:inputText value="#{travelerController.personalData.firstname}"
+                                                 class="form-control"
+                                                 rendered="#{travelerController.isEditingMode()}"/>
+
+                                    <h:outputLabel value="Last Name: "/>
+                                    <h:outputLabel value="#{travelerController.personalData.lastname}"
+                                                   rendered="#{!travelerController.isEditingMode()}"/>
+                                    <h:inputText value="#{travelerController.personalData.lastname}"
+                                                 class="form-control"
+                                                 rendered="#{travelerController.isEditingMode()}"/>
+                                    <div/>
+                                    <h:commandButton id="cancel-update" value="Cancel" class="btn btn-default"
+                                                     action="#{travelerController.cancelUpdate()}"
+                                                     rendered="#{travelerController.isEditingMode()}"/>
+                                    <h:commandButton id="update-profile" value="Update" class="btn btn-default"
+                                                     action="#{travelerController.updatePersonalDataForTraveler()}"
+                                                     rendered="#{travelerController.isEditingMode()}"/>
+                                    <div/>
+                                </h:panelGrid>
+                                <div id="picture-upload">
+                                    <h:outputLabel value="Upload new profile picture"
+                                                   rendered="#{travelerController.isEditingMode()}" />
+                                    <div/>
+                                    <h:form enctype="multipart/form-data">
+                                        <!-- todo: add validations and error messages (size, file type, etc.) -->
+                                        <p:fileUpload fileUploadListener="#{travelerController.upload}"
+                                                      mode="advanced" skinSimple="true" sizeLimit="3145728"
+                                                      rendered="#{travelerController.isEditingMode()}" />
+                                        <!-- size limit: 3MB -->
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+
+                </h:form>
             </div>
-
-            <div id="profile-data-container">
-                <div id="profile-data">
-                    <div>
-                        <h2>#{travelerController.personalData.username}</h2>
-                    </div>
-                    <div style="float:right;">
-                        <h:commandButton value="Edit" action="#{travelerController.setEditingMode(true)}"
-                                         rendered="#{!travelerController.isEditingMode()}" class="btn btn-default" />
-                    </div>
-                    <h:panelGrid id="update-fields" columns="2">
-                        <h:outputLabel value="E-mail: " />
-                        <h:outputLabel value="#{travelerController.personalData.email}"
-                                       rendered="#{!travelerController.isEditingMode()}"/>
-                        <h:inputText value="#{travelerController.personalData.email}" class="form-control"
-                                     rendered="#{travelerController.isEditingMode()}" />
-
-                        <h:outputLabel value="First Name: "/>
-                        <h:outputLabel value="#{travelerController.personalData.firstname}"
-                                       rendered="#{!travelerController.isEditingMode()}"/>
-                        <h:inputText value="#{travelerController.personalData.firstname}" class="form-control"
-                                     rendered="#{travelerController.isEditingMode()}" />
-
-                        <h:outputLabel value="Last Name: "/>
-                        <h:outputLabel value="#{travelerController.personalData.lastname}"
-                                       rendered="#{!travelerController.isEditingMode()}"/>
-                        <h:inputText value="#{travelerController.personalData.lastname}" class="form-control"
-                                     rendered="#{travelerController.isEditingMode()}" />
-                        <div />
-                        <h:commandButton id="update-profile" value="Update" class="btn btn-default"
-                                         action="#{travelerController.updatePersonalDataForTraveler()}"
-                                         rendered="#{travelerController.isEditingMode()}" />
-                        <div />
-                    </h:panelGrid>
-                    <div id="picture-upload">
-                        <h:outputLabel value="Upload new profile picture"/>
-                        <div />
-                        <h:form enctype="multipart/form-data">
-                            <!-- todo: add validations and error messages (size, file type, etc.) -->
-                            <p:fileUpload fileUploadListener="#{travelerController.upload}"
-                                          mode="advanced" skinSimple="true" sizeLimit="3145728"/>
-                            <!-- size limit: 3MB -->
-                        </h:form>
-                    </div>
-                </div>
-            </div>
-        </h:panelGroup>
-
-    </h:form>
+            <div class="col-md-2"/>
+        </div>
+    </div>
 
 </h:body>
 </html>

@@ -15,7 +15,6 @@
 #profile-pic {
 	width: auto;
 	position: absolute;
-	margin-left: 10%;
 	border: 2px solid #777;
 	padding: 20px;
 	border-radius: 30px;
@@ -24,7 +23,6 @@
 
 #profile-data-container {
 	float:right;
-	margin-right: 30%;
 }
 
 #profile-data {
@@ -34,7 +32,8 @@
 	border-width: 2px;
 }
 
-#profile-form\:update-profile {
+#profile-form\:update-profile,
+#profile-form\:cancel-update {
 	float: right;
 	margin-top: 10px;
 }
@@ -54,20 +53,22 @@
 }
 
 #follow-form\:followeds-table {
-	width: 400px;
-	margin-left: 100px;
+	width: 600px;
 	text-align: center;
 	font-size: 1.5em;
 }
 
 #timeline-form\:trips-of-followeds-table,
 #trips-form\:my-trips-table {
-	width: 400px;
-    margin-left: 100px;
+	width: 600px;
 }
 
-#trip-profile-form {
-    width: 50%;
+#trips-form {
+    width: 600px;
+}
+
+#trips-form\:create-trip {
+    float: right;
 }
 
 #trip-profile-form\:edit-button,

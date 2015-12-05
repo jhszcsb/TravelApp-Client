@@ -1,7 +1,7 @@
 package frontend;
 
 
-import frontend.rest.RestHelper;
+import frontend.resthelper.RestHelper;
 
 //@ComponentScan
 //@Configuration

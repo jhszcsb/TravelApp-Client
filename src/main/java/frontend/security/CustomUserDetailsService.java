@@ -1,6 +1,6 @@
 package frontend.security;
 
-import frontend.rest.RestHelper;
+import frontend.resthelper.RestHelper;
 import frontend.web.CurrentUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

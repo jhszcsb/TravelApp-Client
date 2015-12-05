@@ -17,42 +17,53 @@
         <ui:param name="active" value="follows" />
     </ui:include>
 
-    <h:form id="follow-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"/>
+            <div class="col-md-8">
+                <h:form id="follow-form">
 
 
-        <!--
-        <h:commandButton value="Load" class="btn btn-default"
-                         action="#{travelerController.loadFollowedsForTraveler()}"/>
-                         -->
+                    <!--
+                    <h:commandButton value="Load" class="btn btn-default"
+                                     action="#{travelerController.loadFollowedsForTraveler()}"/>
+                                     -->
 
-        <div class="vertical-separator"/>
+                    <div class="vertical-separator"/>
 
-        <h:outputLabel rendered="#{empty travelerController.followerDatas}" value="You don't have any followed travelers yet." />
+                    <h:outputLabel rendered="#{empty travelerController.followerDatas}"
+                                   value="You don't have any followed travelers yet."/>
 
-        <h2>Followed</h2>
-        <h:dataTable id="followeds-table" value="#{travelerController.followerDatas}" var="followed" class="table"
-                     rendered="#{!empty travelerController.followerDatas}">
-            <h:column>
-                <div>
-                    <h:commandLink
-                            action="#{followController.loadPersonalDataForFollowed(followed.traveler2.personaldata.username)}"
-                            value="#{followed.traveler2.personaldata.username}">
-                    </h:commandLink>
-                </div>
-                <h:commandLink action="#{followController.loadPersonalDataForFollowed(followed.traveler2.personaldata.username)}">
-                    <p:graphicImage value="#{travelerController.dynamicTravelerImage}"
-                                    width="100" >
-                        <f:param name="picture_id" value="#{followed.traveler2.id}"/>
-                    </p:graphicImage>
-                </h:commandLink>
-            </h:column>
-            <!--<h:column>
-                <f:facet name="header">ID</f:facet>
-                #{followed.traveler2.id}
-            </h:column>-->
-        </h:dataTable>
+                    <h2>Followed</h2>
+                    <h:dataTable id="followeds-table" value="#{travelerController.followerDatas}" var="followed"
+                                 class="table"
+                                 rendered="#{!empty travelerController.followerDatas}">
+                        <h:column>
+                            <div>
+                                <h:commandLink
+                                        action="#{followController.loadPersonalDataForFollowed(followed.traveler2.personaldata.username)}"
+                                        value="#{followed.traveler2.personaldata.username}">
+                                </h:commandLink>
+                            </div>
+                            <h:commandLink
+                                    action="#{followController.loadPersonalDataForFollowed(followed.traveler2.personaldata.username)}">
+                                <p:graphicImage value="#{travelerController.dynamicTravelerImage}"
+                                                width="100">
+                                    <f:param name="picture_id" value="#{followed.traveler2.id}"/>
+                                </p:graphicImage>
+                            </h:commandLink>
+                        </h:column>
+                        <!--<h:column>
+                            <f:facet name="header">ID</f:facet>
+                            #{followed.traveler2.id}
+                        </h:column>-->
+                    </h:dataTable>
 
-    </h:form>
+                </h:form>
+            </div>
+            <div class="col-md-2"/>
+        </div>
+    </div>
 
 </h:body>
 </html>

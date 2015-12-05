@@ -18,56 +18,69 @@
 
     <div class="vertical-separator"/>
 
-    <div>
-        <h:form id="follow-profile-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"/>
+            <div class="col-md-8">
+                <h:form id="follow-profile-form">
 
-            <h:messages />
+                    <h:messages/>
 
-            <h:commandLink value="Follow"
-                           action="#{followController.makeFollowed(followController.selectedFollowedProfile.username)}"
-                           rendered="#{!travelerController.isFollowed(followController.selectedFollowedProfile.username)}" />
+                    <h:commandLink value="Follow"
+                                   action="#{followController.makeFollowed(followController.selectedFollowedProfile.username)}"
+                                   rendered="#{!travelerController.isFollowed(followController.selectedFollowedProfile.username)}"/>
 
-            <h:panelGroup rendered="#{!empty followController.selectedFollowedProfile.username}">
-                <div id="profile-pic">
-                    <p:graphicImage value="#{followController.selectedFollowedProfile.diplayablePicture}"
-                                    width="200" />
-                </div>
-
-                <div id="profile-data-container">
-                    <div id="profile-data">
-                        <div>
-                            <h2>#{followController.selectedFollowedProfile.username}</h2>
+                    <h:panelGroup rendered="#{!empty followController.selectedFollowedProfile.username}">
+                        <div id="profile-pic">
+                            <p:graphicImage value="#{followController.selectedFollowedProfile.diplayablePicture}"
+                                            width="200"/>
                         </div>
-                        <h:panelGrid id="profile-fields" columns="2">
-                            <h:outputLabel value="E-mail: #{followController.selectedFollowedProfile.email}"/>
-                            <div />
-                            <h:outputLabel value="First Name: #{followController.selectedFollowedProfile.firstname}"/>
-                            <div />
-                            <h:outputLabel value="Last Name: #{followController.selectedFollowedProfile.lastname}"/>
-                            <div />
-                        </h:panelGrid>
-                    </div>
-                </div>
-            </h:panelGroup>
-        </h:form>
+
+                        <div id="profile-data-container">
+                            <div id="profile-data">
+                                <div>
+                                    <h2>#{followController.selectedFollowedProfile.username}</h2>
+                                </div>
+                                <h:panelGrid id="profile-fields" columns="2">
+                                    <h:outputLabel value="E-mail: #{followController.selectedFollowedProfile.email}"/>
+                                    <div/>
+                                    <h:outputLabel
+                                            value="First Name: #{followController.selectedFollowedProfile.firstname}"/>
+                                    <div/>
+                                    <h:outputLabel
+                                            value="Last Name: #{followController.selectedFollowedProfile.lastname}"/>
+                                    <div/>
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+                </h:form>
+            </div>
+
+        </div>
+        <div class="col-md-2"/>
     </div>
 
     <div class="vertical-separator"/>
 
-    <div>
-        <h:form id="follow-trips-form">
+    <div class="row">
+        <div class="col-md-2"/>
+        <div class="col-md-8">
+            <h:form id="follow-trips-form">
 
-            <h2>Trips</h2>
+                <h2>Trips</h2>
 
-            <h:dataTable value="#{followController.selectedFollowedTrips}" var="trip" class="table"
-                         rendered="#{!empty followController.selectedFollowedTrips}" style="width:600px;" >
-                <h:column>
-                    <f:facet name="header">Name</f:facet>
-                    <h:commandLink value="#{trip.name}" action="#{tripController.loadTripForFollowed(trip)}" />
-                </h:column>
-            </h:dataTable>
+                <h:dataTable value="#{followController.selectedFollowedTrips}" var="trip" class="table"
+                             rendered="#{!empty followController.selectedFollowedTrips}" style="width:600px;">
+                    <h:column>
+                        <f:facet name="header">Name</f:facet>
+                        <h:commandLink value="#{trip.name}" action="#{tripController.loadTripForFollowed(trip)}"/>
+                    </h:column>
+                </h:dataTable>
 
-        </h:form>
+            </h:form>
+        </div>
+        <div class="col-md-2"/>
     </div>
 
 </h:body>

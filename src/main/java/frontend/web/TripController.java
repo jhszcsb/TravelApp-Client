@@ -1,12 +1,14 @@
 package frontend.web;
 
-import frontend.rest.RestHelper;
+import frontend.domain.Place;
+import frontend.resthelper.RestHelper;
 import frontend.domain.Picture;
 import frontend.domain.Trip;
-import frontend.rest.TripResourceHelper;
+import frontend.resthelper.TripResourceHelper;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Controller;
 
 import javax.faces.bean.ViewScoped;
@@ -15,6 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @Controller
 @ViewScoped
@@ -38,6 +41,7 @@ public class TripController {
 
     public String loadTripsForTraveler() {
         trips = tripResourceHelper.loadAllTripsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
+        testHateoas();
         return "trips";
     }
 
@@ -96,6 +100,39 @@ public class TripController {
     public String loadTripForFollowed(Trip trip) {
         loadTrip(trip, false);
         return "followedtripprofile";
+    }
+
+    public List<Resource<Place>> loadPlacesForTrip(int trip_id) {
+        Place place = new Place();
+        Resource<Place> placeResource = new Resource<>(place);
+        placeResource.add(linkTo(PlaceController.class).slash("trips").slash(place.getId()).slash("place").withRel("DELETE"));
+        //System.out.println("href: " + placeResource.getLinks().get(0).getHref());
+        //System.out.println("rel: " + placeResource.getLinks().get(0).getRel());
+        Place place2 = new Place();
+        Resource<Place> placeResource2 = new Resource<>(place2);
+        List<Resource<Place>> placeResources = new ArrayList<>();
+        placeResources.add(placeResource);
+        placeResources.add(placeResource2);
+        return placeResources;
+    }
+
+    public boolean isDeleteEnabled(int place_id, List<Resource<Place>> places) {
+        for(Resource<Place> place : places) {
+            if(place.getContent().getId() == place_id &&
+                    !place.getLink("DELETE").getHref().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void testHateoas() {
+        //System.out.println("Loading places for trip 6");
+        List<Resource<Place>> places = loadPlacesForTrip(6);
+        //System.out.println("Is delete enabled for place 1");
+        isDeleteEnabled(1, places);
+        //System.out.println("Is delete enabled for place 2");
+        isDeleteEnabled(2, places);
     }
 
     public List<Trip> getTrips() {

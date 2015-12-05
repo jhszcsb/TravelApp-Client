@@ -1,4 +1,4 @@
-package frontend.rest;
+package frontend.resthelper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

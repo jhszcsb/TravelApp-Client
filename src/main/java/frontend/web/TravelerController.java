@@ -1,11 +1,11 @@
 package frontend.web;
 
-import frontend.rest.FollowerResourceHelper;
-import frontend.rest.RestHelper;
+import frontend.resthelper.FollowerResourceHelper;
+import frontend.resthelper.RestHelper;
 import frontend.domain.FollowerData;
 import frontend.domain.PersonalData;
 import frontend.domain.Traveler;
-import frontend.rest.TravelerResourceHelper;
+import frontend.resthelper.TravelerResourceHelper;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -148,6 +148,10 @@ public class TravelerController {
         //FacesContext.getCurrentInstance().addMessage(null, message);
         profilePic = event.getFile();
         personalData.setProfilepic(profilePic.getContents());
+    }
+
+    public void cancelUpdate() {
+        setEditingMode(false);
     }
 
     public List<Traveler> getTravelers() {

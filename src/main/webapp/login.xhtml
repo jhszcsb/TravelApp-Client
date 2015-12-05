@@ -35,76 +35,95 @@
         </div><!-- /.container-fluid -->
     </nav>
 
-    <div class="arrow_box" style="width: 300px; height: 200px; position: absolute; margin-left: 300px; color: white;" >
-        Alma
-    </div>
-
-    <div class="arrow_box" style="width: 300px; height: 200px; position: absolute; margin-left: 300px; color: white;
-                                    margin-top: 20%;" >
-        Alma2
-    </div>
-
-    <!-- todo: use horizontal panels instead of vertical -->
-
     <!-- todo: refactor css to styles.css, use line separated names -->
-    <div style="float:right; margin-right: 20%;" >
-        <div id="loginPanel"
-             style="border: medium solid rgb(119, 119, 119); padding: 20px; margin-right: 20%;
-             border-radius: 30px; border-width: 2px;" >
-            <form name='f' action="j_spring_security_check" method='POST'>
-                <h1>Log In</h1>
-                <ui:fragment rendered="#{param.login_error == '1'}">
-                    <div id="login-error" class="alert alert-danger" role="alert">
-                        Invalid email/password combination. <br />Please try again.
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="arrow_box" style="width: 300px; height: 200px; color: white; font-size: 2em;" >
+                    Log In here with your existing account
+                </div>
+            </div>
+            <div class="col-md-4">
+
+                <div style="float:right; margin-right: 20%;">
+                    <div id="login-panel"
+                         style="border: medium solid rgb(119, 119, 119); padding: 20px; margin-right: 20%;
+             border-radius: 30px; border-width: 2px;">
+                        <form name='f' action="j_spring_security_check" method='POST'>
+                            <h1>Log In</h1>
+                            <ui:fragment rendered="#{param.login_error == '1'}">
+                                <div id="login-error" class="alert alert-danger" role="alert">
+                                    Invalid email/password combination. <br/>Please try again.
+                                </div>
+                            </ui:fragment>
+                            <table>
+                                <tr>
+                                    <td>User</td>
+                                    <td><input type='text' name='j_username' value='' class="form-control"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Password</td>
+                                    <td><input type='password' name='j_password' class="form-control"/></td>
+                                </tr>
+                                <tr>
+                                    <td><input name="submit" type="submit" value="Log In" class="btn btn-default"/></td>
+                                </tr>
+                            </table>
+                        </form>
                     </div>
-                </ui:fragment>
-                <table>
-                    <tr>
-                        <td>User</td>
-                        <td><input type='text' name='j_username' value='' class="form-control"/></td>
-                    </tr>
-                    <tr>
-                        <td>Password</td>
-                        <td><input type='password' name='j_password' class="form-control"/></td>
-                    </tr>
-                    <tr>
-                        <td><input name="submit" type="submit" value="Log In" class="btn btn-default" /></td>
-                    </tr>
-                </table>
-            </form>
+                </div>
+            </div>
         </div>
+        <div class="vertical-separator"/>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="arrow_box" style="width: 300px; height: 200px; position: absolute; color: white;
+                                       font-size: 2em;" >
+                    Register here, if You do not have an account
+                </div>
+            </div>
+            <div class="col-md-4">
 
-        <div id="panel" />
+                <div id="panel"/>
 
-
-        <div id="registrationPanel"
-             style="border: medium solid rgb(119, 119, 119); padding: 20px; margin-top: 17%;
-             border-radius: 30px; border-width: 2px;" >
-            <h:form id="registerForm">
-                <h1>Register</h1>
-                <h:messages infoClass="alert alert-info" warnClass="alert alert-warning" errorClass="alert alert-danger" />
-                <h:panelGrid id="loginPanel" columns="2" style="width: 300px;">
-                    <h:outputLabel id="label_username" for="username" value="User Name"/>
-                    <h:inputText id="username" value="#{loginController.registerUsername}" class="form-control" required="true"
-                                 requiredMessage="User name cannot be empty!"/>
-                    <h:outputLabel id="label_firstname" for="firstname" value="First Name"/>
-                    <h:inputText id="firstname" value="#{loginController.registerFirstname}" class="form-control"/>
-                    <h:outputLabel id="label_lastname" for="lastname" value="Last Name"/>
-                    <h:inputText id="lastname" value="#{loginController.registerLastname}" class="form-control"/>
-                    <h:outputLabel id="label_email" for="email" value="E-mail"/>
-                    <h:inputText id="email" value="#{loginController.registerEmail}" class="form-control" required="true"
-                                 validatorMessage="Please enter a real e-mail address!"
-                                 requiredMessage="E-mail cannot be empty!">
-                        <f:validateLength maximum="40" />
-                        <f:validateRegex
-                                pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                    </h:inputText>
-                    <h:outputLabel id="label_password" for="password" value="Password"/>
-                    <h:inputSecret id="password" value="#{loginController.registerPassword}" feedback="false" class="form-control" required="true"
-                                   requiredMessage="Password cannot be empty!"/>
-                </h:panelGrid>
-                <h:commandButton id="loginButton" value="Register" title="Register" action="#{loginController.register()}" class="btn btn-default"/>
-            </h:form>
+                <div id="registration-panel"
+                     style="border: medium solid rgb(119, 119, 119); padding: 20px; border-radius: 30px;
+                            border-width: 2px;">
+                    <h:form id="register-form">
+                        <h1>Register</h1>
+                        <h:messages infoClass="alert alert-info" warnClass="alert alert-warning"
+                                    errorClass="alert alert-danger"/>
+                        <h:panelGrid id="login-panel" columns="2" style="width: 300px;">
+                            <h:outputLabel id="label_username" for="username" value="User Name"/>
+                            <h:inputText id="username" value="#{loginController.registerUsername}"
+                                         class="form-control" required="true"
+                                         requiredMessage="User name cannot be empty!"/>
+                            <h:outputLabel id="label_firstname" for="firstname" value="First Name"/>
+                            <h:inputText id="firstname" value="#{loginController.registerFirstname}"
+                                         class="form-control"/>
+                            <h:outputLabel id="label_lastname" for="lastname" value="Last Name"/>
+                            <h:inputText id="lastname" value="#{loginController.registerLastname}"
+                                         class="form-control"/>
+                            <h:outputLabel id="label_email" for="email" value="E-mail"/>
+                            <h:inputText id="email" value="#{loginController.registerEmail}" class="form-control"
+                                         required="true"
+                                         validatorMessage="Please enter a real e-mail address!"
+                                         requiredMessage="E-mail cannot be empty!">
+                                <f:validateLength maximum="40"/>
+                                <f:validateRegex
+                                        pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                            </h:inputText>
+                            <h:outputLabel id="label_password" for="password" value="Password"/>
+                            <h:inputSecret id="password" value="#{loginController.registerPassword}"
+                                           feedback="false" class="form-control" required="true"
+                                           requiredMessage="Password cannot be empty!"/>
+                        </h:panelGrid>
+                        <h:commandButton id="login-button" value="Register" title="Register"
+                                         action="#{loginController.register()}" class="btn btn-default"/>
+                    </h:form>
+                </div>
+            </div>
         </div>
     </div>
 
