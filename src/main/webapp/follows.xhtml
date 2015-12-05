@@ -41,21 +41,21 @@
                         <h:column>
                             <div>
                                 <h:commandLink
-                                        action="#{followController.loadPersonalDataForFollowed(followed.traveler2.personaldata.username)}"
-                                        value="#{followed.traveler2.personaldata.username}">
+                                        action="#{followController.loadPersonalDataForFollowed(followed.followed.personaldata.username)}"
+                                        value="#{followed.followed.personaldata.username}">
                                 </h:commandLink>
                             </div>
                             <h:commandLink
-                                    action="#{followController.loadPersonalDataForFollowed(followed.traveler2.personaldata.username)}">
+                                    action="#{followController.loadPersonalDataForFollowed(followed.followed.personaldata.username)}">
                                 <p:graphicImage value="#{travelerController.dynamicTravelerImage}"
                                                 width="100">
-                                    <f:param name="picture_id" value="#{followed.traveler2.id}"/>
+                                    <f:param name="picture_id" value="#{followed.followed.id}"/>
                                 </p:graphicImage>
                             </h:commandLink>
                         </h:column>
                         <!--<h:column>
                             <f:facet name="header">ID</f:facet>
-                            #{followed.traveler2.id}
+                            #{followed.followed.id}
                         </h:column>-->
                     </h:dataTable>
 

@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
@@ -80,11 +81,11 @@ public class TravelerController {
         followerDatas = followerResourceHelper.loadAllFollowsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
 
         for(int i = 0; i < followerDatas.size(); i++) {
-            byte[] pic = followerDatas.get(i).getTraveler2().getPersonaldata().getProfilepic();
+            byte[] pic = followerDatas.get(i).getFollowed().getPersonaldata().getProfilepic();
             if(pic != null) {
                 InputStream stream = new ByteArrayInputStream(pic);
-                PersonalData traveler2 = followerDatas.get(i).getTraveler2().getPersonaldata();
-                traveler2.setDiplayablePicture(new DefaultStreamedContent(stream));
+                PersonalData followed = followerDatas.get(i).getFollowed().getPersonaldata();
+                followed.setDiplayablePicture(new DefaultStreamedContent(stream));
             }
         }
         return "follows";
@@ -96,7 +97,7 @@ public class TravelerController {
         }
         boolean isFollowed = false;
         for(FollowerData f : followerDatas) {   // improvement: check java8 stream
-            if(name.equals(f.getTraveler2().getPersonaldata().getUsername())) {
+            if(name.equals(f.getFollowed().getPersonaldata().getUsername())) {
                 isFollowed = true;
             }
         }
@@ -108,8 +109,8 @@ public class TravelerController {
         if(id!=null && this.followerDatas !=null && !this.followerDatas.isEmpty()){
             Integer pictureId = Integer.parseInt(id);
             for(FollowerData followerDataTemp : this.followerDatas){
-                if(followerDataTemp.getTraveler2().getId() == pictureId){
-                    return followerDataTemp.getTraveler2().getPersonaldata().getDiplayablePicture();
+                if(followerDataTemp.getFollowed().getId() == pictureId){
+                    return followerDataTemp.getFollowed().getPersonaldata().getDiplayablePicture();
                 }
             }
         }
@@ -192,5 +193,6 @@ public class TravelerController {
 
     public void setEditingMode(boolean editingMode) {
         this.editingMode = editingMode;
+        loadPersonalDataForTraveler();
     }
 }

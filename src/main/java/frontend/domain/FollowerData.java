@@ -4,9 +4,9 @@ public class FollowerData {
 
     private int id;
 
-    private Traveler traveler1;
+    private Traveler follower;
 
-    private Traveler traveler2;
+    private Traveler followed;
 
     public int getId() {
         return id;
@@ -16,19 +16,19 @@ public class FollowerData {
         this.id = id;
     }
 
-    public Traveler getTraveler1() {
-        return traveler1;
+    public Traveler getFollower() {
+        return follower;
     }
 
-    public void setTraveler1(Traveler traveler1) {
-        this.traveler1 = traveler1;
+    public void setFollower(Traveler follower) {
+        this.follower = follower;
     }
 
-    public Traveler getTraveler2() {
-        return traveler2;
+    public Traveler getFollowed() {
+        return followed;
     }
 
-    public void setTraveler2(Traveler traveler2) {
-        this.traveler2 = traveler2;
+    public void setFollowed(Traveler followed) {
+        this.followed = followed;
     }
 }

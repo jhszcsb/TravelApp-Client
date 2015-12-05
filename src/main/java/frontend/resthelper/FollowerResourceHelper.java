@@ -34,8 +34,8 @@ public class FollowerResourceHelper {
         return travelers;
     }
 
-    public void createFollowed(String traveler1_name, String traveler2_name) {
-        FollowRequest followRequest = new FollowRequest(traveler1_name, traveler2_name);
+    public void createFollowed(String follower_name, String followed_name) {
+        FollowRequest followRequest = new FollowRequest(follower_name, followed_name);
         String json = restHelper.writeValue(followRequest);
         if(json != null) {
             JsonNode jsonNode = restHelper.prepareJsonObject(json);

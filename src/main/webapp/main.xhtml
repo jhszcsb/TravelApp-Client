@@ -17,40 +17,14 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-2" style="border: 2px solid #777;">
-                Asdf
-            </div>
-            <div class="col-md-2" style="border: 2px solid #777;">
-                Asdf
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12" style="border: 2px solid #777;">
-                <div class="col-md-2">
-                    outer
-                </div>
-                <div class="col-md-8">
-                    inner
-                </div>
-                <div class="col-md-2">
-                    outer
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row">
             <div class="col-md-2"/>
             <div class="col-md-8">
                 <h:form id="timeline-form">
 
-                    <h2>Test: load all trips of followed travelers</h2>
+                    <h2>Timeline</h2>
                     <h:commandButton value="Load Timeline" class="btn btn-default"
                                      action="#{tripController.loadAllTripsOfFolloweds()}"/>
-
                     <br/><br/>
-
                     <h:dataTable id="trips-of-followeds-table" value="#{tripController.tripsOfFolloweds}" var="trip"
                                  class="table"
                                  rendered="#{!empty tripController.tripsOfFolloweds}">
@@ -66,12 +40,10 @@
 
                     <h:messages/>
 
-                    <h2>Test: load all travelers from DB</h2>
-                    <h:commandButton value="Load" class="btn btn-default"
+                    <h2>Browse all travelers from DB</h2>
+                    <h:commandButton value="Browse" class="btn btn-default"
                                      action="#{travelerController.loadAllTravelers()}"/>
-
                     <br/><br/>
-
                     <h:dataTable id="travelers-table" value="#{travelerController.travelers}" var="traveler"
                                  class="table"
                                  rendered="#{!empty travelerController.travelers}">

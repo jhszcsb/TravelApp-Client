@@ -2,30 +2,30 @@ package frontend.domain;
 
 public class FollowRequest {
 
-    private String traveler1_name;
+    private String follower_name;
 
-    private String traveler2_name;
+    private String followed_name;
 
     public FollowRequest() {}
 
-    public FollowRequest(String traveler1_name, String traveler2_name) {
-        this.traveler1_name = traveler1_name;
-        this.traveler2_name = traveler2_name;
+    public FollowRequest(String follower_name, String followed_name) {
+        this.follower_name = follower_name;
+        this.followed_name = followed_name;
     }
 
-    public String getTraveler1_name() {
-        return traveler1_name;
+    public String getFollower_name() {
+        return follower_name;
     }
 
-    public void setTraveler1_name(String traveler1_name) {
-        this.traveler1_name = traveler1_name;
+    public void setFollower_name(String follower_name) {
+        this.follower_name = follower_name;
     }
 
-    public String getTraveler2_name() {
-        return traveler2_name;
+    public String getFollowed_name() {
+        return followed_name;
     }
 
-    public void setTraveler2_name(String traveler2_name) {
-        this.traveler2_name = traveler2_name;
+    public void setFollowed_name(String followed_name) {
+        this.followed_name = followed_name;
     }
 }

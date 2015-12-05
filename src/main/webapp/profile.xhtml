@@ -70,14 +70,15 @@
                                                  class="form-control"
                                                  rendered="#{travelerController.isEditingMode()}"/>
                                     <div/>
+                                </h:panelGrid>
+                                <div>
                                     <h:commandButton id="cancel-update" value="Cancel" class="btn btn-default"
                                                      action="#{travelerController.cancelUpdate()}"
                                                      rendered="#{travelerController.isEditingMode()}"/>
                                     <h:commandButton id="update-profile" value="Update" class="btn btn-default"
                                                      action="#{travelerController.updatePersonalDataForTraveler()}"
                                                      rendered="#{travelerController.isEditingMode()}"/>
-                                    <div/>
-                                </h:panelGrid>
+                                </div>
                                 <div id="picture-upload">
                                     <h:outputLabel value="Upload new profile picture"
                                                    rendered="#{travelerController.isEditingMode()}" />
