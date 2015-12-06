@@ -60,7 +60,7 @@ public class CurrentUserService /*implements LogoutSuccessHandler*/ {
         if(personalData != null) {
             loadCurrentUserTravelerData();
         }
-        // todo: other error handling?
+        // other error handling?
     }
 
     public String getName() {

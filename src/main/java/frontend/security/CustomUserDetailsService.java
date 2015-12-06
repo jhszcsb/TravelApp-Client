@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        currentUserService.clearData(); // todo: invoke this on logout instead of login. use with logout filter?
+        currentUserService.clearData(); // improvement: invoke this on logout instead of login. use with logout filter?
         boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;

@@ -31,7 +31,7 @@ public class TripResourceHelper {
     RestHelper restHelper;
 
     public List<Trip> loadAllTripsForTraveler(String id) {
-        ResponseEntity<Trip[]> responseData = restTemplate.exchange(BASE_URL + id + "/trips", HttpMethod.GET, restHelper.createAuthenticatedRequest(), Trip[].class);
+        ResponseEntity<Trip[]> responseData = restTemplate.exchange(BASE_URL + "/travelers/" + id + "/trips", HttpMethod.GET, restHelper.createAuthenticatedRequest(), Trip[].class);
         Trip[] tripArray = responseData.getBody();
         List<Trip> trips = Arrays.asList(tripArray);
         return trips;
@@ -45,7 +45,7 @@ public class TripResourceHelper {
     }
 
     public Trip createTrip(int id) {
-        return restTemplate.exchange(BASE_URL + id + "/trips", HttpMethod.POST, restHelper.createAuthenticatedRequest(), Trip.class).getBody();
+        return restTemplate.exchange(BASE_URL + "/travelers/" + id + "/trips", HttpMethod.POST, restHelper.createAuthenticatedRequest(), Trip.class).getBody();
     }
 
     public void updateTrip(Trip trip) {

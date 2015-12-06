@@ -6,14 +6,14 @@ public class Traveler {
 
     private PersonalData personaldata;
 
-    //private int socialdata;
+    private SocialData socialdata;
 
     public Traveler() {}
 
-    public Traveler(int id, PersonalData personaldata/*, int socialdata*/) {
+    public Traveler(int id, PersonalData personaldata, SocialData socialdata) {
         this.id = id;
         this.personaldata = personaldata;
-        /*this.socialdata = socialdata;*/
+        this.socialdata = socialdata;
     }
 
     public int getId() {
@@ -32,11 +32,11 @@ public class Traveler {
         this.personaldata = personaldata;
     }
 
-    /*public int getSocialdata() {
+    public SocialData getSocialdata() {
         return socialdata;
     }
 
-    public void setSocialdata(int socialdata) {
+    public void setSocialdata(SocialData socialdata) {
         this.socialdata = socialdata;
-    }*/
+    }
 }

@@ -45,10 +45,10 @@ public class LoginController {
         personalData.setEmail(registerEmail);
         personalData.setFirstname(registerFirstname);
         personalData.setLastname(registerLastname);
-        personalData.setHometown("dummy");  // todo: use geolocation
+        personalData.setHometown("dummy");  // improvement: use geolocation
         newTraveler.setPersonaldata(personalData);
         travelerResourceHelper.registerTraveler(newTraveler);
-        // TODO: add error message if registration is not successful (error from backend). check for duplicate users in backend
+        // improvement: check for duplicate users in backend
         FacesMessage message = new FacesMessage("Successful registration!");
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, message);

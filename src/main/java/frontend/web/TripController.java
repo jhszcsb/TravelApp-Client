@@ -79,7 +79,7 @@ public class TripController {
 
     public String deleteSelectedTrip() {
         tripResourceHelper.deleteTrip(selectedTrip.getId());
-        // todo: add facesmessage after successful delete
+        // improvement: add facesmessage after successful delete
         selectedTrip = null;
         return "trips";
     }

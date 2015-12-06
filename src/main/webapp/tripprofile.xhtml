@@ -45,7 +45,7 @@
                     </h:panelGrid>
                     <h:commandButton id="cancel-button" value="Cancel" action="#{tripController.setEditingMode(false)}"
                                      rendered="#{tripController.isEditingMode()}" class="btn btn-default"/>
-                    <!-- todo: delete using cancel button if this is a new trip -->
+                    <!-- improvement: delete using cancel button if this is a new trip -->
                     <h:commandButton id="update-button" value="Save" class="btn btn-default"
                                      action="#{tripController.updateSelectedTrip()}"
                                      rendered="#{tripController.isEditingMode()}"/>
@@ -59,7 +59,7 @@
                 <div class="col-md-8">
 
                     <h:panelGrid style="width:100%"
-                                 rendered="#{!empty tripController.selectedTrip.place and !tripController.isEditingMode()}">
+                                 rendered="#{!tripController.isEditingMode()}">
                         <div class="vertical-separator"/>
                         <h3>Places</h3>
                         <h:commandButton id="add-place-button" value="Add Place" class="btn btn-default"

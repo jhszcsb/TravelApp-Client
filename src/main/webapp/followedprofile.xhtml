@@ -26,7 +26,7 @@
 
                     <h:messages/>
 
-                    <h:commandLink value="Follow"
+                    <h:commandLink value="Follow #{followController.selectedFollowedProfile.username}"
                                    action="#{followController.makeFollowed(followController.selectedFollowedProfile.username)}"
                                    rendered="#{!travelerController.isFollowed(followController.selectedFollowedProfile.username)}"/>
 
@@ -68,15 +68,17 @@
         <div class="col-md-8">
             <h:form id="follow-trips-form">
 
-                <h2>Trips</h2>
+                <h:panelGroup rendered="#{!empty followController.selectedFollowedTrips}">
+                    <h2>Trips</h2>
 
-                <h:dataTable value="#{followController.selectedFollowedTrips}" var="trip" class="table"
-                             rendered="#{!empty followController.selectedFollowedTrips}" style="width:600px;">
-                    <h:column>
-                        <f:facet name="header">Name</f:facet>
-                        <h:commandLink value="#{trip.name}" action="#{tripController.loadTripForFollowed(trip)}"/>
-                    </h:column>
-                </h:dataTable>
+                    <h:dataTable value="#{followController.selectedFollowedTrips}" var="trip" class="table"
+                                 rendered="#{!empty followController.selectedFollowedTrips}" style="width:600px;">
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            <h:commandLink value="#{trip.name}" action="#{tripController.loadTripForFollowed(trip)}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
 
             </h:form>
         </div>

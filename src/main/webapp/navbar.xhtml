@@ -24,7 +24,6 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <!-- todo: use different name instead of 'timeline', e.g. 'feed' -->
                         <li class="#{active == 'timeline' ? 'active' : ''}">
                             <a href="main.xhtml">
                                 Timeline
@@ -39,6 +38,9 @@
                         </li>
                         <li class="#{active == 'follows' ? 'active' : ''}">
                             <h:commandLink action="#{travelerController.loadFollowedsForTraveler()}" value="Followed Travelers" />
+                        </li>
+                        <li class="#{active == 'browse' ? 'active' : ''}">
+                            <h:commandLink action="#{travelerController.loadAllTravelers()}" value="Browse Travelers" />
                         </li>
                     </ul>
                     <!--    commented out, not yet needed:

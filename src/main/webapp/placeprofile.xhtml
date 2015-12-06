@@ -57,7 +57,7 @@
                             <h:outputLabel value="Upload pictures"/>
                             <div/>
                             <h:form enctype="multipart/form-data">
-                                <!-- todo: add validations and error messages (size, file type, etc.) -->
+                                <!-- improvement: add validations and error messages (size, file type, etc.) -->
                                 <p:fileUpload fileUploadListener="#{placeController.upload}"
                                               mode="advanced" skinSimple="true" sizeLimit="3145728" multiple="true"
                                               fileLimit="5" dragDropSupport="false"/>

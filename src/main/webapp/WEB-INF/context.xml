@@ -28,7 +28,11 @@
         <security:intercept-url pattern="/main.xhtml" access="isAuthenticated()" />
         <security:intercept-url pattern="/follows.xhtml" access="isAuthenticated()" />
         <security:intercept-url pattern="/trips.xhtml" access="isAuthenticated()" />
-        <!-- TODO: add rules for new pages -->
+        <security:intercept-url pattern="/followedplaceprofile.xhtml" access="isAuthenticated()" />
+        <security:intercept-url pattern="/followedprofile.xhtml" access="isAuthenticated()" />
+        <security:intercept-url pattern="/followedtripprofile.xhtml" access="isAuthenticated()" />
+        <security:intercept-url pattern="/placeprofile.xhtml" access="isAuthenticated()" />
+        <security:intercept-url pattern="/tripprofile.xhtml" access="isAuthenticated()" />
         <!-- <intercept-url pattern="/*" requires-channel="https" /> -->
 
         <security:form-login login-page="/login.xhtml"
@@ -38,7 +42,7 @@
                              default-target-url="/main.xhtml"
                              authentication-failure-url="/login.xhtml?login_error=1" />
         <security:logout logout-success-url="/login.xhtml" logout-url="/j_spring_security_logout" />
-        <security:csrf disabled="true"/><!-- todo: use CSRF -->
+        <security:csrf disabled="true"/><!-- improvement: use CSRF -->
     </security:http>
 
     <!-- Encrypter to encrypt password -->

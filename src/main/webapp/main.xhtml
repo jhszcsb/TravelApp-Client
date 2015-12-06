@@ -33,53 +33,6 @@
                             #{trip.name}
                         </h:column>
                     </h:dataTable>
-
-                </h:form>
-
-                <h:form id="traveler-form">
-
-                    <h:messages/>
-
-                    <h2>Browse all travelers from DB</h2>
-                    <h:commandButton value="Browse" class="btn btn-default"
-                                     action="#{travelerController.loadAllTravelers()}"/>
-                    <br/><br/>
-                    <h:dataTable id="travelers-table" value="#{travelerController.travelers}" var="traveler"
-                                 class="table"
-                                 rendered="#{!empty travelerController.travelers}">
-                        <h:column>
-                            <f:facet name="header">Username</f:facet>
-                            #{traveler.personaldata.username}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">E-mail</f:facet>
-                            #{traveler.personaldata.email}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">First Name</f:facet>
-                            #{traveler.personaldata.firstname}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Last Name</f:facet>
-                            #{traveler.personaldata.lastname}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Hometown</f:facet>
-                            #{traveler.personaldata.hometown}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Action</f:facet>
-                            <h:commandLink value="Follow | "
-                                           action="#{followController.makeFollowed(traveler.personaldata.username)}"
-                                           rendered="#{!travelerController.isFollowed(traveler.personaldata.username)}"/>
-                            <!-- todo: render only if not the same as the logged in user
-                            rendered = traveler.personaldata.username is not currentuser
-                            -->
-                            <h:commandLink value="Profile"
-                                           action="#{followController.loadPersonalDataForFollowed(traveler.personaldata.username)}"/>
-                        </h:column>
-                    </h:dataTable>
-
                 </h:form>
             </div>
             <div class="col-md-2"/>

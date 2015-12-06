@@ -1,5 +1,6 @@
 package frontend.web;
 
+import frontend.domain.SocialData;
 import frontend.resthelper.FollowerResourceHelper;
 import frontend.resthelper.RestHelper;
 import frontend.domain.FollowerData;
@@ -43,6 +44,7 @@ public class TravelerController {
     private List<Traveler> travelers = new ArrayList<>();
     private List<FollowerData> followerDatas = new ArrayList<>(); // optimize: load traveler personaldatas only instead of followed data
     private PersonalData personalData = new PersonalData();
+    private SocialData socialData = new SocialData();
     private UploadedFile profilePic;
     private boolean editingMode = false;
 
@@ -60,6 +62,7 @@ public class TravelerController {
             InputStream stream = new ByteArrayInputStream(pic);
             personalData.setDiplayablePicture(new DefaultStreamedContent(stream));
         }
+
         return "profile";
     }
 
@@ -72,12 +75,13 @@ public class TravelerController {
         setEditingMode(false);
     }
 
-    public void loadAllTravelers() {
+    public String loadAllTravelers() {
         travelers = travelerResourceHelper.loadAllTravelers();
-        loadFollowedsForTraveler(); // todo: optimize this
+        loadFollowedsForTraveler(); // improvement: optimize this
+        return "browse";
     }
 
-    public String loadFollowedsForTraveler() {  // todo: use traveler type instead of follows -> fix backend!
+    public String loadFollowedsForTraveler() {  // improvement: use traveler type instead of follows -> fix backend!
         followerDatas = followerResourceHelper.loadAllFollowsForTraveler(String.valueOf(currentUserService.getTraveler().getId()));
 
         for(int i = 0; i < followerDatas.size(); i++) {
@@ -91,7 +95,7 @@ public class TravelerController {
         return "follows";
     }
 
-    public boolean isFollowed(String name) { // todo cache this
+    public boolean isFollowed(String name) { // cache this?
         if(followerDatas.isEmpty()) {
             loadFollowedsForTraveler();
         }

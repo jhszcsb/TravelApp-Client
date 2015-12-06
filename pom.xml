@@ -26,8 +26,6 @@
 
     <dependencies>
 
-        <!-- TODO: review and remove unnecessary dependencies -->
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>

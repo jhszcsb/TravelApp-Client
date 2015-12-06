@@ -41,7 +41,7 @@ public class TravelerResourceHelper {
         ResponseEntity<Object> responseData = restTemplate.getForEntity(URL_TRAVELER + id, Object.class);
     }
 
-    public void registerTraveler(Traveler newTraveler) {    // todo add a return value (string message or else)
+    public void registerTraveler(Traveler newTraveler) {    // add a return value (string message or else)
         String json = null;
         String encoded = passwordEncoder.encode(newTraveler.getPersonaldata().getPassword());
         newTraveler.getPersonaldata().setPassword(encoded);

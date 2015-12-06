@@ -36,7 +36,7 @@
                                             width="200" />-->
                             <p:graphicImage value="#{travelerController.dynamicTravelerProfileImage}"
                                             width="200"/>
-                            <!-- TODO: add image id (peronaldata id to enable browser caching)-->
+                            <!-- improvement: add image id (peronaldata id to enable browser caching)-->
                         </div>
 
                         <div id="profile-data-container">
@@ -69,6 +69,13 @@
                                     <h:inputText value="#{travelerController.personalData.lastname}"
                                                  class="form-control"
                                                  rendered="#{travelerController.isEditingMode()}"/>
+
+                                    <h:outputLabel value=": "/>
+                                    <h:outputLabel value="#{travelerController.socialData.facebook_account}"
+                                                   rendered="#{!travelerController.isEditingMode()}"/>
+                                    <h:inputText value="#{travelerController.socialData.facebook_account}"
+                                                 class="form-control"
+                                                 rendered="#{travelerController.isEditingMode()}"/>
                                     <div/>
                                 </h:panelGrid>
                                 <div>
@@ -84,7 +91,7 @@
                                                    rendered="#{travelerController.isEditingMode()}" />
                                     <div/>
                                     <h:form enctype="multipart/form-data">
-                                        <!-- todo: add validations and error messages (size, file type, etc.) -->
+                                        <!-- improvement: add validations and error messages (size, file type, etc.) -->
                                         <p:fileUpload fileUploadListener="#{travelerController.upload}"
                                                       mode="advanced" skinSimple="true" sizeLimit="3145728"
                                                       rendered="#{travelerController.isEditingMode()}" />

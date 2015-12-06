@@ -28,7 +28,7 @@ public class FollowerResourceHelper {
     RestHelper restHelper;
 
     public List<FollowerData> loadAllFollowsForTraveler(String id) {
-        ResponseEntity<FollowerData[]> responseData = restTemplate.exchange(BASE_URL + id + "/follows", HttpMethod.GET, restHelper.createAuthenticatedRequest(), FollowerData[].class);
+        ResponseEntity<FollowerData[]> responseData = restTemplate.exchange(URL_TRAVELER + id + "/follows", HttpMethod.GET, restHelper.createAuthenticatedRequest(), FollowerData[].class);
         FollowerData[] travelerArray = responseData.getBody();
         List<FollowerData> travelers = Arrays.asList(travelerArray);
         return travelers;
